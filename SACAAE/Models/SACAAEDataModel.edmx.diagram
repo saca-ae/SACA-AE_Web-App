@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f0e6c3ca2f7d4f429c71af5305839fd5" Name="Diagrama1" ZoomLevel="71">
+        <EntityTypeShape EntityType="SACAAEModel.Ajuste" Width="1.5" PointX="3" PointY="17.125" />
+        <EntityTypeShape EntityType="SACAAEModel.Aula" Width="1.5" PointX="3.75" PointY="43.875" />
+        <EntityTypeShape EntityType="SACAAEModel.BloqueAcademico" Width="1.5" PointX="1.5" PointY="38.375" />
+        <EntityTypeShape EntityType="SACAAEModel.BloqueAcademicoXPlanDeEstudio" Width="1.5" PointX="1.5" PointY="28.625" />
+        <EntityTypeShape EntityType="SACAAEModel.BloqueXPlanXCurso" Width="1.5" PointX="3.75" PointY="26.875" />
+        <EntityTypeShape EntityType="SACAAEModel.Comisione" Width="1.5" PointX="0.75" PointY="2.25" />
+        <EntityTypeShape EntityType="SACAAEModel.ComisionesXProfesor" Width="1.5" PointX="3" PointY="6.125" />
+        <EntityTypeShape EntityType="SACAAEModel.Curso" Width="1.5" PointX="1.5" PointY="23.875" />
+        <EntityTypeShape EntityType="SACAAEModel.Detalle_Grupo" Width="1.5" PointX="7.375" PointY="13.5" />
+        <EntityTypeShape EntityType="SACAAEModel.Dia" Width="1.5" PointX="3" PointY="11" />
+        <EntityTypeShape EntityType="SACAAEModel.Estado" Width="1.5" PointX="1.5" PointY="20.25" />
+        <EntityTypeShape EntityType="SACAAEModel.Grupo" Width="1.5" PointX="6" PointY="6.125" />
+        <EntityTypeShape EntityType="SACAAEModel.Horario" Width="1.5" PointX="0.75" PointY="13.125" />
+        <EntityTypeShape EntityType="SACAAEModel.Modalidade" Width="1.5" PointX="1.5" PointY="35.75" />
+        <EntityTypeShape EntityType="SACAAEModel.Periodo" Width="1.5" PointX="0.75" PointY="6.375" />
+        <EntityTypeShape EntityType="SACAAEModel.PlanesDeEstudio" Width="1.5" PointX="1.5" PointY="32.375" />
+        <EntityTypeShape EntityType="SACAAEModel.PlanesDeEstudioXSede" Width="1.5" PointX="3.75" PointY="40.875" />
+        <EntityTypeShape EntityType="SACAAEModel.ProfesoresXCurso" Width="1.5" PointX="3" PointY="14.25" />
+        <EntityTypeShape EntityType="SACAAEModel.Proyecto" Width="1.5" PointX="0.75" PointY="9.75" />
+        <EntityTypeShape EntityType="SACAAEModel.ProyectosXProfesor" Width="1.5" PointX="3" PointY="2.125" />
+        <EntityTypeShape EntityType="SACAAEModel.Sede" Width="1.5" PointX="1.5" PointY="41.125" />
+        <EntityTypeShape EntityType="SACAAEModel.Usuario" Width="1.5" PointX="5.75" PointY="0.75" />
+        <AssociationConnector Association="SACAAEModel.FK_Ajustes_Periodo" />
+        <AssociationConnector Association="SACAAEModel.FK_Aulas_Sedes" />
+        <AssociationConnector Association="SACAAEModel.FK_BloqueAcademicoXPlanDeEstudio_BloqueAcademico" />
+        <AssociationConnector Association="SACAAEModel.FK_BloqueAcademicoXPlanDeEstudio_PlanesDeEstudio" />
+        <AssociationConnector Association="SACAAEModel.FK_BloqueXPlanXCurso_BloqueAcademicoXPlanDeEstudio" />
+        <AssociationConnector Association="SACAAEModel.FK_BloqueXPlanXCurso_Cursos" />
+        <AssociationConnector Association="SACAAEModel.FK_Grupo_BloqueXPlanXCurso" />
+        <AssociationConnector Association="SACAAEModel.FK_Comisiones_Estado_Estado_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_ComisionesXProfesor_Comision_Comisiones_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_ComisionesXProfesor_Horario_Horario_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_ComisionesXProfesor_Periodo_Periodos_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_Detalle_Curso_Horario_Horario_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_Detalle_Curso_Profesor_ProfesoresXCurso_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_Dia_Horario_Horario_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_Proyectos_Estado_Estado_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_Grupo_Periodo_Periodos_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_Grupo_PlanDeEstudio_PlanesDeEstudioXSede_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_ProyectosXProfesor_Horario_Horario_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_PlanesDeEstudio_Modalidad_Modalidades_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_ProyectosXProfesor_Periodo_Periodos_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_PlanesDeEstudioXSede_PlanDeEstudio_PlanesDeEstudio_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_PlanesDeEstudioXSede_Sede_Sedes_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_ProyectosXProfesor_Proyecto_Proyectos_ID" />
+        <EntityTypeShape EntityType="SACAAEModel.Plaza" Width="1.5" PointX="4.5" PointY="20.25" />
+        <EntityTypeShape EntityType="SACAAEModel.PlazaXProfesor" Width="1.5" PointX="6.75" PointY="17.375" />
+        <AssociationConnector Association="SACAAEModel.FK_PlazaXProfesor_Plazas" />
+        <EntityTypeShape EntityType="SACAAEModel.Profesore" Width="1.5" PointX="3.75" PointY="29.875" />
+        <AssociationConnector Association="SACAAEModel.FK_ComisionesXProfesor_Profesor_Profesores_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_Profesores_Estado_Estado_Id" />
+        <AssociationConnector Association="SACAAEModel.FK_PlazaXProfesor_Profesores" />
+        <AssociationConnector Association="SACAAEModel.FK_ProfesoresXCurso_Profesor_Profesores_ID" />
+        <AssociationConnector Association="SACAAEModel.FK_ProyectosXProfesor_Profesor_Profesores_ID" />
+        <EntityTypeShape EntityType="SACAAEModel.PlazasAsignada" Width="1.5" PointX="5.375" PointY="3.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

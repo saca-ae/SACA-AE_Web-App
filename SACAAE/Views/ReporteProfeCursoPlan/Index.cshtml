@@ -1,0 +1,173 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="/Scripts/jquery.battatech.excelexport.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            /* Deshabilitar componentes que no tienen datos cargados */
+            $("#sltPlan").prop("disabled", "disabled");
+            /* Funcion llamada cuando se cambien los valores de las sedes o las modalidades */
+            $("#sltModalidad, #sltSede").change(function () {
+
+                var route = "/Plans/Planes/List/" + $('select[name="sltSede"]').val() + "/" + $('select[name="sltModalidad"]').val();
+                $.getJSON(route, function (data) {
+                    var items = "";
+                    $.each(data, function (i, plan) {
+                        items += "<option value= " + plan.ID + ">" + plan.Nombre + "</option>";
+                    });
+
+                    if (items != "") {
+                        $("#sltPlan").prop("disabled", false);
+                        $("#sltPlan").html(items);
+                        $("#sltPlan").prepend("<option value='' selected='selected'>-- Seleccionar Plan de Estudio --</option>");
+                    }
+                });
+            });
+
+            $("#sltPlan").change(function () {
+
+                var route = "/ObtenerInfoReporteCursos/List/" + $('select[name="sltPlan"]').val() + "/" + $('select[name="sltPeriodo"]').val();
+                //alert(route);
+
+                $.getJSON(route, function (data) {
+                    var items = "<tr><th>Codigo</th><th>Nombre</th><th>Grupo</th><th>Curso Externo</th><th>Horario</th><th>Aula</th><th>Cupo</th><th>Profesor</th><th>Creditos</th></tr>";
+                    $.each(data, function (i, info) {
+                        var route2 = "/CursoProfesor/Horarios/Info/" + info.ID;
+                        var horarioItems = "";
+                        $.getJSON(route2, function (datos) {
+                            for (var k = 0; k < datos.length; k++) {
+                                horarioItems += datos[k]["Dia1"] + " " + datos[k]["Hora_Inicio"] + " - " + datos[k]["Hora_Fin"] + "<br/>";
+
+                            }
+                            var valorExterno = "No";
+                            var Creditos = info.Creditos;
+                            if (info.Creditos == null)
+                                Creditos=0;
+                            if (info.Externo)
+                                valorExterno = "Si";
+                            items += "<tr><td>" + info.Codigo + "</td><td>" + info.Nombre + "</td><td>" + info.Numero + "</td><td>" + valorExterno + "</td><td>" + horarioItems + "</td><td>" + info.Aula + "</td><td>" + info.Cupo + "</td><td>" + info.profe + "</td><td>" + info.Creditos + "</td></tr>";
+
+
+                            if (items != "") {
+                                $("#datosReporte").html(items);
+                            }
+
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+
+    <h2>Seleccionar Plan de Estudio</h2>
+        @if (TempData.ContainsKey("MessageError"))
+        {
+            <p class="text-danger">@TempData["MessageError"].ToString()</p>
+        }
+        @if (TempData.ContainsKey("MessageSuccess"))
+        {
+            <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+        }
+            @using (Html.BeginForm())
+{
+     <div class="row-fluid">
+    <div class="col-lg-5">
+        <div class="span12">
+            <label>
+                    Período
+                </label>
+                <select id="sltPeriodo" name="sltPeriodo" class="form-control">
+                    @if (ViewBag.Periodos != null)
+                    {
+                        <option value=" " selected="selected">-- Seleccionar Periodo --</option>
+                        foreach (var item in ViewBag.Periodos)
+                        {
+                            <option value="@item.ID">@item.Nombre</option>
+                        }
+                    }
+                    else
+                    {
+                        <option selected="selected">No hay Periodos</option>
+                    }
+
+                </select>
+         <label>
+                    Sede
+                </label>
+                    <select id="sltSede" name="sltSede" class="form-control">
+                        @if (ViewBag.Sedes != null)
+                        {
+                            <option value=" " selected="selected">-- Seleccionar Sede --</option>
+                            foreach (var item in ViewBag.Sedes)
+                            {         
+                            <option value="@item.ID">@item.Nombre</option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected="selected">No hay sedes</option>
+                        }
+
+                    </select>
+                    @if (ViewBag.Sedes == null)
+                    {                    
+                        @Html.ActionLink("Agregar Sede", "Crear", "Sede")
+                    }       
+            
+                <label>
+                    Modalidad
+                </label>
+                    <select id="sltModalidad" name="sltModalidad" class="form-control">
+                        @if (ViewBag.Modalidades != null)
+                        {
+                            <option value=" " selected="selected">-- Seleccionar Modalidad --</option>
+                            foreach (var item in ViewBag.Modalidades)
+                            {         
+                            <option value="@item.ID">@item.Nombre</option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected="selected">No hay modalidades</option>
+                        }
+
+                    </select>
+                    @if (ViewBag.Modalidades == null)
+                    {                    
+                        @Html.ActionLink("Agregar Modalidad", "Crear", "Modalidad")
+                    }
+            <label>
+                    Plan
+                </label>
+                <select id="sltPlan" name="sltPlan" class="form-control"></select>
+            <br />
+    <br />
+<div class="row">
+    <div class="span12">
+        <div id="dvData">
+        <table id="datosReporte" class="table">
+        </table>
+            </div>
+    </div>
+    <button id="btnExport" >Export</button>
+</div>
+            </div>
+    </div>
+    </div>     
+
+
+    }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnExport").click(function (e) {
+            window.open('data:application/vnd.ms-excel;charset=utf-8,' + escape($('#dvData').html()));
+            e.preventDefault();
+        });
+    });
+</script>

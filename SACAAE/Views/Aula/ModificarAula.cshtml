@@ -1,0 +1,85 @@
+﻿@model SACAAE.Models.Aula
+
+@{
+    ViewBag.Title = "Modificar Aula";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+@section Scripts {
+
+    <script src="@Url.Content("~/Scripts/ajaxCrear.js")"></script>
+    <script src="@Url.Content("~/Scripts/validaciones.js")"></script> <!--de necesitar revisar los select en cascada, la funcionalidad se encuentra-->
+    <!-- en el archivo referenciado. Carpeta Scripts-->
+}
+
+<div class="col-lg-4">
+    <h2>ModificarAula</h2>
+    @if (TempData.ContainsKey("MessageError"))
+    {
+        <p class="text-danger">@TempData["MessageError"].ToString()</p>
+    }
+    @if (TempData.ContainsKey("MessageSuccess"))
+    {
+        <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+    }
+    <hr />
+    <div class="span12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
+            <div class="editor-label">
+                <label>Código</label>
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Codigo, new
+               {
+                   @class = "form-control",
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Codigo)
+            </div>
+
+            <div class="editor-label">
+                <label>Capacidad</label>
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Espacio, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Espacio, "", new { @class = "text-danger" })
+            </div>
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Activa)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Activa)
+                @Html.ValidationMessageFor(model => model.Activa, "", new { @class = "text-danger" })
+            </div>
+            <div class="editor-label">
+                <label>Sede</label>
+            </div>
+            <div class="editor-field">
+                <select id="sltSede" name="selectSede">
+            @if (ViewBag.Sedes != null)
+                        {
+                            <option value=" " selected="selected">-- Seleccionar Sede --</option>
+                            foreach (var item in ViewBag.Sedes)
+                            {         
+                            <option value="@item.ID">@item.Nombre</option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected="selected">No hay sedes</option>
+                        }
+        </select>
+            </div>
+            <br />
+            <p>
+                <input type="submit" onclick="return Validar()" value="Guardar" class="btn" />
+                | @Html.ActionLink("Regresar", "Index")
+            </p>
+
+        }
+    </div>
+</div>

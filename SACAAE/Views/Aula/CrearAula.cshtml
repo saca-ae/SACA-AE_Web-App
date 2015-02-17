@@ -1,0 +1,69 @@
+﻿@model SACAAE.Models.Aula
+
+@{
+    ViewBag.Title = "CrearAula";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+@section Scripts {
+
+    <script src="@Url.Content("~/Scripts/ajaxCrear.js")"></script>
+    <script src="@Url.Content("~/Scripts/validaciones.js")"></script> <!--de necesitar revisar los select en cascada, la funcionalidad se encuentra-->
+    <!-- en el archivo referenciado. Carpeta Scripts-->
+}
+
+<div class="col-lg-4">
+    <h2>Crear Aula</h2>
+
+    @if (TempData.ContainsKey("MessageError"))
+    {
+        <p class="text-danger">@TempData["MessageError"].ToString()</p>
+    }
+    @if (TempData.ContainsKey("MessageSuccess"))
+    {
+        <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+    }
+
+
+    <label>Código del Aula</label>
+    <br />
+    @using (Html.BeginForm())
+    {
+
+
+        @Html.TextBoxFor(model => model.Codigo, new
+               {
+                   @class = "form-control",
+                   @placeholder = "Código del Aula",
+                   @required = "true"
+               })
+        @Html.ValidationMessageFor(model => model.Codigo)
+
+        <label>Sede</label>
+        <br />
+        <select id="sltSede" name="selectSede">
+            @if (ViewBag.Sedes != null)
+                        {
+                            <option value=" " selected="selected">-- Seleccionar Sede --</option>
+                            foreach (var item in ViewBag.Sedes)
+                            {         
+                            <option value="@item.ID">@item.Nombre</option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected="selected">No hay sedes</option>
+                        }
+        </select>
+        <br />
+        <label>Capacidad</label>
+        <br />
+        <div class="editor-field">
+        <input name="capacidad" id="capacidad" type="number" min="1" value="1" />
+        </div> <br />
+    <p>
+        <input type="submit" onclick="return Validar()" value="Crear" class="btn" />
+        |@Html.ActionLink("Regresar", "Index")
+    </p>
+    }
+</div>

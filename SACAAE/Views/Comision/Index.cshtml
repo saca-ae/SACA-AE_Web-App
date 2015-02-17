@@ -1,0 +1,57 @@
+﻿@model IEnumerable<SACAAE.Models.Comisione>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="row">
+    <h2>Lista de Comisiones</h2>
+    <div class="span12">
+        @if (TempData.ContainsKey("Message"))
+        {
+            <p class="text-success">@TempData["Message"].ToString()</p>
+        }
+        <p>
+            @Html.ActionLink("Crear Comisión", "Crear")
+        </p>
+    </div>
+    <div class="span12">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Inicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fin)
+                </th>
+                <th>Acciones</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @item.Inicio.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @item.Fin.ToString("dd/MM/yyyy")
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", new { id = item.ID }) |
+            @Html.ActionLink("Detalles", "Detalles", new { id = item.ID }) |
+            @Html.ActionLink("Eliminar", "Eliminar", new { id = item.ID }) |
+                        @Html.ActionLink("Asignar Profesores", "Asignar", "ComisionProfesor")
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

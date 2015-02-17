@@ -1,0 +1,72 @@
+﻿@model SACAAE.Models.Proyecto
+
+@{
+    ViewBag.Title = "Crear Proyecto";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Crear Proyecto</h2>
+    <hr />
+    <div class="span12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Nombre)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Nombre, new
+               {
+                   @class = "form-control",
+                   @placeholder = "Nombre del Proyecto",
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Nombre)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Inicio)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Inicio, new { @type="date", @class = "form-control", placeholder = "Fecha de Inicio" })
+                @Html.ValidationMessageFor(model => model.Inicio)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Fin)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Fin, new { @type="date", @class = "form-control", placeholder = "Fecha de Fin" })
+                @Html.ValidationMessageFor(model => model.Fin)
+            </div>
+            
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Link)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Link, new { @class = "form-control", placeholder = "Enlace del proyecto" })
+                @Html.ValidationMessageFor(model => model.Link)
+            </div>
+
+            <br />
+            <input type="submit" class="btn btn-lg btn-primary btn-block" value="Crear Proyecto" />
+
+           
+        }
+
+        <div>
+            @Html.ActionLink("Regresar", "Index")
+        </div>
+        <br />
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

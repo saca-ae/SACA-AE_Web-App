@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SACAAE.Models.Profesore>
+
+@{
+    ViewBag.Title = "Profesores";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="row">
+    <h2>Lista de Profesores</h2>
+    <div class="span12">
+        @if (TempData.ContainsKey("Message"))
+        {
+            <p class="text-success">@TempData["Message"].ToString()</p>
+        }
+        <p>
+            @Html.ActionLink("Agregar Nuevo", "Crear")
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th>
+                    Plaza
+                </th>
+                <th>
+                    Horas Asignadas
+                </th>
+                 <th>
+                    @Html.DisplayNameFor(model => model.Link)
+                </th>
+                <th>Acciones</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @for (int i = 0; i < item.PlazaXProfesors.Count(); i++)
+                        {
+                        @Html.DisplayFor(modelItem => item.PlazaXProfesors.ElementAt(i).Plaza1.Codigo_Plaza)
+                        <br />
+                        }
+                    </td>
+                    <td>
+                        @for (int i = 0; i < item.PlazaXProfesors.Count(); i++)
+                        {
+                        @Html.DisplayFor(modelItem => item.PlazaXProfesors.ElementAt(i).Horas_Asignadas)
+                        <br />
+                        }
+                    </td>
+
+                    <td>
+                        @if (item.Link == null)
+                        {
+                            @("No hay enlace disponible");
+                        }
+                        else
+                        {
+                            /*@Html.DisplayFor(modelItem => item.Link)*/
+                            <a href="@item.Link">Curriculum @item.Nombre</a>
+                        }
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", new { id = item.ID }) |
+            @Html.ActionLink("Detalles", "Detalles", new { id = item.ID }) |
+            @Html.ActionLink("Borrar", "Eliminar", new { id = item.ID }) |
+                        @Html.ActionLink("Asignar a comisión", "Asignar", "ComisionProfesor") |
+                        @Html.ActionLink("Asignar a proyecto", "Asignar", "ProfesoresProyectos") |
+                        @Html.ActionLink("Asignar a curso", "Asignar", "CursoProfesor")
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+
+</div>
+

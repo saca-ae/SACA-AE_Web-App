@@ -1,0 +1,50 @@
+﻿@model SACAAE.Models.Aula
+
+@{
+    ViewBag.Title = "Eliminar Aula";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Borrar Informaci&oacute;n de Aula</h2>
+    <hr />
+    <div class="span12">
+        <h4><span class="label label-warning">¿Est&aacute; seguro de que desea eliminar la informaci&oacute;n de esta aula?</span></h4>
+        <br />
+        <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Codigo)
+                @Html.DisplayFor(model => model.Codigo)
+            </span>
+        </h4>
+
+        <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Espacio)
+                @Html.DisplayFor(model => model.Espacio)
+            </span>
+        </h4>
+        <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Activa)
+                @Html.DisplayFor(model => model.Activa)
+            </span>
+        </h4>
+        <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Sede.Nombre)
+                @Html.DisplayFor(model => model.Sede.Nombre)
+            </span>
+        </h4>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                <input type="submit" value="Borrar" class="btn" />
+                |@Html.ActionLink("Regresar", "Index")
+            </p>
+        }
+    </div>
+</div>
+

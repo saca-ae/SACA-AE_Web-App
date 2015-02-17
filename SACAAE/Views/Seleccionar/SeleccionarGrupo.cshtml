@@ -1,0 +1,110 @@
+﻿@{
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+@section Scripts {
+
+
+    <script type="text/javascript">
+        $(function () {
+            $.getJSON("/Seleccionar/Cursos/List/" + $('#PlanesDeEstudio :selected').text() + "|" + $('#Bloque').val() + "|" + $('#Sedes :selected').text() + "|" + $('#Modalidades :selected').text(), function (data) {
+
+                var items = "";
+                $.each(data, function (i, curso) {
+                    items += "<option value='" + curso.Value + "'>" + curso.Text + "</option>";
+                });
+                $("#cursosPlan").html(items);
+            });
+            $("#PlanesDeEstudio").change(function () {
+                $.getJSON("/Seleccionar/Cursos/List/" + $('#PlanesDeEstudio :selected').text() + "|" + $('#Bloque').val() + "|" + $('#Sedes :selected').text() + "|" + $('#Modalidades :selected').text(), function (data) {
+                    
+                    var items = "";
+                    $.each(data, function (i, curso) {
+                        items += "<option value='" + curso.Value + "'>" + curso.Text + "</option>";
+                    });
+                    $("#cursosPlan").html(items);
+                });
+            });
+            $("#Bloque").change(function () {
+                $.getJSON("/Seleccionar/Cursos/List/" + $('#PlanesDeEstudio :selected').text() + "|" + $('#Bloque').val() + "|" + $('#Sedes :selected').text() + "|" + $('#Modalidades :selected').text(), function (data) {
+
+                    var items = "";
+                    $.each(data, function (i, curso) {
+                        items += "<option value='" + curso.Value + "'>" + curso.Text + "</option>";
+                    });
+                    $("#cursosPlan").html(items);
+                });
+            });
+            $("#Modalidades").change(function () {
+                $.getJSON("/Seleccionar/Cursos/List/" + $('#PlanesDeEstudio :selected').text() + "|" + $('#Bloque').val() + "|" + $('#Sedes :selected').text() + "|" + $('#Modalidades :selected').text(), function (data) {
+
+                    var items = "";
+                    $.each(data, function (i, curso) {
+                        items += "<option value='" + curso.Value + "'>" + curso.Text + "</option>";
+                    });
+                    $("#cursosPlan").html(items);
+                });
+            });
+            $("#Sedes").change(function () {
+                $.getJSON("/Seleccionar/Cursos/List/" + $('#PlanesDeEstudio :selected').text() + "|" + $('#Bloque').val() + "|" + $('#Sedes :selected').text() + "|" + $('#Modalidades :selected').text(), function (data) {
+
+                    var items = "";
+                    $.each(data, function (i, curso) {
+                        items += "<option value='" + curso.Value + "'>" + curso.Text + "</option>";
+                    });
+                    $("#cursosPlan").html(items);
+                });
+            });
+        });
+
+
+        function setCookie(cname, cvalue, exdays) {
+
+            document.cookie = cname + "=" + cvalue + ";path=/";
+        }
+
+        function Enviar() {
+            setCookie("SelGrupo", $('#cursosPlan :selected').text(), 1);
+            setCookie("SelIdGrupo", $('#cursosPlan :selected').val(), 1);
+            setCookie("SelPlanDeEstudio", $('#PlanesDeEstudio :selected').text(), 1);
+            setCookie("SelModalidad", $('#Modalidades :selected').val(), 1);
+            setCookie("SelBloque", $('#Bloque').val(), 1);
+            setCookie("SelSede", $('#Sedes :selected').val(), 1);
+        }
+    </script>
+}
+
+
+<div class="col-lg-4">
+
+    <br />
+    <br />
+    <h2>Seleccionar Grupo</h2>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        <label>Planes de Estudio</label> <br />
+        @Html.DropDownList("PlanesDeEstudio", new SelectList(ViewBag.PlanesDeEstudio), new { @id = "PlanesDeEstudio" })
+        <br />
+         <br />
+        <label>Sedes</label> <br />
+         @Html.DropDownList("Sedes", new SelectList(ViewBag.Sedes), new { @id = "Sedes" })
+        <br />
+        <br />
+        <label>Bloque</label> <br />
+        <INPUT id="Bloque" name ="Bloque" TYPE="text"  VALUE="1">
+        <br />
+        <br />
+        <label>Modalidad</label> <br />
+        @Html.DropDownList("Modalidades", new SelectList(ViewBag.Modalidades), new { @id = "Modalidades" })
+        <br />
+        <br />
+        <label>Grupos</label><br />
+        <select id="cursosPlan" name="cursosPlan"></select><br />
+        <br />
+    }
+    <form action="/Seleccionar/Enviar" method="post" novalidate="novalidate">
+            <input type="submit" onclick="Enviar()" value="Seleccionar" class="btn btn-lg btn-primary btn-block" /> 
+        </form>
+
+</div>

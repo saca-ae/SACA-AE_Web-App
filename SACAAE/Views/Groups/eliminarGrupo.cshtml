@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "eliminarGrupo";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+@section Scripts {
+
+    <script src="@Url.Content("~/Scripts/eliminarAjax.js")"></script> <!--de necesitar revisar los select en cascada, la funcionalidad se encuentra-->
+                                                                           <!-- en el archivo referenciado. Carpeta Scripts-->
+
+    
+}
+
+<div class="col-lg-4">
+    <h2>Eliminar Grupo</h2>
+
+
+    @if (TempData.ContainsKey("MessageError"))
+    {
+        <p class="text-danger">@TempData["MessageError"].ToString()</p>
+    }
+    @if (TempData.ContainsKey("MessageSuccess"))
+    {
+        <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+    }
+ 
+
+    @using (Html.BeginForm())
+    {
+        <label>Sede</label>
+        <br />
+        <select id="selectSede" name="selectSede"></select>
+        <br />
+        <label>Modalidad</label>
+        <br />
+        <select id="selectModalidad" name="selectModalidad"></select>
+        <br />
+        <label>Plan de Estudio</label>
+        <br />
+        <select id="selectPlan" name="selectPlan"></select>
+        <br />
+        <label>Bloque</label>
+        <br />
+        <select id="selectBloque" name="selectBloque"></select>
+        <br /> 
+        <label>Grupo</label>
+        <br />
+        <select id="selectGrupo" name="selectGrupo"></select>
+        <br />
+        <br />
+        
+         <input type="submit" value="Eliminar" />
+      }
+         <button onclick="grupoAjax()">Traer Grupos</button>
+</div>
+
+

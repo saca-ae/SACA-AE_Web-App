@@ -1,0 +1,86 @@
+﻿@model IEnumerable<SACAAE.Models.Plaza>
+
+@{
+    ViewBag.Title = "Plazas";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="row">
+    <h2>Lista de Plazas</h2>
+    <div class="span12">
+        @if (TempData.ContainsKey("Message"))
+        {
+            <p class="text-success">@TempData["Message"].ToString()</p>
+        }
+        <p>
+            @Html.ActionLink("Agregar Nuevo", "Crear")  | @Html.ActionLink("Asignar", "Asignar") | @Html.ActionLink("Liberar Horas", "Liberar") | @Html.ActionLink("Nombrar Plaza", "Nombrar") | @Html.ActionLink("Quitar Nombramiento Plaza", "QuitarNombramiento")
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <table id="myTable" class="table">
+            <thead>
+            <tr>
+                <th>
+                    Codigo
+                </th>
+                <th>
+                    Tipo de Plaza
+                </th>
+                <th>
+                    Tipo según tiempo
+                </th>
+                <th>
+                    Horas Totales
+                </th>
+                <th>
+                    Tiempo de vigencia
+                </th>
+                <th>Acciones</th>
+            </tr>
+                </thead>
+    <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Codigo_Plaza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tipo_de_plaza)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tipo_segun_tiempo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Horas_Totales)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tiempo_de_vigencia)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", new { id = item.ID }) |
+                        @Html.ActionLink("Detalles", "Detalles", new { id = item.ID }) |
+                        @Html.ActionLink("Borrar", "Eliminar", new { id = item.ID })                       
+                    </td>
+                </tr>
+            }
+        </tbody> 
+        </table>
+    </div>
+
+</div>
+
+    @section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#myTable").tablesorter();
+        }
+);
+    </script>
+<script type="text/javascript" src="../Scripts/jquery.tablesorter.js"></script>
+    
+    
+      }

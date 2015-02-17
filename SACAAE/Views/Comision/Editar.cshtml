@@ -1,0 +1,68 @@
+﻿@model SACAAE.Models.Comisione
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Editar Comisi&oacute;n</h2>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nombre)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Nombre, new
+               {
+                   @class = "form-control",                   
+                   @required = "true"
+               })
+            @Html.ValidationMessageFor(model => model.Nombre)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Inicio)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Inicio, new
+               {
+                   @class = "form-control",                   
+                   @required = "true"
+               })
+            @Html.ValidationMessageFor(model => model.Inicio)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Fin)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Fin, new
+               {
+                   @class = "form-control",                   
+                   @required = "true"
+               })
+            @Html.ValidationMessageFor(model => model.Fin)
+        </div>
+        <br />
+        <p>
+            <input type="submit" value="Guardar" class="btn" />
+            | @Html.ActionLink("Regresar", "Index")
+        </p>
+    }
+
+    <div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

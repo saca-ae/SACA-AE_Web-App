@@ -1,0 +1,47 @@
+﻿@model SACAAE.Models.Periodo
+
+
+@{
+    ViewBag.Title = "Agregar Periodo";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Agregar Periodo</h2>
+    <div class="span12">
+        @if (TempData.ContainsKey("MessageError"))
+        {
+            <p class="text-danger">@TempData["MessageError"].ToString()</p>
+        }
+        @if (TempData.ContainsKey("MessageSuccess"))
+        {
+            <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+             <div class="editor-label">
+                @Html.LabelFor(model => model.Nombre)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Nombre, new
+               {
+                   @class = "form-control",
+                   @placeholder = "Nombre del Perdiodo",
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Nombre)
+            </div>
+            <br />
+            <p>
+                <input type="submit" value="Crear" class="btn" />
+            </p>
+        }
+
+    </div>
+
+</div>
+
+

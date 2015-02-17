@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "Horarios";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<style type="text/css">
+
+   div.col-lg-8 table{border-collapse:collapse;
+                      width:100%;
+                      table-layout:fixed;
+
+   }
+   div.col-lg-8 tr {border: none;}
+   div.col-lg-8 td{border-right: solid 1px #000;
+                   border-left: solid 1px #000;  
+                   text-align: center; 
+   }
+    .encabezado,.Horas {border-bottom:solid 1px #000;
+                 border-top:solid 1px #000;
+    }
+
+    .ComboCursosSeleccionados {
+        width: 25%;
+    }
+    .guia {
+        width:0px;
+        border-right:none;
+    }
+    
+    .mitabla{
+    font-size:x-small;
+    color:#000;
+    }
+    .encabezado {
+        font-size:medium;
+    }
+</Style>
+
+@section Scripts {
+    <script src="@Url.Content("~/Scripts/horario.js")"></script>
+
+}
+
+<body onload="Load()">
+<div class="col-lg-4">
+    <h2>Gestionar Horarios</h2>
+    <hr />
+        <div class="span12">
+            @if (TempData.ContainsKey("Message"))
+        {
+            <p class="text-success">@TempData["Message"].ToString()</p>
+        }
+            <label>
+                    Bloque
+                </label>
+                    <select id="sltBloque" name="sltBloque" class="form-control">
+                        @if (ViewBag.Bloques != null)
+                        {
+                            <option value=" " selected="selected">-- Seleccionar Bloque --</option>
+                            foreach (var item in ViewBag.Bloques)
+                            {         
+                            <option value="@item.ID">@item.Descripcion</option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected="selected">No hay Bloques</option>
+                        }
+
+                    </select>
+            <div class="editor-label">
+            <label>
+                    Curso
+                </label>
+            </div>             
+            <select id="sltCurso" name="sltCurso" class="form-control"></select>
+            <label>
+                    Grupo
+                </label>
+            <select id="sltGrupo" name="sltGrupo" class="form-control"></select>
+    <label>
+                    Aula
+                </label>
+            <select id="sltAula" name="sltAula" class="form-control">
+                        @if (ViewBag.Aulas != null)
+                        {
+                            <option value=" " selected="selected">-- Seleccionar Aula --</option>
+                            foreach (var item in ViewBag.Aulas)
+                            {         
+                            <option value="@item.ID">@item.Codigo</option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected="selected">No hay Aulas</option>
+                        }
+
+                    </select>
+            <div class="editor-label">
+            Dia
+            </div>
+            <div class="editor-field">
+            @Html.DropDownList("ComboDia", new SelectList(ViewBag.Dias),new {@id="ComboDia"})
+            </div>
+            <div class="editor-label">
+            Hora Inicio
+            </div>
+            @Html.DropDownList("ComboHoraInicio", new SelectList(ViewBag.Horas),new {@id="ComboHoraInicio"})
+            @Html.DropDownList("ComboMinutoInicio", new SelectList(ViewBag.Minutos),new {@id="ComboMinutoInicio"})
+            <div class="editor-field">
+            </div>
+            <div class="editor-label">
+            Hora Fin
+            </div>
+            <div class="editor-field">
+            @Html.DropDownList("ComboHoraFin", new SelectList(ViewBag.Horas),new {@id="ComboHoraFin"})
+            @Html.DropDownList("ComboMinutoFin", new SelectList(ViewBag.Minutos),new {@id="ComboMinutoFin"})
+            </div>            
+            <br />
+            <p>
+            <button class="btn" onclick="AgregarCurso()">Agregar Curso</button>
+            <button class="btn" onclick="EliminarCurso()">Eliminar Curso</button>
+            </p>
+
+            <form action="/Horarios/GuardarCambios" method="post" novalidate="novalidate">
+            <input type="submit" onclick="ActualizarContadores()" value="GuardarCambios" class="btn btn-lg btn-primary btn-block" /> 
+            </form>
+    </div>
+</div>
+
+<div class="col-lg-8">
+        <div class="span12">
+        <table class="mitabla" id="Resultado">
+                  <tr>
+                    <td class="encabezado" id="vacio"></td>
+                    <td class="encabezado" id="Lunes">Lunes</td>
+                    <td class="encabezado" id="Martes">Martes</td>
+                    <td class="encabezado" id="Miercoles">Miercoles</td>
+                    <td class="encabezado" id="Jueves">Jueves</td>
+                    <td class="encabezado" id="Viernes">Viernes</td>
+                    <td class="encabezado" id="Sabado">Sabado</td>
+                    <td class="encabezado" id="Domingo">Domingo</td>
+                    <td class ="Guia" id="Guia"></td>
+                  </tr>
+
+                  @for (int hr = 0; hr<24; hr++ )
+                   {
+                      for (int min = 0; min<60; min=min+10 )
+                      {
+                          String Hora;
+                          
+                            if (min < 10)
+                            {
+                                Hora = hr.ToString() +"0"+ min.ToString();
+                            }
+                            else{
+                                Hora = hr.ToString() + min.ToString();
+                            }
+                            String Lateral = Hora.Substring(0, Hora.Length - 2) + ":" + Hora.Substring(Hora.Length - 2, 2);
+                            
+                      <tr> 
+                         @if(min==0){<td class="encabezado" id="@Hora" rowspan="6" class="Horas"> @Lateral</td>}
+                        <td id="Lunes @Hora"></td>
+                        <td id="Martes @Hora"></td>
+                        <td id="Miercoles @Hora"></td>
+                        <td id="Jueves @Hora"></td>
+                        <td id="Viernes @Hora"></td>
+                        <td id="Sabado @Hora"></td>
+                        <td id="Domingo @Hora"></td>
+                        <td class="Guia" id="Guia @Hora"></td>
+                      </tr>
+                      
+                      }
+                  }
+
+                </table>
+    </div>
+</div>
+
+</body>

@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SACAAE.Models.Curso>
+
+
+
+@{
+    ViewBag.Title = "Cursos";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+<link rel="stylesheet" href="../Content/themes/blue/style.css" type="text/css" media="print, projection, screen">
+ 
+  
+<body>
+<h2>Cursos</h2>
+@if (TempData.ContainsKey("MessageError"))
+{
+    <p class="text-danger">@TempData["MessageError"].ToString()</p>
+}
+@if (TempData.ContainsKey("MessageSuccess"))
+{
+    <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+}
+
+<p>
+    @Html.ActionLink("Crear Nuevo Curso", "CrearCurso")
+</p>
+<table id="myTable" class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HorasTeoricas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bloque)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Externo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HorasPracticas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Creditos)
+        </th>
+        <th></th>
+        <th></th>
+    </tr>
+        </thead>
+    <tbody> 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Codigo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorasTeoricas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bloque)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Externo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorasPracticas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creditos)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "ModificarCurso", new { id = item.ID })
+            </td>
+            <td>
+                @Html.ActionLink("Eliminar", "EliminarCurso", new { id = item.ID })
+            </td>
+        </tr>
+    }
+</tbody> 
+</table>
+
+    </body>
+
+    @section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#myTable").tablesorter();
+        }
+);
+    </script>
+<script type="text/javascript" src="../Scripts/jquery.tablesorter.js"></script>
+    
+    
+      } 

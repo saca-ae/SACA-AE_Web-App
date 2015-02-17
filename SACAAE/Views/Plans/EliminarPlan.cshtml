@@ -1,0 +1,38 @@
+﻿@model SACAAE.Models.PlanesDeEstudio
+
+@{
+    ViewBag.Title = "Eliminar Plan";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Borrar Informaci&oacute;n de Plan</h2>
+    <hr />
+    <div class="span12">
+        <h4><span class="label label-warning">¿Est&aacute; seguro de que desea eliminar la informaci&oacute;n de este Plan?</span></h4>
+        <br />
+        <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Nombre) :             
+                @Html.DisplayFor(model => model.Nombre)
+            </span>
+        </h4>
+         <div class="editor-label">
+                
+            </div>
+            <div class="editor-field">
+                
+            </div>
+
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                <input type="submit" value="Borrar" class="btn" />
+                |@Html.ActionLink("Regresar", "Index")
+            </p>
+        }
+    </div>
+</div>
+

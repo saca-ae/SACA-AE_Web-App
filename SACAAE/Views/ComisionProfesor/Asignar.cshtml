@@ -1,0 +1,131 @@
+﻿@model SACAAE.Models.ComisionesXProfesor
+
+@{
+    ViewBag.Title = "Asignar";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<h2>Asignar Profesor a Comisi&oacute;n</h2>
+<hr />
+<div class="col-lg-4">
+    <div class="span12">
+        @if (TempData.ContainsKey("Message"))
+        {
+            <p class="text-success">@TempData["Message"].ToString()</p>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+    
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Profesor)
+            </div>
+            <div class="editor-field">
+                <select id="sltProfesor" name="profesor" class="form-control">
+                    @if (ViewBag.Profesores != null)
+                    {
+                        foreach (var item in ViewBag.Profesores)
+                        {         
+                            <option>@item.Nombre</option>
+                        } 
+                    }
+                    else
+                    {
+                        <option selected="selected">No hay profesores</option>
+                    }
+
+                </select>
+                @if (ViewBag.Profesores == null)
+                {
+                    
+                    @Html.ActionLink("Crear Profesor", "Crear", "Profesor")
+                }
+            </div>
+            <br />
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Comision)
+            </div>
+            <div class="editor-field" style="display:inline">
+                <select id="sltComision" name="comision" class="form-control">
+                    @if (ViewBag.Comisiones != null)
+                    {
+                        foreach (var item in ViewBag.Comisiones)
+                        {         
+                            <option>@item.Nombre</option>
+                        } 
+                    }
+                    else
+                    {
+                        <option selected="selected">No hay comisiones</option>
+                    }
+                </select>  
+                @if (ViewBag.Comisiones == null)
+                {
+                    
+                    @Html.ActionLink("Crear Comision", "Crear", "Comision")
+                }
+
+               
+            </div>
+            <br />
+            <div class="editor-label">
+                @Html.Label("Día")
+            </div>
+            <div class="editor-field">
+                <select id="sltDia" class="form-control" name="dia">
+                    <option>Lunes</option>
+                    <option>Martes</option>
+                    <option>Mi&eacute;rcoles</option>
+                    <option>Jueves</option>
+                    <option>Viernes</option>
+                    <option>S&aacute;bado</option>
+                </select>
+            </div>
+            
+            <br />
+            <div class="editor-label">
+                @Html.Label("Hora Inicio")
+            </div>
+            <div class="editor-field">
+                @Html.TextBox("HoraInicio", null, new { type="number", @class = "form-control", @required = "true", @placeholder = "12:00" })
+                @Html.ValidationMessageFor(model => model.Horario1.Dias.ElementAt(0).Hora_Inicio)
+            </div>
+            <br />
+            <div class="editor-label">
+                @Html.Label("Hora Fin")
+            </div>
+            <div class="editor-field">
+                @Html.TextBox("HoraFin", null, new { type="number",@class = "form-control", @required = "true", @placeholder = "12:00" })
+
+            </div>
+            <br />
+            <p>
+                @if (ViewBag.Profesores == null || ViewBag.Comisiones == null)
+                {                    
+                    <input type="submit" value="Asignar" class="btn" disabled="disabled" />
+                }
+                else
+                {
+                    <input type="submit" value="Asignar" class="btn" />
+                }
+                | 
+                @if(ViewBag.returnUrl != null)
+                {
+                    <a href="@ViewBag.returnUrl">Cancelar</a>    
+                }
+                else
+                {
+                    @Html.ActionLink("Cancelar", "Index", "Proyecto");    
+                }
+                
+            </p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+
+}

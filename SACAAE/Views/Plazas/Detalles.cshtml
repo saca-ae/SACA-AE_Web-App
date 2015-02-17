@@ -1,0 +1,61 @@
+﻿@model SACAAE.Models.Plaza
+
+@{
+    ViewBag.Title = "Detalles de la Plaza";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Detalles de la Plaza</h2>
+    <hr />
+
+    <div class="span4">
+
+
+        <h4>
+            <span class="label label-info">
+                Codigo Plaza:
+
+                @Html.DisplayFor(model => model.Codigo_Plaza)
+            </span>
+        </h4>
+
+        <h4>
+            <span class="label label-info">
+                Tipo de plaza:
+
+                @Html.DisplayFor(model => model.Tipo_de_plaza)
+            </span>
+        </h4>
+
+        <h4>
+            <span class="label label-info">
+                Tipo segun tiempo:
+
+                @Html.DisplayFor(model => model.Tipo_segun_tiempo)
+            </span>
+        </h4>
+
+        <h4>
+            <span class="label label-info">
+                Horas Totales:
+
+                @Html.DisplayFor(model => model.Horas_Totales)
+
+            </span>
+        </h4>
+        <h4>
+            <span class="label label-info">
+                Tiempo de vigencia:
+
+                @Html.DisplayFor(model => model.Tiempo_de_vigencia)
+
+            </span>
+        </h4>
+
+        <p>
+            @Html.ActionLink("Editar", "Editar", new { id = Model.ID }) |
+            @Html.ActionLink("Regresar", "Index")
+        </p>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+﻿@model SACAAE.Models.PlazaXProfesor
+@{
+    ViewBag.Title = "Liberar";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<h2>Liberar Horas de Plaza </h2>
+<hr />
+<body onload="CargarProfe()">
+    <div class="col-lg-4">
+        <div class="span12">
+            @if (TempData.ContainsKey("Message"))
+            {
+                <p class="text-success">@TempData["Message"].ToString()</p>
+            }
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+
+                <div class="editor-label">
+                    Plazas
+                </div>
+                <div class="editor-field">
+                    <select id="sltPlaza" name="sltPlaza" class="form-control" required>
+                        @foreach (var item in ViewBag.Plaza)
+                        {
+                            <option value="@item.ID">@item.Codigo_Plaza</option>
+                        }
+                    </select>
+                </div>
+                <br />
+
+                <br />
+
+                <div class="editor-label">
+                    Profesores
+                </div>
+                <div class="editor-field">
+                    <select id="sltProfesor" name="sltProfesor" class="form-control" required>
+                    </select>
+                </div>
+                <br />
+
+                <br />
+                <div class="editor-label">
+                    Horas Totales
+                </div>
+
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Horas_Asignadas, new { htmlAttributes = new { @class = "form-control", @id = "HT" } })
+                </div>
+
+                <br />
+                <div class="editor-label">
+                    Horas Asignadas
+                </div>
+
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Horas_Asignadas, new { htmlAttributes = new { @class = "form-control", @id = "HA" } })
+                </div>
+
+                <br />
+                <div class="editor-label">
+                    Horas Por Liberar
+                </div>
+
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Horas_Asignadas, new { htmlAttributes = new { @class = "form-control", @id = "HPA" } })
+                    @Html.ValidationMessageFor(model => model.Horas_Asignadas)
+                </div>
+
+                <br />
+                <p>
+                    <input type="submit" onclick="return validarHorasXLiberar()" value="Liberar" class="btn" /> | @Html.ActionLink("Regresar", "Index")
+
+                </p>
+            }
+        </div>
+    </div>
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="span12">
+                <table class="table">
+                    <tr>
+                        <th>
+                            Plaza
+                        </th>
+
+                        <th>
+                            Nombre del Profesor
+                        </th>
+                        <th>
+                            Horas Asignadas
+                        </th>
+
+                    </tr>
+
+                    @foreach (var item in ViewBag.PlazasAsignadas)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayForModel()
+                                @item.Codigo_Plaza
+                            </td>
+
+                            <td>
+                                @Html.DisplayForModel()
+                                @item.Nombre
+                            </td>
+                            <td>
+                                @Html.DisplayForModel()
+                                @item.Horas_Asignadas
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="@Url.Content("~/Scripts/liberarHorasPlaza.js")"></script>
+}

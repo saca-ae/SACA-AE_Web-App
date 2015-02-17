@@ -1,0 +1,62 @@
+﻿@model SACAAE.Models.Comisione
+
+@{
+    ViewBag.Title = "Crear";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+
+<div class="col-lg-4">
+    <h2>Crear Comisi&oacute;n</h2>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Nombre)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Nombre, new
+               {
+                   @class = "form-control",
+                   @placeholder = "Nombre de la Comisión",
+                   @required = "true"
+               })
+            @Html.ValidationMessageFor(model => model.Nombre)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Inicio)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Inicio, new
+               {
+                   type = "date", @class = "form-control" 
+               })
+            @Html.ValidationMessageFor(model => model.Inicio)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Fin)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Fin, new
+               {
+                   type = "date", @class = "form-control" 
+               })
+            @Html.ValidationMessageFor(model => model.Fin)
+        </div>
+        <br />
+        <p>
+            <input type="submit" value="Crear" class="btn" /> |  @Html.ActionLink("Regresar", "Index")
+        </p>
+    }
+
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

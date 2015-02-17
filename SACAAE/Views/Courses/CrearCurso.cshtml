@@ -1,0 +1,119 @@
+﻿@model SACAAE.Models.Curso
+
+@{
+    ViewBag.Title = "Index";
+
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+
+
+<div class="col-lg-4">
+
+    <h2>Agregar Cursos</h2>
+    <hr />
+    @if (TempData.ContainsKey("MessageError"))
+    {
+        <p class="text-danger">@TempData["MessageError"].ToString()</p>
+    }
+    @if (TempData.ContainsKey("MessageSuccess"))
+    {
+        <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+    }
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+
+
+        <div id="ventanaAgregar">
+
+            <div class=" editor-label">
+                <label> Nombre </label>
+            </div>
+
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Nombre, new
+               {
+                   @class = "form-control",
+                   @placeholder = "Nombre del Curso",
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Nombre)
+            </div>
+
+            <div class="editor-label">
+                <label> Código </label>
+            </div>
+
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Codigo, new
+               {
+                   @class = "form-control",
+                   @placeholder = "Código del Curso",
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Codigo)
+
+
+            </div>
+            <div class="editor-label">
+                <label> Horas Prácticas </label>
+            </div>
+
+            <div class="editor-field">
+                <input name="HorasPracticas" class="form-control" id="HorasPracticas" type="number" min="0" value="0" />
+                @Html.ValidationMessageFor(model => model.HorasPracticas)
+            </div>
+
+            <div class="editor-label">
+                <label> Horas Teóricas </label>
+            </div>
+
+            <div class="editor-field">
+                <input name="HorasTeoricas" class="form-control" id="HorasTeoricas" type="number" min="0" value="0" />
+                @Html.ValidationMessageFor(model => model.HorasTeoricas)
+            </div>
+            <br />
+
+            <div class="editor-label">
+                <label> Creditos </label>
+            </div>
+
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Creditos, new
+               {
+                   @class = "form-control",
+                   @placeholder = "Creditos del Curso",
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Creditos)
+
+
+            </div>
+            <div class="editor-label">
+                <label> Bloque</label>
+            </div>
+
+            <div class="editor-field">
+                <input name="Bloque" class="form-control" id="Bloque" type="number" min="1" max="12" value="1" />
+            </div>
+
+            <div class="editor-label">
+                <label> Curso externo </label>
+                @Html.CheckBoxFor(model => model.Externo)
+            </div>
+            <br />
+
+            <p>
+                <input type="submit" value="Agregar Curso" class="btn" /> | @Html.ActionLink("Regresar", "Index","Courses")
+            </p>
+
+        </div>
+
+    }
+
+</div>

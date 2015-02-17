@@ -1,0 +1,72 @@
+﻿@model SACAAE.Models.LoginModel
+
+@{
+    ViewBag.Title = "Iniciar Sesión";
+}
+
+<script>
+    function setCookie(cname, cvalue, exdays) {
+
+        document.cookie = cname + "=" + cvalue;
+    }
+
+    function Guardar() {
+        var Periodo = document.getElementById("ComboPeriodos").value;
+        setCookie("Periodo", Periodo, 1);
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i].trim();
+            if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+        }
+        return "";
+    }
+</script>
+<body onload="Guardar()">
+    <div class="page-header">
+        <div class="col-lg-4">
+            <h2 class="form-signin-heading">Iniciar Sesi&oacute;n</h2>
+            <section id="loginForm">
+                @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)               
+
+                
+                    @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control", @placeholder = "Nombre de Usuario", @required = "true" })
+                    @Html.ValidationMessageFor(m => m.NombreUsuario)
+                    <br />
+                    @Html.TextBoxFor(m => m.Contrasenia, new { @class = "form-control", @placeholder = "Contraseña", @type = "password", @required = "true" })
+                    @Html.ValidationMessageFor(m => m.Contrasenia)
+                    <h4>Periodo</h4>
+                
+                    if (ViewBag.Periodos != null)
+                    {
+                    @Html.DropDownList("ComboPeriodos", new SelectList(ViewBag.Periodos), new { @id = "ComboPeriodos", @class = "form-control", @onChange = "Guardar()" });
+                    }
+                    else
+                    {
+                    @Html.DropDownList("ComboPeriodos", new SelectList("No se pudieron cargar los periodos."), new { @id = "ComboPeriodos", @class = "form-control", @disabled = "disabled", @onChange = "Guardar()" });
+                    }             
+                        
+                
+                
+                    <hr />
+
+                    if (ViewBag.Periodos != null)
+                    {
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesi&oacute;n</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" disabled="disabled">Iniciar Sesi&oacute;n</button>
+                    }
+
+                }
+            </section>
+        </div>
+    </div>
+</body>

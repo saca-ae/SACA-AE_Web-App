@@ -1,0 +1,77 @@
+﻿@model SACAAE.Models.Plaza
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Editar Plaza</h2>
+    <hr />
+    <div class="span12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+
+
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="editor-label">
+                Codigo Plaza
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Codigo_Plaza, new
+               {
+                   @class = "form-control",
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Codigo_Plaza)
+            </div>
+
+            <div class="editor-label">
+                Tipo de Plaza
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Tipo_de_plaza, new SelectList(new string[] { "Interna", "Externa" }, Model.Tipo_de_plaza),
+                    new { @class = "form-control", @required = "true" })
+                @Html.ValidationMessageFor(model => model.Tipo_de_plaza)
+
+            </div>
+
+            <div class="editor-label">
+                Tipo segun tiempo
+            </div>
+            <div class="editor-field">
+                @Html.DropDownListFor(model => model.Tipo_segun_tiempo, new SelectList(new string[] { "Completo", "Parcial" }, Model.Tipo_segun_tiempo),
+                     new { @class = "form-control", @required = "true" })
+                @Html.ValidationMessageFor(model => model.Tipo_segun_tiempo)
+            </div>
+            <div class="editor-label">
+                Horas Totales
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Horas_Totales, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(model => model.Horas_Totales)
+            </div>
+            <div class="editor-label">
+                Tiempo de vigencia:
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Tiempo_de_vigencia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Tiempo_de_vigencia)
+            </div>
+            <br />
+            <p>
+                <input type="submit" value="Guardar" class="btn" />
+                | @Html.ActionLink("Regresar", "Index")
+            </p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

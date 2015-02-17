@@ -1,0 +1,38 @@
+﻿@model SACAAE.Models.BloqueAcademico
+
+@{
+    ViewBag.Title = "EliminarBloqueAcademico";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Borrar Informaci&oacute;n de Bloque Académico</h2>
+    <hr />
+    <div class="span12">
+        <h4><span class="label label-warning">¿Est&aacute; seguro de que desea eliminar la informaci&oacute;n de este bloque?</span></h4>
+        <br />
+        <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Descripcion)
+                @Html.DisplayFor(model => model.Descripcion)
+            </span>
+        </h4>
+
+        <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Nivel)
+                @Html.DisplayFor(model => model.Nivel)
+            </span>
+        </h4>
+        <br />
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <p>
+                <input type="submit" value="Borrar" class="btn" />
+                |
+                @Html.ActionLink("Regresar", "Index")
+            </p>
+        }
+    </div>
+</div>

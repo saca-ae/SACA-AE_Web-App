@@ -1,0 +1,12 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<hgroup class="title">
+    <h1 class="error"> ¡Vaya! Se ha producido un error en SACA-AE</h1>
+    <h2 class="error">Lo sentimos. Si el error persiste comuniquese con su administrador</h2>
+    Error Detail : @Model.Exception.Message
+</hgroup>

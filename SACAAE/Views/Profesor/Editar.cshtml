@@ -1,0 +1,55 @@
+﻿@model SACAAE.Models.Profesore
+
+@{
+    ViewBag.Title = "Editar";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+
+<div class="col-lg-4">
+    <h2>Editar Profesor</h2>
+    <hr />
+    <div class="span12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+    
+
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Nombre)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Nombre, new
+               {
+                   @class = "form-control",                   
+                   @required = "true"
+               })
+                @Html.ValidationMessageFor(model => model.Nombre)
+            </div>
+
+           
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Link)
+            </div>
+             <div class="editor-field">
+                @Html.TextBoxFor(model => model.Link, new
+               {
+                   @class = "form-control",                   
+               })
+                @Html.ValidationMessageFor(model => model.Link)
+            </div>
+            <br />
+            <p>
+                <input type="submit" value="Guardar" class="btn" />
+                | @Html.ActionLink("Regresar", "Index")
+            </p>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
