@@ -190,6 +190,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlertaComisionProfesorController.cs" />
+    <Compile Include="Controllers\AlertaProyectoProfesorController.cs" />
     <Compile Include="Controllers\AulaController.cs" />
     <Compile Include="Controllers\BloqueController.cs" />
     <Compile Include="Controllers\BloqueXPlanController.cs" />
@@ -218,6 +220,8 @@
     <Compile Include="Models\Ajuste.cs">
       <DependentUpon>SACAAEDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AlertaComisionProfesor.cs" />
+    <Compile Include="Models\AlertaProyectoProfesor.cs" />
     <Compile Include="Models\Aula.cs">
       <DependentUpon>SACAAEDataModel.tt</DependentUpon>
     </Compile>
@@ -328,6 +332,9 @@
       <DependentUpon>SACAAEDataModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Sede.cs">
+      <DependentUpon>SACAAEDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TipoEntidad.cs">
       <DependentUpon>SACAAEDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Usuario.cs">
@@ -570,6 +577,8 @@
     <Content Include="Views\Plazas\QuitarNombramiento.cshtml" />
     <Content Include="Views\Courses\EliminarCurso.cshtml" />
     <Content Include="Views\Plans\EliminarPlan.cshtml" />
+    <Content Include="Views\AlertaProyectoProfesor\Index.cshtml" />
+    <Content Include="Views\AlertaComisionProfesor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

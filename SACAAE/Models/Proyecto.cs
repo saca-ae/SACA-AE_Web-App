@@ -25,8 +25,10 @@ namespace SACAAE.Models
         public Nullable<System.DateTime> Fin { get; set; }
         public int Estado { get; set; }
         public string Link { get; set; }
+        public Nullable<int> FK_TipoEntidad { get; set; }
     
         public virtual Estado Estado1 { get; set; }
         public virtual ICollection<ProyectosXProfesor> ProyectosXProfesors { get; set; }
+        public virtual TipoEntidad TipoEntidad { get; set; }
     }
 }

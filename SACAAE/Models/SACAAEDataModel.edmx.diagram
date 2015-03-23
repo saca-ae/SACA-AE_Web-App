@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f0e6c3ca2f7d4f429c71af5305839fd5" Name="Diagrama1" ZoomLevel="71">
+      <Diagram DiagramId="f0e6c3ca2f7d4f429c71af5305839fd5" Name="Diagrama1" ZoomLevel="127">
         <EntityTypeShape EntityType="SACAAEModel.Ajuste" Width="1.5" PointX="3" PointY="17.125" />
         <EntityTypeShape EntityType="SACAAEModel.Aula" Width="1.5" PointX="3.75" PointY="43.875" />
         <EntityTypeShape EntityType="SACAAEModel.BloqueAcademico" Width="1.5" PointX="1.5" PointY="38.375" />
@@ -60,6 +60,10 @@
         <AssociationConnector Association="SACAAEModel.FK_ProfesoresXCurso_Profesor_Profesores_ID" />
         <AssociationConnector Association="SACAAEModel.FK_ProyectosXProfesor_Profesor_Profesores_ID" />
         <EntityTypeShape EntityType="SACAAEModel.PlazasAsignada" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="SACAAEModel.TipoEntidad" Width="1.5" PointX="0.75" PointY="17.625" />
+        <AssociationConnector Association="SACAAEModel.FK_Comisiones_TipoEntidad" />
+        <AssociationConnector Association="SACAAEModel.FK_PlanesDeEstudio_TipoEntidad" />
+        <AssociationConnector Association="SACAAEModel.FK_Proyectos_TipoEntidad" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
