@@ -64,6 +64,27 @@ namespace SACAAE.Models
             Dias.Add("Domingo");
             ViewBag.Dias = Dias;
 
+            List<String> HorasInicio = new List<String>();
+            
+            for (int i = 7; i < 22; i++)
+            {
+                if (i < 13)
+                    HorasInicio.Add(i.ToString()+":30");
+                else
+                    HorasInicio.Add(i.ToString()+":00");
+            }
+            ViewBag.HorasInicio = HorasInicio;
+
+            List<String> HorasFin = new List<String>();
+            for (int i = 8; i < 22; i++)
+            {
+                if (i < 13)
+                    HorasFin.Add(i.ToString() + ":20");
+                else
+                    HorasFin.Add(i.ToString() + ":50");
+            }
+            ViewBag.HorasFin = HorasFin;
+
             List<String> Horas = new List<String>();
             for (int i=0;i<24;i++)
             {

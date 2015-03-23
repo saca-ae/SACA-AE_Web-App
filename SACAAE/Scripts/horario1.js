@@ -130,7 +130,7 @@
             EliminarCurso(6);
         }
     });
-
+    
 });
 
 function Load() {
@@ -191,7 +191,7 @@ function Cargar() {
 }
 
 function AgregarCursos(pDia) {
-
+    
     var IdDiaSeleccionado = "";
     var IdHoraInicioSeleccionada = "";
     var IdHoraFinSeleccionada = "";
@@ -207,7 +207,7 @@ function AgregarCursos(pDia) {
         default: break;
     }
 
-
+    
     try {
 
         var table = document.getElementById("Resultado");
@@ -245,40 +245,40 @@ function AgregarCursos(pDia) {
         alert("ERROR: Seleccione una aula");
         return;
     }
-    //Valido que no existan choques para la hora seleccionada
-    /*while (i < Fin) {
+            //Valido que no existan choques para la hora seleccionada
+            /*while (i < Fin) {
 
-        var IdCelda = Dia + " " + i;
-        if (i < 100) { IdCelda = Dia + " 0" + i; } //repara el string en caso de que la hora fuera 010 ya que el parse la deja como 10
-        if (i == 0) { IdCelda = Dia + " 000"; }    //repara el string en caso de que la hora fuera 000 ya que el parse la deja como 0
+                var IdCelda = Dia + " " + i;
+                if (i < 100) { IdCelda = Dia + " 0" + i; } //repara el string en caso de que la hora fuera 010 ya que el parse la deja como 10
+                if (i == 0) { IdCelda = Dia + " 000"; }    //repara el string en caso de que la hora fuera 000 ya que el parse la deja como 0
 
-        var celda = document.getElementById(IdCelda);
-        if (celda.style.backgroundColor != "") {
-            alert("ERROR: Existe un choque de horario,\n No se puede agregar el curso");
-            return;
-        }
+                var celda = document.getElementById(IdCelda);
+                if (celda.style.backgroundColor != "") {
+                    alert("ERROR: Existe un choque de horario,\n No se puede agregar el curso");
+                    return;
+                }
 
-        i += 10;
-        if (i % 100 == 60) { i += 40; }
-    }*/
-    //var route = "/ExisteHorario/" + Dia + "/" + Inicio + "/" + Fin + "/" + Aula + "/" + Grupo + "/" + getCookie("PeriodoHorario");
+                i += 10;
+                if (i % 100 == 60) { i += 40; }
+            }*/
+            //var route = "/ExisteHorario/" + Dia + "/" + Inicio + "/" + Fin + "/" + Aula + "/" + Grupo + "/" + getCookie("PeriodoHorario");
     var choque = 0;
-    /*$.ajax({
-        url: route,
-        datatype: 'json',
-        async: false,
-        success: function (data) {
-            if (data == 1) {
-                alert("Ya existe un curso a esa hora y aula");
-                choque = 1;
-                return;
-            }
-        }
+            /*$.ajax({
+                url: route,
+                datatype: 'json',
+                async: false,
+                success: function (data) {
+                    if (data == 1) {
+                        alert("Ya existe un curso a esa hora y aula");
+                        choque = 1;
+                        return;
+                    }
+                }
 
-    });*/
+            });*/
+    
 
-
-
+    
     for (k = 1; k <= getCookie("i") ; k++) {
         var Detalles = getCookie("Cookie" + k);
         var Partes = Detalles.split("|");
@@ -312,12 +312,12 @@ function AgregarCursos(pDia) {
 
                 if (Aula == vAula && Dia == vDia && ((vHoraInicio <= Inicio && vHoraFin >= Inicio) || (vHoraInicio <= Fin && vHoraFin >= Fin)
                 || (vHoraInicio <= Inicio && vHoraFin >= Fin) || (vHoraInicio >= Inicio && vHoraFin <= Fin))) {
-                    hayChoque = 1;
-                    alert("ERROR: Ya hay un curso impartido en el aula y horario seleccionados: " + vCurso);
-                    document.getElementById(IdDiaSeleccionado).checked = false;
-                    document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
-                    document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
-                    return false;
+                            hayChoque = 1;
+                            alert("ERROR: Ya hay un curso impartido en el aula y horario seleccionados: "+vCurso);
+                            document.getElementById(IdDiaSeleccionado).checked = false;
+                            document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
+                            document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
+                            return false; 
                 }
             });
             if (hayChoque == 0) {

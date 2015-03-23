@@ -440,6 +440,7 @@
     <Content Include="Scripts\CursoProfesor.js" />
     <Content Include="Scripts\eliminarAjax.js" />
     <Content Include="Scripts\horario.js" />
+    <Content Include="Scripts\horario1.js" />
     <Content Include="Scripts\indexHorario.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
