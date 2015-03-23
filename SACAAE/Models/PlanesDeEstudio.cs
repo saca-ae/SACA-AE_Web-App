@@ -23,9 +23,11 @@ namespace SACAAE.Models
         public int ID { get; set; }
         public string Nombre { get; set; }
         public int Modalidad { get; set; }
+        public Nullable<int> FK_TipoEntidad { get; set; }
     
         public virtual ICollection<BloqueAcademicoXPlanDeEstudio> BloqueAcademicoXPlanDeEstudios { get; set; }
         public virtual Modalidade Modalidade { get; set; }
         public virtual ICollection<PlanesDeEstudioXSede> PlanesDeEstudioXSedes { get; set; }
+        public virtual TipoEntidad TipoEntidad { get; set; }
     }
 }

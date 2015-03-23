@@ -60,9 +60,26 @@ namespace SACAAE.Models
         public IQueryable<Grupo> ObtenerTodosGrupos()
         {
             return from Grupo in entidades.Grupoes
+                   join c in entidades.BloqueXPlanXCursoes on Grupo.ID equals c.ID
                    orderby Grupo.Numero
                    select Grupo;
         }
+
+        public string ObtenerEntidadGrupo(int IdGrupo)
+        {
+            int idBloqueAcademicoXPlanDeEstudio =  (from h in entidades.BloqueXPlanXCursoes
+                    join c in entidades.BloqueAcademicoXPlanDeEstudios on h.BloqueXPlanID equals c.ID
+                    where h.ID == IdGrupo
+                    select c.PlanID).FirstOrDefault();
+            int IdTipoEntidad = (int)(from h in entidades.PlanesDeEstudios
+                          where h.ID == idBloqueAcademicoXPlanDeEstudio
+                          select h.FK_TipoEntidad).FirstOrDefault();
+
+            return (from h in entidades.TipoEntidads
+                    where h.Id == IdTipoEntidad
+                    select h.Nombre).FirstOrDefault();
+        }
+
 
         public IQueryable<Grupo> ObtenerTodosGrupos(int periodo)
         {

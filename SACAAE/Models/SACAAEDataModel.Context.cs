@@ -51,5 +51,6 @@ namespace SACAAE.Models
         public DbSet<PlazaXProfesor> PlazaXProfesors { get; set; }
         public DbSet<Profesore> Profesores { get; set; }
         public DbSet<PlazasAsignada> PlazasAsignadas { get; set; }
+        public DbSet<TipoEntidad> TipoEntidads { get; set; }
     }
 }

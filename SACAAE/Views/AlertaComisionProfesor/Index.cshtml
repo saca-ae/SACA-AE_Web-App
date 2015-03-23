@@ -1,0 +1,87 @@
+﻿
+@model IEnumerable<SACAAE.Models.AlertaComisionProfesor>
+
+
+
+@{
+    ViewBag.Title = "AlertaComisionProfesor";
+    Layout = "~/Views/Shared/Privado.cshtml";
+}
+<link rel="stylesheet" href="../Content/themes/blue/style.css" type="text/css" media="print, projection, screen">
+
+
+<body>
+    <h2>Comisiones a @Request.QueryString["dias"] días a Vencer o Vencidos</h2>
+    <label>Cambiar Rango de Días</label>
+    <br />
+    <div class="editor-field">
+        <input name="dias" id="dias" type="number" min="1" value="0" />
+        <input type="submit" onclick="location.href = 'http://localhost:50297/AlertaComisionProfesor/Index?Dias='+dias.value;" value=" Cambiar" class="btn" />
+    </div> <br />
+    <table id="myTable" class="table">
+        <thead>
+            <tr>
+                <th>
+                    Profesor
+                </th>
+                <th>
+                    Comision
+                </th>
+                <th>
+                    Inicio
+                </th>
+                <th>
+                    Fin
+                </th>
+                <th>
+                    Entidad
+                </th>
+
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PROFESOR)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.COMISION)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.INCIO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FIN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ENTIDAD)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Editar", "Editar", "Comision", new { id = item.ID }, null)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Eliminar", "Eliminar", "Comision", new { id = item.ID }, null)
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</body>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#myTable").tablesorter();
+        }
+);
+    </script>
+    <script type="text/javascript" src="../Scripts/jquery.tablesorter.js"></script>
+
+
+} 

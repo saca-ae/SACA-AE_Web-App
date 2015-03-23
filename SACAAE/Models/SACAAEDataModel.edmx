@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="SACAAEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SACAAEModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Ajustes">
           <Key>
             <PropertyRef Name="IDConfig" />
@@ -54,6 +54,7 @@
           <Property Name="Nombre" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Inicio" Type="date" Nullable="false" />
           <Property Name="Fin" Type="date" Nullable="false" />
+          <Property Name="FK_TipoEntidad" Type="int" />
           <Property Name="Estado" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ComisionesXProfesor">
@@ -143,6 +144,7 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="FK_TipoEntidad" Type="int" />
           <Property Name="Modalidad" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PlanesDeEstudioXSede">
@@ -195,11 +197,12 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="varchar" MaxLength="250" Nullable="false" />
           <Property Name="Inicio" Type="datetime" />
           <Property Name="Fin" Type="datetime" />
           <Property Name="Estado" Type="int" Nullable="false" />
+          <Property Name="FK_TipoEntidad" Type="int" />
           <Property Name="Link" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="ProyectosXProfesor">
@@ -219,6 +222,13 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="250" Nullable="false" />
         </EntityType>
+        <EntityType Name="TipoEntidad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="ID" />
@@ -229,8 +239,8 @@
           <Property Name="Contrasenia" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Correo" Type="nvarchar" MaxLength="60" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_75363_sacaae.dbo.PlazasAsignadas' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="PlazasAsignadas">
           <Key>
             <PropertyRef Name="Codigo_Plaza" />
@@ -321,6 +331,18 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
             </Principal>
             <Dependent Role="Comisiones">
               <PropertyRef Name="Estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comisiones_TipoEntidad">
+          <End Role="TipoEntidad" Type="Self.TipoEntidad" Multiplicity="0..1" />
+          <End Role="Comisiones" Type="Self.Comisiones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comisiones">
+              <PropertyRef Name="FK_TipoEntidad" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -456,6 +478,18 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PlanesDeEstudio_TipoEntidad">
+          <End Role="TipoEntidad" Type="Self.TipoEntidad" Multiplicity="0..1" />
+          <End Role="PlanesDeEstudio" Type="Self.PlanesDeEstudio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanesDeEstudio">
+              <PropertyRef Name="FK_TipoEntidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PlanesDeEstudioXSede_PlanDeEstudio_PlanesDeEstudio_ID">
           <End Role="PlanesDeEstudio" Type="Self.PlanesDeEstudio" Multiplicity="1" />
           <End Role="PlanesDeEstudioXSede" Type="Self.PlanesDeEstudioXSede" Multiplicity="*" />
@@ -540,6 +574,18 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Proyectos_TipoEntidad">
+          <End Role="TipoEntidad" Type="Self.TipoEntidad" Multiplicity="0..1" />
+          <End Role="Proyectos" Type="Self.Proyectos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proyectos">
+              <PropertyRef Name="FK_TipoEntidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProyectosXProfesor_Horario_Horario_Id">
           <End Role="Horario" Type="Self.Horario" Multiplicity="0..1" />
           <End Role="ProyectosXProfesor" Type="Self.ProyectosXProfesor" Multiplicity="*" />
@@ -613,6 +659,7 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <EntitySet Name="Proyectos" EntityType="Self.Proyectos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProyectosXProfesor" EntityType="Self.ProyectosXProfesor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sedes" EntityType="Self.Sedes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoEntidad" EntityType="Self.TipoEntidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlazasAsignadas" EntityType="Self.PlazasAsignadas" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
@@ -647,6 +694,10 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           </AssociationSet>
           <AssociationSet Name="FK_Comisiones_Estado_Estado_Id" Association="Self.FK_Comisiones_Estado_Estado_Id">
             <End Role="Estado" EntitySet="Estado" />
+            <End Role="Comisiones" EntitySet="Comisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comisiones_TipoEntidad" Association="Self.FK_Comisiones_TipoEntidad">
+            <End Role="TipoEntidad" EntitySet="TipoEntidad" />
             <End Role="Comisiones" EntitySet="Comisiones" />
           </AssociationSet>
           <AssociationSet Name="FK_ComisionesXProfesor_Comision_Comisiones_ID" Association="Self.FK_ComisionesXProfesor_Comision_Comisiones_ID">
@@ -693,6 +744,10 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
             <End Role="Modalidades" EntitySet="Modalidades" />
             <End Role="PlanesDeEstudio" EntitySet="PlanesDeEstudio" />
           </AssociationSet>
+          <AssociationSet Name="FK_PlanesDeEstudio_TipoEntidad" Association="Self.FK_PlanesDeEstudio_TipoEntidad">
+            <End Role="TipoEntidad" EntitySet="TipoEntidad" />
+            <End Role="PlanesDeEstudio" EntitySet="PlanesDeEstudio" />
+          </AssociationSet>
           <AssociationSet Name="FK_PlanesDeEstudioXSede_PlanDeEstudio_PlanesDeEstudio_ID" Association="Self.FK_PlanesDeEstudioXSede_PlanDeEstudio_PlanesDeEstudio_ID">
             <End Role="PlanesDeEstudio" EntitySet="PlanesDeEstudio" />
             <End Role="PlanesDeEstudioXSede" EntitySet="PlanesDeEstudioXSede" />
@@ -719,6 +774,10 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           </AssociationSet>
           <AssociationSet Name="FK_Proyectos_Estado_Estado_Id" Association="Self.FK_Proyectos_Estado_Estado_Id">
             <End Role="Estado" EntitySet="Estado" />
+            <End Role="Proyectos" EntitySet="Proyectos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proyectos_TipoEntidad" Association="Self.FK_Proyectos_TipoEntidad">
+            <End Role="TipoEntidad" EntitySet="TipoEntidad" />
             <End Role="Proyectos" EntitySet="Proyectos" />
           </AssociationSet>
           <AssociationSet Name="FK_ProyectosXProfesor_Horario_Horario_Id" Association="Self.FK_ProyectosXProfesor_Horario_Horario_Id">
@@ -885,6 +944,19 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
             <End Role="ProyectosXProfesor" EntitySet="ProyectosXProfesors" />
           </AssociationSet>
           <EntitySet Name="PlazasAsignadas" EntityType="SACAAEModel.PlazasAsignada" />
+          <EntitySet Name="TipoEntidads" EntityType="SACAAEModel.TipoEntidad" />
+          <AssociationSet Name="FK_Comisiones_TipoEntidad" Association="SACAAEModel.FK_Comisiones_TipoEntidad">
+            <End Role="TipoEntidad" EntitySet="TipoEntidads" />
+            <End Role="Comisione" EntitySet="Comisiones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlanesDeEstudio_TipoEntidad" Association="SACAAEModel.FK_PlanesDeEstudio_TipoEntidad">
+            <End Role="TipoEntidad" EntitySet="TipoEntidads" />
+            <End Role="PlanesDeEstudio" EntitySet="PlanesDeEstudios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Proyectos_TipoEntidad" Association="SACAAEModel.FK_Proyectos_TipoEntidad">
+            <End Role="TipoEntidad" EntitySet="TipoEntidads" />
+            <End Role="Proyecto" EntitySet="Proyectos" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Ajuste">
           <Key>
@@ -947,6 +1019,8 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <Property Name="Estado" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Estado1" Relationship="SACAAEModel.FK_Comisiones_Estado_Estado_Id" FromRole="Comisione" ToRole="Estado" />
           <NavigationProperty Name="ComisionesXProfesors" Relationship="SACAAEModel.FK_ComisionesXProfesor_Comision_Comisiones_ID" FromRole="Comisione" ToRole="ComisionesXProfesor" />
+          <Property Name="FK_TipoEntidad" Type="Int32" />
+          <NavigationProperty Name="TipoEntidad" Relationship="SACAAEModel.FK_Comisiones_TipoEntidad" FromRole="Comisione" ToRole="TipoEntidad" />
         </EntityType>
         <EntityType Name="ComisionesXProfesor">
           <Key>
@@ -1062,6 +1136,8 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <NavigationProperty Name="BloqueAcademicoXPlanDeEstudios" Relationship="SACAAEModel.FK_BloqueAcademicoXPlanDeEstudio_PlanesDeEstudio" FromRole="PlanesDeEstudio" ToRole="BloqueAcademicoXPlanDeEstudio" />
           <NavigationProperty Name="Modalidade" Relationship="SACAAEModel.FK_PlanesDeEstudio_Modalidad_Modalidades_ID" FromRole="PlanesDeEstudio" ToRole="Modalidade" />
           <NavigationProperty Name="PlanesDeEstudioXSedes" Relationship="SACAAEModel.FK_PlanesDeEstudioXSede_PlanDeEstudio_PlanesDeEstudio_ID" FromRole="PlanesDeEstudio" ToRole="PlanesDeEstudioXSede" />
+          <Property Name="FK_TipoEntidad" Type="Int32" />
+          <NavigationProperty Name="TipoEntidad" Relationship="SACAAEModel.FK_PlanesDeEstudio_TipoEntidad" FromRole="PlanesDeEstudio" ToRole="TipoEntidad" />
         </EntityType>
         <EntityType Name="PlanesDeEstudioXSede">
           <Key>
@@ -1096,6 +1172,8 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <Property Name="Link" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Estado1" Relationship="SACAAEModel.FK_Proyectos_Estado_Estado_Id" FromRole="Proyecto" ToRole="Estado" />
           <NavigationProperty Name="ProyectosXProfesors" Relationship="SACAAEModel.FK_ProyectosXProfesor_Proyecto_Proyectos_ID" FromRole="Proyecto" ToRole="ProyectosXProfesor" />
+          <Property Name="FK_TipoEntidad" Type="Int32" />
+          <NavigationProperty Name="TipoEntidad" Relationship="SACAAEModel.FK_Proyectos_TipoEntidad" FromRole="Proyecto" ToRole="TipoEntidad" />
         </EntityType>
         <EntityType Name="ProyectosXProfesor">
           <Key>
@@ -1525,6 +1603,52 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
           <Property Name="Horas_Asignadas" Type="Int32" />
         </EntityType>
+        <EntityType Name="TipoEntidad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Comisiones" Relationship="SACAAEModel.FK_Comisiones_TipoEntidad" FromRole="TipoEntidad" ToRole="Comisione" />
+          <NavigationProperty Name="PlanesDeEstudios" Relationship="SACAAEModel.FK_PlanesDeEstudio_TipoEntidad" FromRole="TipoEntidad" ToRole="PlanesDeEstudio" />
+          <NavigationProperty Name="Proyectos" Relationship="SACAAEModel.FK_Proyectos_TipoEntidad" FromRole="TipoEntidad" ToRole="Proyecto" />
+        </EntityType>
+        <Association Name="FK_Comisiones_TipoEntidad">
+          <End Type="SACAAEModel.TipoEntidad" Role="TipoEntidad" Multiplicity="0..1" />
+          <End Type="SACAAEModel.Comisione" Role="Comisione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Comisione">
+              <PropertyRef Name="FK_TipoEntidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlanesDeEstudio_TipoEntidad">
+          <End Type="SACAAEModel.TipoEntidad" Role="TipoEntidad" Multiplicity="0..1" />
+          <End Type="SACAAEModel.PlanesDeEstudio" Role="PlanesDeEstudio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PlanesDeEstudio">
+              <PropertyRef Name="FK_TipoEntidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Proyectos_TipoEntidad">
+          <End Type="SACAAEModel.TipoEntidad" Role="TipoEntidad" Multiplicity="0..1" />
+          <End Type="SACAAEModel.Proyecto" Role="Proyecto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoEntidad">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Proyecto">
+              <PropertyRef Name="FK_TipoEntidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1580,6 +1704,7 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <EntitySetMapping Name="Comisiones">
             <EntityTypeMapping TypeName="SACAAEModel.Comisione">
               <MappingFragment StoreEntitySet="Comisiones">
+                <ScalarProperty Name="FK_TipoEntidad" ColumnName="FK_TipoEntidad" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Fin" ColumnName="Fin" />
                 <ScalarProperty Name="Inicio" ColumnName="Inicio" />
@@ -1681,6 +1806,7 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <EntitySetMapping Name="PlanesDeEstudios">
             <EntityTypeMapping TypeName="SACAAEModel.PlanesDeEstudio">
               <MappingFragment StoreEntitySet="PlanesDeEstudio">
+                <ScalarProperty Name="FK_TipoEntidad" ColumnName="FK_TipoEntidad" />
                 <ScalarProperty Name="Modalidad" ColumnName="Modalidad" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -1708,6 +1834,7 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
           <EntitySetMapping Name="Proyectos">
             <EntityTypeMapping TypeName="SACAAEModel.Proyecto">
               <MappingFragment StoreEntitySet="Proyectos">
+                <ScalarProperty Name="FK_TipoEntidad" ColumnName="FK_TipoEntidad" />
                 <ScalarProperty Name="Link" ColumnName="Link" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="Fin" ColumnName="Fin" />
@@ -1786,6 +1913,14 @@ warning 6002: The table/view 'DB_75363_sacaae.dbo.PlazasAsignadas' does not have
                 <ScalarProperty Name="Horas_Asignadas" ColumnName="Horas_Asignadas" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="Codigo_Plaza" ColumnName="Codigo_Plaza" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoEntidads">
+            <EntityTypeMapping TypeName="SACAAEModel.TipoEntidad">
+              <MappingFragment StoreEntitySet="TipoEntidad">
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,22 +12,20 @@ namespace SACAAE.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Comisione
+    public partial class TipoEntidad
     {
-        public Comisione()
+        public TipoEntidad()
         {
-            this.ComisionesXProfesors = new HashSet<ComisionesXProfesor>();
+            this.Comisiones = new HashSet<Comisione>();
+            this.PlanesDeEstudios = new HashSet<PlanesDeEstudio>();
+            this.Proyectos = new HashSet<Proyecto>();
         }
     
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
-        public System.DateTime Inicio { get; set; }
-        public System.DateTime Fin { get; set; }
-        public int Estado { get; set; }
-        public Nullable<int> FK_TipoEntidad { get; set; }
     
-        public virtual Estado Estado1 { get; set; }
-        public virtual ICollection<ComisionesXProfesor> ComisionesXProfesors { get; set; }
-        public virtual TipoEntidad TipoEntidad { get; set; }
+        public virtual ICollection<Comisione> Comisiones { get; set; }
+        public virtual ICollection<PlanesDeEstudio> PlanesDeEstudios { get; set; }
+        public virtual ICollection<Proyecto> Proyectos { get; set; }
     }
 }

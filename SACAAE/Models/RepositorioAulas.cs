@@ -12,6 +12,7 @@ namespace SACAAE.Models
         
         public IQueryable<Aula> ListarAulas()
         {
+            
             return from Aulas in entidades.Aulas
                    select Aulas;
         }
