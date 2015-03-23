@@ -7,9 +7,9 @@
 
 @section Scripts {
 
+    <script src="@Url.Content("~/Scripts/horario_aula.js")"></script>
     <script src="@Url.Content("~/Scripts/ajaxCrear.js")"></script>
-    <script src="@Url.Content("~/Scripts/validaciones.js")"></script> <!--de necesitar revisar los select en cascada, la funcionalidad se encuentra-->
-    <!-- en el archivo referenciado. Carpeta Scripts-->
+    <script src="@Url.Content("~/Scripts/validaciones.js")"></script>
 }
 <style type="text/css">
 
@@ -52,6 +52,15 @@
 </Style>
 
 <body onload="Load()">
+
+
+    <h2> Horario de Aula </h2>
+    <h4>
+            <span class="label label-info">
+                @Html.DisplayNameFor(model => model.Codigo)
+                @Html.DisplayFor(model => model.Codigo)
+            </span>
+        </h4>
 <div class="col-lg-8">
         <div class="span12">
         <table class="mitabla" id="Resultado">
@@ -156,8 +165,18 @@
 
                 </table>
     </div>
+    <div class="editor-field">
+            </div>
+    <div>
+        <p>
+            <br />
+            <br />
+         |  @Html.ActionLink("Regresar", "Index")  |
+
+            <br />
+        </p>
+        
+    </div>
 </div>
-    <p>
-         @Html.ActionLink("Regresar", "Index")
-    </p>
+    
 </body>

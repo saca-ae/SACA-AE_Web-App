@@ -448,6 +448,7 @@
     <Content Include="Scripts\eliminarAjax.js" />
     <Content Include="Scripts\horario.js" />
     <Content Include="Scripts\horario1.js" />
+    <Content Include="Scripts\horario_aula.js" />
     <Content Include="Scripts\indexHorario.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\jquery-2.1.0.js" />
@@ -579,6 +580,7 @@
     <Content Include="Views\Plans\EliminarPlan.cshtml" />
     <Content Include="Views\AlertaProyectoProfesor\Index.cshtml" />
     <Content Include="Views\AlertaComisionProfesor\Index.cshtml" />
+    <Content Include="Views\Aula\HorarioAula.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

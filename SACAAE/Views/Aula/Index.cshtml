@@ -19,7 +19,7 @@
                 $.getJSON(route, function (data) {
                     var items = "<thead><tr><th>Código</th><th>Capacidad</th><th>Activa</th><th>Acciones</th></tr></thead><tbody>";
                     $.each(data, function (i, aula) {
-                        var newLink = '<a href="@Url.Action("ModificarAula")/' + aula.ID + '">Editar</a> | <a href="@Url.Action("EliminarAula")/' + aula.ID + '">Eliminar</a>';
+                        var newLink = '<a href="@Url.Action("ModificarAula")/' + aula.ID + '">Editar</a> | <a href="@Url.Action("EliminarAula")/' + aula.ID + '">Eliminar</a> | <a href="@Url.Action("HorarioAula")/' + aula.ID + '">Ver Horario</a>';
                         items += "<tr><td>" + aula.Codigo + "</td>";
                         items += "<td>" + aula.Espacio + "</td>";
                         items += '<td><input type="checkbox" checked="'+aula.Activa+'" disabled></td><td>' + newLink + "</td></tr>";

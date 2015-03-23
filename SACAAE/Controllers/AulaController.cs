@@ -58,6 +58,13 @@ namespace SACAAE.Controllers
         }
 
         [Authorize]
+        public ActionResult HorarioAula(int id)
+        {
+            var model = vRepoAulas.ObtenerAula(id);
+            return View(model);
+        }
+
+        [Authorize]
         [HttpPost]
         public ActionResult CrearAula(Aula model, string selectSede, int capacidad)
         {
