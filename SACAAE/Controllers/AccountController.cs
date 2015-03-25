@@ -72,7 +72,7 @@ namespace SACAAE.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Profesor");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else
