@@ -25,8 +25,8 @@ namespace SACAAE
         private BackgroundWorker bw = new BackgroundWorker();
         private String CorreoAlertas = "Alertas-SACA@saca-ae.net";
         private String ContraseniaCorreo = "Administracion20142015.";
-        private int DiasAlerta = 5;
-        private int RevisionDiasAlerta = 15;
+        private int PeriodoRevisionDias = 49;
+        private int RevisionDiasAlerta = 100;
         SACAAEEntities entidades = new SACAAEEntities();
         
         protected void Application_Start()
@@ -56,7 +56,7 @@ namespace SACAAE
             for(;;){
                     // Perform a time consuming operation and report progress.
                     RevisarProyectosYComisiones();
-                    System.Threading.Thread.Sleep(60000);//86400*DiasAlerta);
+                    System.Threading.Thread.Sleep(86400*PeriodoRevisionDias);
                     
                 
             }
