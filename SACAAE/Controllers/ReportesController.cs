@@ -258,7 +258,7 @@ namespace SACAAE.Models
                     }
                     else
                     {
-                        sw.WriteLine("TOTAL CARGA;"+profesores[profe_actual]);
+                        sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores[profe_actual]);
                         sw.WriteLine("");
                         sw.WriteLine("");
 
@@ -266,7 +266,8 @@ namespace SACAAE.Models
                         sw.WriteLine(profe.toStr());
                     }
                 }
-                sw.WriteLine("TOTAL CARGA;" + profesores[profe_actual]);
+                sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores[profe_actual]);
+
 
                 /*
                 sw.WriteLine("");
