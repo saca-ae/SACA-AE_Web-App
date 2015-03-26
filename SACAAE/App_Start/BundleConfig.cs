@@ -21,7 +21,9 @@ namespace SACAAE
                         "~/Scripts/modernizr-*"));
 
             //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/custom.css",
+                "~/Content/bootstrap.min.css"));
 
         }
     }
