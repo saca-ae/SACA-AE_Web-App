@@ -10,6 +10,7 @@
 <div class="row">
         
     <h2>Lista de Proyectos</h2> 
+    <hr />
     <div class="span12">
         @if (TempData.ContainsKey("Message"))
         {
@@ -22,7 +23,7 @@
 </div>
 <div class="row">
     <div class="span12">
-        <table class="table table-bordered table-hover">
+        <table class="table  table-hover">
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Nombre)
@@ -56,9 +57,14 @@
                         <a href="@Html.DisplayFor(modelItem => item.Link)">Enlace del proyecto</a>
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Editar", new { id = item.ID }) |
-            @Html.ActionLink("Detalles", "Detalles", new { id = item.ID }) |
-            @Html.ActionLink("Eliminar", "Eliminar", new { id = item.ID })
+                        <a href="@Url.Action("Detalles", new { id = item.ID })"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Editar", new { id = item.ID })"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Eliminar", new { id = item.ID })"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+
                     </td>
                 </tr>
             }
