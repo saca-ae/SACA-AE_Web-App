@@ -163,10 +163,10 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#descargar_reportes">Descarga de Reportes <b class="caret"></b></a>
                         <ul id="descargar_reportes" class="collapse">
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="@Html.Action("Download", "Reportes")">Generar Reporte</a>
                             </li>
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="@Html.Action("Index", "ReporteProfeCursoPlan")">Reporte de Profesores y Cursos por Plan</a>
                             </li>
                         </ul>
                     </li>
@@ -174,10 +174,37 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo">Mantenimientos <b class="caret"></b></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="@Html.Action("Index", "Courses")">Cursos</a>
                             </li>
                             <li>
-                                <a href="#">Dropdown Item</a>
+                                <a href="@Html.Action("Index", "Bloque")">Bloques Académicos</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "Plans")">Planes de Estudio</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "OfertaAcademica")">Oferta Académica</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "Aula")">Aulas</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "Horarios")">Horarios</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "Profesor")">Profesores</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "Proyecto")">Proyectos</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "Comision")">Comisiones</a>
+                            </li>
+                            <li>
+                                <a href="@Html.Action("Index", "Plazas")">Plazas</a>
+                            </li>
+                            <li>
+                                <a href="#">Sedes</a>
                             </li>
                         </ul>
                     </li>          
@@ -185,20 +212,22 @@
             </div>
 
         </nav>
-
-            <div class="container">
+        <div id="page-wrapper">
+            <div class="container-fluid">
                 @RenderBody()
             </div>
 
-        <!--
-            <div id="footer">
-                <div class="container">
-                    <p class="text-muted">Escuela de Administraci&oacute;n de Empresas - 2014.</p>
-                </div>
-            </div>
-        
-           -->
-     </div>
+            <!--
+         <div id="footer">
+             <div class="container">
+                 <p class="text-muted">Escuela de Administraci&oacute;n de Empresas - 2014.</p>
+             </div>
+         </div>
+
+        -->
+        </div>
+        <!-- /#page-wrapper -->
+        </div>
     <!-- /#wrapper -->
 
         @Scripts.Render("~/bundles/jquery")
