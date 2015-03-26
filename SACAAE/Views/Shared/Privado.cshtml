@@ -25,7 +25,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand">@Html.ActionLink("SACAAE", "Login", "Account")</div>
+                <div class="navbar-brand">@Html.ActionLink("SACAAE", "Index", "Home")</div>
             </div>
             
             <!-- Top Menu Items -->
@@ -215,7 +215,18 @@
         </nav>
 
         <div id="page-wrapper">
+            <div class="btn-group pull-right" role="group" aria-label="...">
+                <button type="button" class="btn btn-default">TEC</button>
+                <button type="button" class="btn btn-default">TAE</button>
+                <button type="button" class="btn btn-default">MAE</button>
+                <button type="button" class="btn btn-default">DDE</button>
+                <button type="button" class="btn btn-default">FUNDATEC</button>
+                <button type="button" class="btn btn-default">Actualización</button>
+            </div>
+           
             <div class="container-fluid">
+
+
                 @RenderBody()
             </div>
 
