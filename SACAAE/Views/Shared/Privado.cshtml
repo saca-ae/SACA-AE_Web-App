@@ -27,7 +27,8 @@
                 </button>
                 <div class="navbar-brand">@Html.ActionLink("SACAAE", "Login", "Account")</div>
             </div>
-             <!-- Top Menu Items -->
+            
+            <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> <b class="caret"></b></a>
@@ -140,22 +141,22 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#asignacion_carga_academica">Gestión de Carga Académica <b class="caret"></b></a>
                         <ul id="asignacion_carga_academica" class="collapse">
                             <li>
-                                <a href="@Html.Action("Asignar", "CursoProfesor")">Asignar Profesor a Curso</a>
+                                <a href="@Url.Action("Asignar", "CursoProfesor")">Asignar Profesor a Curso</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Revocar", "CursoProfesor")">Revocar Profesor de Curso</a>
+                                <a href="@Url.Action("Revocar", "CursoProfesor")">Revocar Profesor de Curso</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Asignar", "ComisionProfesor")">Asignar Profesor a Comisión</a>
+                                <a href="@Url.Action("Asignar", "ComisionProfesor")">Asignar Profesor a Comisión</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Revocar", "ComisionProfesor")">Revocar Profesor de Comisión</a>
+                                <a href="@Url.Action("Revocar", "ComisionProfesor")">Revocar Profesor de Comisión</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Asignar", "ProfesoresProyectos")">Asignar Profesor a Proyecto</a>
+                                <a href="@Url.Action("Asignar", "ProfesoresProyectos")">Asignar Profesor a Proyecto</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Revocar", "ProfesoresProyectos")">Revocar Profesor de Proyecto</a>
+                                <a href="@Url.Action("Revocar", "ProfesoresProyectos")">Revocar Profesor de Proyecto</a>
                             </li>
                         </ul>
                     </li>
@@ -163,10 +164,10 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#descargar_reportes">Descarga de Reportes <b class="caret"></b></a>
                         <ul id="descargar_reportes" class="collapse">
                             <li>
-                                <a href="@Html.Action("Download", "Reportes")">Generar Reporte</a>
+                                <a href="@Url.Action("Download", "Reportes")">Generar Reporte</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "ReporteProfeCursoPlan")">Reporte de Profesores y Cursos por Plan</a>
+                                <a href="@Url.Action("Index", "ReporteProfeCursoPlan")">Reporte de Profesores y Cursos por Plan</a>
                             </li>
                         </ul>
                     </li>
@@ -174,34 +175,34 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo">Mantenimientos <b class="caret"></b></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="@Html.Action("Index", "Courses")">Cursos</a>
+                                <a href="@Url.Action("Index", "Courses")">Cursos</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Bloque")">Bloques Académicos</a>
+                                <a href="@Url.Action("Index", "Bloque")">Bloques Académicos</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Plans")">Planes de Estudio</a>
+                                <a href="@Url.Action("Index", "Plans")">Planes de Estudio</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "OfertaAcademica")">Oferta Académica</a>
+                                <a href="@Url.Action("Index", "OfertaAcademica")">Oferta Académica</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Aula")">Aulas</a>
+                                <a href="@Url.Action("Index", "Aula")">Aulas</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Horarios")">Horarios</a>
+                                <a href="@Url.Action("Index", "Horarios")">Horarios</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Profesor")">Profesores</a>
+                                <a href="@Url.Action("Index", "Profesor")">Profesores</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Proyecto")">Proyectos</a>
+                                <a href="@Url.Action("Index", "Proyecto")">Proyectos</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Comision")">Comisiones</a>
+                                <a href="@Url.Action("Index", "Comision")">Comisiones</a>
                             </li>
                             <li>
-                                <a href="@Html.Action("Index", "Plazas")">Plazas</a>
+                                <a href="@Url.Action("Index", "Plazas")">Plazas</a>
                             </li>
                             <li>
                                 <a href="#">Sedes</a>
@@ -212,6 +213,7 @@
             </div>
 
         </nav>
+
         <div id="page-wrapper">
             <div class="container-fluid">
                 @RenderBody()
@@ -227,7 +229,8 @@
         -->
         </div>
         <!-- /#page-wrapper -->
-        </div>
+
+    </div>
     <!-- /#wrapper -->
 
         @Scripts.Render("~/bundles/jquery")
