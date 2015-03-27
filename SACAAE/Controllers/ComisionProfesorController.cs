@@ -27,6 +27,7 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Asignar()
         {
+            ViewBag.entidad = "TEC";
             if (Request.UrlReferrer != null)
             {
                 ViewBag.returnUrl = Request.UrlReferrer.ToString();
@@ -38,7 +39,8 @@ namespace SACAAE.Controllers
             List<Profesore> ListaProfesores = repositorioProfesor.ObtenerTodosProfesores().ToList<Profesore>();
             List<Comisione> ListaComisiones = repositorioComision.ObtenerTodasComisiones().ToList<Comisione>();
             //Lista de Comisiones segun entidad
-            List<Comisione> ListaComisionesXEntidad = repositorioComision.ObtenerComisionesXEntidad().ToList<Comisione>();
+           // string p_entidad = ViewBag.entidad;
+            List<Comisione> ListaComisionesXEntidad = repositorioComision.ObtenerComisionesXEntidad("TEC").ToList<Comisione>();
 
             if (ListaProfesores.Count > 0)
                 ViewBag.Profesores = ListaProfesores;

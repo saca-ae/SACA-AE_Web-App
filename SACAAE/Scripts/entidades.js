@@ -1,6 +1,7 @@
-﻿var num = null;
-$(".btn-group > button.btn").on("click", function(){
-    num = this.innerHTML;
+﻿
+var num = null;
+$(".btn-group > label.btn").on("click", function(){
+    num = this.innerText;
     //alert("Value is " + num);
-    ViewBag.entidad = num;
+    //ViewBag.entidad = num;
 });
