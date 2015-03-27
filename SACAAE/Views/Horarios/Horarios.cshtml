@@ -15,8 +15,13 @@
                    border-left: solid 1px #000;  
                    text-align: center; 
    }
-    .encabezado,.Horas {border-bottom:solid 1px #000;
-                 border-top:solid 1px #000;
+    .Horas {
+        border-bottom:solid 1px #000;
+        border-top:solid 1px #000;
+        font-size:medium;
+        width:100px;
+        height:30px;
+        
     }
 
     .ComboCursosSeleccionados {
@@ -32,11 +37,13 @@
     color:#000;
     }
     .encabezado {
+        border-bottom:solid 1px #000;
+        border-top:solid 1px #000;
         font-size:medium;
     }
     .alineacion-div > div {
         display: inline-block;
-        width: 25%;
+        width: 30%;
         margin: 0;
  }
 
@@ -193,7 +200,7 @@
         <div class="span12">
         <table class="mitabla" id="Resultado">
                   <tr>
-                    <td class="encabezado" id="vacio">Hora</td>
+                    <td class="Horas" id="vacio">Hora</td>
                     <td class="encabezado" id="Lunes">Lunes</td>
                     <td class="encabezado" id="Martes">Martes</td>
                     <td class="encabezado" id="Miercoles">Miércoles</td>
@@ -260,8 +267,8 @@
                             
                       <tr> 
                          @if (min == 0){
-                            if (hr == 12){<td class="encabezado" id="@Hora" rowspan="3"> @Lateral</td>}
-                            else {<td class="encabezado" id="@Hora" rowspan="6"> @Lateral</td>}
+                            if (hr == 12){<td class="Horas" id="@Hora" rowspan="3"> @Lateral</td>}
+                            else {<td class="Horas" id="@Hora" rowspan="6"> @Lateral</td>}
                         }
                         @if (hr == 12)
                         {
