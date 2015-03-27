@@ -42,6 +42,14 @@ namespace SACAAE.Models
                    select comision;
         }
 
+        public IQueryable<Comisione> ObtenerComisionesXEntidad()
+        {
+            return from comision in entidades.Comisiones
+                   orderby comision.Nombre
+                   where comision.Estado == 1 
+                   select comision;
+        }
+
         public Comisione ObtenerComision(int id)
         {
             return entidades.Comisiones.SingleOrDefault(comision => comision.ID == id);

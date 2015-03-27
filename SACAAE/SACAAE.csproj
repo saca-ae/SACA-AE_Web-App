@@ -447,6 +447,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\CursoProfesor.js" />
     <Content Include="Scripts\eliminarAjax.js" />
+    <Content Include="Scripts\entidades.js" />
     <Content Include="Scripts\horario.js" />
     <Content Include="Scripts\horario1.js" />
     <Content Include="Scripts\horario_aula.js" />

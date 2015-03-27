@@ -37,16 +37,18 @@ namespace SACAAE.Controllers
             }
             List<Profesore> ListaProfesores = repositorioProfesor.ObtenerTodosProfesores().ToList<Profesore>();
             List<Comisione> ListaComisiones = repositorioComision.ObtenerTodasComisiones().ToList<Comisione>();
+            //Lista de Comisiones segun entidad
+            List<Comisione> ListaComisionesXEntidad = repositorioComision.ObtenerComisionesXEntidad().ToList<Comisione>();
 
             if (ListaProfesores.Count > 0)
                 ViewBag.Profesores = ListaProfesores;
             else
                 ViewBag.Profesores = null;
 
-            if (ListaComisiones.Count > 0)
-                ViewBag.Comisiones = ListaComisiones;
+            if (ListaComisionesXEntidad.Count > 0)
+                ViewBag.ComisionesXEntidad = ListaComisionesXEntidad;
             else
-                ViewBag.Comisiones = null;
+                ViewBag.ComisionesXEntidad = null;
                        
 
             return View();
