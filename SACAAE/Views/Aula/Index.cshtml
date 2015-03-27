@@ -51,7 +51,9 @@
             <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
         }
         <p>
-            @Html.ActionLink("Crear Nueva Aula", "CrearAula")
+
+            <a href="@Url.Action("CrearAula", "Aula")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Aula</a>
+
         </p>
     </div>
 </div>
@@ -80,8 +82,7 @@
 <br />
 <div class="row">
     <div class="span12">
-        <table id="datosAula" class="table">
-        </table>
+        <table id="datosAula" class="table table-hover"></table>
     </div>
 </div>
 </div>

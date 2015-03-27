@@ -6,7 +6,7 @@
 }
 
 <div class="row">
-    <h2>Lista de Plazas</h2>
+    <h2>Plazas</h2>
     <hr />
     <div class="span12">
         @if (TempData.ContainsKey("Message"))
@@ -14,8 +14,9 @@
             <p class="text-success">@TempData["Message"].ToString()</p>
         }
         <p>
-            @Html.ActionLink("Agregar Nuevo", "Crear")  | @Html.ActionLink("Asignar", "Asignar") | @Html.ActionLink("Liberar Horas", "Liberar") | @Html.ActionLink("Nombrar Plaza", "Nombrar") | @Html.ActionLink("Quitar Nombramiento Plaza", "QuitarNombramiento")
-        </p>
+            <a href="@Url.Action("Crear", "Plazas")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Plaza</a>
+
+         </p>
     </div>
 </div>
 
@@ -27,19 +28,19 @@
                 <th>
                     Codigo
                 </th>
-                <th>
+                <th class="text-center">
                     Tipo de Plaza
                 </th>
-                <th>
+                <th class="text-center">
                     Tipo según tiempo
                 </th>
-                <th>
+                <th class="text-center">
                     Horas Totales
                 </th>
-                <th>
+                <th class="text-center">
                     Tiempo de vigencia
                 </th>
-                <th>Acciones</th>
+                <th class="text-center">Acciones</th>
             </tr>
                 </thead>
     <tbody>
@@ -49,22 +50,22 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Codigo_Plaza)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.Tipo_de_plaza)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.Tipo_segun_tiempo)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.Horas_Totales)
                     </td>
-                    <td>
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.Tiempo_de_vigencia)
                     </td>
-                    <td>
+                    <td class="text-center">
                         <a href="@Url.Action("Detalles", new { id = item.ID })"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                         <a href="@Url.Action("Editar", new { id = item.ID })"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a href="@Url.Action("Eliminar", new { id = item.ID })"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>                     
+                        <a href="@Url.Action("Eliminar", new { id = item.ID })"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                     </td>
                 </tr>
             }

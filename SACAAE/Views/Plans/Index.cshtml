@@ -50,7 +50,7 @@
     <div class="col-lg-5">
         <div class="span12">
         <p>
-            @Html.ActionLink("Agregar Nuevo", "CrearPlan")
+            <a href="@Url.Action("CrearPlan", "Plans")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Plan de Estudio</a>
         </p>
          <label>
                     Sede
@@ -102,9 +102,7 @@
     <br />
             </div>
     </div>
-    </div>     
+    </div>
 
-    <table id="datosPlan" class="table">
-    
-</table>
-    }
+    <table id="datosPlan" class="table table-hover"></table>
+}
