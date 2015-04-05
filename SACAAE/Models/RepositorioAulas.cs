@@ -9,7 +9,11 @@ namespace SACAAE.Models
     {
         private SACAAEEntities entidades = new SACAAEEntities();
 
-        
+        public RepositorioAulas()
+        {
+            entidades = new SACAAEEntities();
+        }
+
         public IQueryable<Aula> ListarAulas()
         {
             
@@ -32,6 +36,17 @@ namespace SACAAE.Models
                    select Aulas;
         }
 
+        
+        public IQueryable obtenerInfoAula(string aula, int periodo)
+        {
+            return from Dias in entidades.Dias
+                   join detallesGrupo in entidades.Detalle_Grupo on Dias.Horario equals detallesGrupo.Horario
+                   join grupos in entidades.Grupoes on detallesGrupo.Grupo equals grupos.ID
+                   join bloqueXPlanXCurso in entidades.BloqueXPlanXCursoes on grupos.BloqueXPlanXCursoID equals bloqueXPlanXCurso.ID
+                   join cursos in entidades.Cursos on bloqueXPlanXCurso.CursoID equals cursos.ID
+                   where detallesGrupo.Aula == aula && grupos.Periodo == periodo
+                   select new { Dias.Dia1, Dias.Hora_Inicio, Dias.Hora_Fin, cursos.Nombre, grupos.Numero, grupos.ID, detallesGrupo.Aula, bloqueXPlanXCurso.BloqueAcademicoXPlanDeEstudio.BloqueAcademico.Descripcion };
+        }
 
         public int idAula(string pCodigoAula)
         {

@@ -116,6 +116,11 @@ namespace SACAAE
             new { Controller = "Aula", action = "ObtenerAula" });
 
             routes.MapRoute(
+             "HorarioDeAula",
+             "ObtenerHorarioAula/List/{aula}/{periodo}",
+             new { Controller = "Aula", action = "ObtenerHorarioAula" });
+
+            routes.MapRoute(
              "ObtenerPlansEstudios",
              "Plans/Planes/List/{sede}/{modalidad}",
              new { Controller = "CursoProfesor", action = "ObtenerPlanesEstudio" });
