@@ -23,8 +23,9 @@ namespace SACAAE
 
             //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/custom.css",
-                "~/Content/bootstrap.min.css"));
+               
+                "~/Content/bootstrap.min.css",
+                 "~/Content/custom.css"));
 
         }
     }

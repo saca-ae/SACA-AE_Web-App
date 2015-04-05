@@ -38,10 +38,10 @@
 }
 
 
-<div class="row">
-    <h2>Aulas</h2>
-    <hr />
-    <div class="span12">
+    <h1 class="page-header">
+        Aulas
+    </h1>
+   
         @if (TempData.ContainsKey("MessageError"))
         {
             <p class="text-danger">@TempData["MessageError"].ToString()</p>
@@ -55,9 +55,7 @@
             <a href="@Url.Action("CrearAula", "Aula")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Aula</a>
 
         </p>
-    </div>
-</div>
-<div class="row">
+
     <div class="col-lg-5">
     <div class="span12">
         <label>Sede</label>
@@ -80,9 +78,5 @@
     </div>
 </div>
 <br />
-<div class="row">
-    <div class="span12">
+
         <table id="datosAula" class="table table-hover"></table>
-    </div>
-</div>
-</div>

@@ -5,17 +5,17 @@
  */
 
 /* Global Styles */
-
+ /*
 body {
-    margin-top: 100px;
-    background-color: #222;
+   margin-top: 100px;
+    background-color: #FFF;
 }
 
 @media(min-width:768px) {
     body {
         margin-top: 50px;
     }
-}
+}*/
 
 #wrapper {
     padding-left: 0;
@@ -23,9 +23,9 @@ body {
 
 #page-wrapper {
     width: 100%;
-    padding: 0;
+    padding: 10px;
+    padding-top: 50px;
     background-color: #fff;
-  
 }
 
 .huge {
@@ -35,11 +35,11 @@ body {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 225px;
+        padding-left: 240px;
     }
 
     #page-wrapper {
-        padding: 50px;
+        padding: 10px;
     }
 }
 
@@ -67,7 +67,7 @@ body {
 .top-nav>.open>a:hover,
 .top-nav>.open>a:focus {
     color: #fff;
-    background-color: #000;
+    background-color: #999;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -114,42 +114,35 @@ ul.alert-dropdown {
 /* Side Navigation */
 
 .side-nav {
-    position: absolute;
-    top: 51px;
-    left: 0px;
-    width: 230px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  
     height: 100%;
-
+     border: 1px solid rgba(0,0,0,0.1);  
 }
+
 
 @media(min-width:768px) {
     .side-nav {
         position: fixed;
         top: 51px;
-        left: 0px;
-        width: 240px;
+        left: 225px;
+        width: 230px;
         margin-left: -225px;
         border: none;
-        border-radius: 0px;
+        border-radius: 0;
         overflow-y: auto;
-        background-color: #eee;
+        background-color: #F5F5F5; /**/
     }
 
     .side-nav>li>a {
-        width: 240px;
-       
+        width: 230px;
     }
 
     .side-nav li a:hover,
     .side-nav li a:focus {
         outline: none;
-        background-color: #777 !important;
+        background-color: #999 !important;
     }
 }
-
 
 .side-nav>li>ul {
     padding: 0;
@@ -159,15 +152,38 @@ ul.alert-dropdown {
     display: block;
     padding: 10px 15px 10px 38px;
     text-decoration: none;
-    color: #999;
+    color: #777;
 }
 
 .side-nav>li>ul>li>a:hover {
     color: #fff;
 }
 
-.btn-group{
-    top: -50px;
+
+/*Login*/
+#loginForm {
+  max-width: 380px;
+  padding: 15px 35px 45px;
+  
+  margin: 0 auto;
+  margin-top: 50px;
+  background-color: #F5F5F5;
+  border: 1px solid rgba(0,0,0,0.1);  
+}
+
+/*Footer*/
+#footer {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+   position:absolute;
+   bottom:0;
+   width:100%;
+   height:60px;   
+   border: 1px solid rgba(0,0,0,0.1); 
    
 }
+
+
+
 

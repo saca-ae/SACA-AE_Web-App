@@ -25,36 +25,38 @@
         return "";
     }
 </script>
+
 <body onload="Guardar()">
-    <div class="page-header">
-        <div class="col-lg-4">
+    <div>
+        <div  id="loginForm">
             <h2 class="form-signin-heading">Iniciar Sesi&oacute;n</h2>
-            <section id="loginForm">
+            <section>
                 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
                 {
                     @Html.AntiForgeryToken()
-                    @Html.ValidationSummary(true)               
+                    @Html.ValidationSummary(true)
 
-                
+
                     @Html.TextBoxFor(m => m.NombreUsuario, new { @class = "form-control", @placeholder = "Nombre de Usuario", @required = "true" })
                     @Html.ValidationMessageFor(m => m.NombreUsuario)
                     <br />
                     @Html.TextBoxFor(m => m.Contrasenia, new { @class = "form-control", @placeholder = "Contraseña", @type = "password", @required = "true" })
                     @Html.ValidationMessageFor(m => m.Contrasenia)
-                    <h4>Periodo</h4>
                 
+                    <h4>Periodo</h4>
+
                     if (ViewBag.Periodos != null)
                     {
-                    @Html.DropDownList("ComboPeriodos", new SelectList(ViewBag.Periodos), new { @id = "ComboPeriodos", @class = "form-control", @onChange = "Guardar()" });
+                        @Html.DropDownList("ComboPeriodos", new SelectList(ViewBag.Periodos), new { @id = "ComboPeriodos", @class = "form-control", @onChange = "Guardar()" });
                     }
                     else
                     {
-                    @Html.DropDownList("ComboPeriodos", new SelectList("No se pudieron cargar los periodos."), new { @id = "ComboPeriodos", @class = "form-control", @disabled = "disabled", @onChange = "Guardar()" });
-                    }             
-                        
-                
-                
-                    <hr />
+                        @Html.DropDownList("ComboPeriodos", new SelectList("No se pudieron cargar los periodos."), new { @id = "ComboPeriodos", @class = "form-control", @disabled = "disabled", @onChange = "Guardar()" });
+                    }
+
+
+
+                    <hr/>
 
                     if (ViewBag.Periodos != null)
                     {
