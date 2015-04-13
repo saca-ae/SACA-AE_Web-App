@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using SACAAE.Models;
+using Newtonsoft.Json;
 
 namespace SACAAE.Controllers
 {
@@ -12,6 +14,8 @@ namespace SACAAE.Controllers
     {
         private RepositorioAulas vRepoAulas = new RepositorioAulas();
         private repositorioSedes vRepoSedes = new repositorioSedes();
+        private RepositorioAulas Aula = new RepositorioAulas();
+        private RepositorioPlanesDeEstudio repoPlanes = new RepositorioPlanesDeEstudio();
         private const string TempDataMessageKey = "MessageError";
         private const string TempDataMessageKeySuccess = "MessageSuccess";
 
@@ -40,6 +44,15 @@ namespace SACAAE.Controllers
                 return Json(listaAulas, JsonRequestBehavior.AllowGet);
             }
             return View(listaAulas);
+        }
+
+
+        public ActionResult ObtenerHorarioAula(string aula, int periodo)
+        {
+            IQueryable listaHorarioAula = Aula.obtenerInfoAula(aula, periodo);
+            var json = JsonConvert.SerializeObject(listaHorarioAula);
+
+            return Content(json);
         }
 
         [Authorize]

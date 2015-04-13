@@ -10,8 +10,8 @@
  
   
 <body>
-<h2>Cursos</h2>
-    <hr />
+
+<h1 class="page-header">Cursos</h1>
 @if (TempData.ContainsKey("MessageError"))
 {
     <p class="text-danger">@TempData["MessageError"].ToString()</p>
@@ -25,7 +25,7 @@
    
     <a href="@Url.Action("CrearCurso", "Courses")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Curso</a>
 </p>
-    <table id="myTable" class="table table-hover">
+<table id="myTable" class="table table-hover">
         <thead>
             <tr>
                 <th>
@@ -85,9 +85,9 @@
                 </tr>
             }
         </tbody>
-    </table>
+</table>
 
-    </body>
+</body>
 
     @section Scripts {
     <script type="text/javascript">

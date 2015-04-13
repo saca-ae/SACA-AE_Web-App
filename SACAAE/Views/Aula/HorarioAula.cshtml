@@ -1,5 +1,6 @@
 ﻿@model SACAAE.Models.Aula
 
+
 @{
     ViewBag.Title = "Horario Aula";
     Layout = "~/Views/Shared/Privado.cshtml";
@@ -7,9 +8,8 @@
 
 @section Scripts {
 
-    <script src="@Url.Content("~/Scripts/horario_aula.js")"></script>
-    <script src="@Url.Content("~/Scripts/ajaxCrear.js")"></script>
-    <script src="@Url.Content("~/Scripts/validaciones.js")"></script>
+    <script src="@Url.Content("~/Scripts/horarioAula.js")"></script>
+    
 }
 <style type="text/css">
 
@@ -58,13 +58,13 @@
 
 </Style>
 
-<body onload="Load()">
+<body onload="Load('@(Model.Codigo)')">
 
 
     <h2> Horario de Aula </h2>
     <h4>
             <span class="label label-info">
-                @Html.DisplayNameFor(model => model.Codigo)
+                @Html.DisplayName("Aula: ")
                 @Html.DisplayFor(model => model.Codigo)
             </span>
         </h4>

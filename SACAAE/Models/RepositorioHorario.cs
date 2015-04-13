@@ -104,7 +104,7 @@ namespace SACAAE.Models
                    where grupos.PlanDeEstudio == plan && grupos.Periodo == periodo
                    select new {Dias.Dia1, Dias.Hora_Inicio,Dias.Hora_Fin,cursos.Nombre, grupos.Numero, grupos.ID, detallesGrupo.Aula, bloqueXPlanXCurso.BloqueAcademicoXPlanDeEstudio.BloqueAcademico.Descripcion};
         }
-
+        
         public int ExisteHorario(string dia, int HoraInicio, int HoraFin, string aula, int grupo, int periodo)
         {
             var vDetalleGrupo=from Dia in entidades.Dias

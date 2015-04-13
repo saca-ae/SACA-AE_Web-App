@@ -1,56 +1,136 @@
 ﻿$(function () {
-    setCookie("Grupo", "");
-    setCookie("i", 0, 1);
-    setCookie("Cantidad", 0, 1);
-    var route = "/getHorarios/List/" + getCookie("Periodo");
-    $.getJSON(route, function (data) {
-        $.each(data, function (i, Horario) {
-            var Curso = Horario.Nombre;
-            var GrupoText = Horario.Numero;
-            var BloqueText = Horario.Descripcion;
-            var Dia = Horario.Dia1;
-            var Aula = Horario.Aula;
-            var HoraInicioCookie = Horario.Hora_Inicio;
-            var HoraFinCookie = Horario.Hora_Fin;
-            if (GrupoText == $('#sltGrupo option:selected').text() && BloqueText == $('#sltBloque option:selected').text()) {
-                var Inicio = parseInt(HoraInicioCookie);
-                var Fin = parseInt(HoraFinCookie);
-                var i = Inicio;
-                //Actualizo la tabla con el nuevo curso
-                var CantCeldas = 0;
-                var items = "";
-                while (i < Fin) {
+    /* Deshabilitar componentes que no tienen datos cargados */
+    $("#sltCurso").prop("disabled", "disabled");
+    $("#sltGrupo").prop("disabled", "disabled");
+    /* Funcion llamada cuando se cambien los valores de las sedes o las modalidades */
+    $("#sltBloque").change(function () {
+        var plan = getCookie("SelPlanDeEstudio");
+        var route = "/BloqueXPlanXCurso/Cursos/List/" + plan + "/" + $('select[name="sltBloque"]').val();
+        setCookie("Grupo", "");
+        $.getJSON(route, function (data) {
+            var items = "";
+            $.each(data, function (i, curso) {
+                items += "<option value= " + curso.Value + ">" + curso.Text + "</option>";
+            });
 
-                    var IdCelda = Dia + " " + i;
-                    if (i < 100) { IdCelda = Dia + " 0" + i; } //repara el string en caso de que la hora fuera 0010 ya que el parse la deja como 10
-                    if (i == 0) { IdCelda = Dia + " 000"; }
-                    var celda = document.getElementById(IdCelda);
-                    if (i == Inicio) {
-                        var primera = document.getElementById(IdCelda);
-                    }
-                    else if (celda != null) {
-                        items += celda.innerHTML;
-                        celda.parentNode.removeChild(celda);
-                    }
-                    i += 10;
-                    if (i % 100 == 60) { i += 40; }//cuando se llega al minuto 60 se le suman 40 al numero para que pase por ejemplo de 1060 a 1100
-                    CantCeldas++;
-                }
-                primera.innerHTML += items + "<p id=" + Dia + ">" + Curso + "<br>" + Aula + "</p>";
-                primera.style.backgroundColor = "#3276b1";
-                primera.rowSpan = CantCeldas.toString();
-                var cookie = getCookie("i");//i es el nombre de la cookie, es un contador de cursos pero en toda la sesion no local
-                var cantidad = 0;
-                if (cookie != "" && cookie != null && !isNaN(cookie)) {
-                    cantidad = parseInt(cookie);
-                }
-                cantidad++;
-                setCookie("i", cantidad.toString(), 1);
-                setCookie("Cookie" + cantidad.toString(), Curso + "|" + Dia + "|" + HoraInicioCookie + "|" + HoraFinCookie + "|" + "-" + "|" + Horario.ID + "|" + Horario.Aula, 1);
-            }
+
+            $("#sltCurso").prop("disabled", false);
+            $("#sltGrupo").html("");
+            $("#sltGrupo").prop("disabled", "disabled");
+            $("#sltCurso").html(items);
+            $("#sltCurso").prepend("<option value='' selected='selected'>-- Seleccionar Curso --</option>");
 
         });
     });
+    $("#sltCurso").change(function () {
+        var plan = getCookie("SelPlanDeEstudio");
+        var sede = getCookie("SelSede");
+        var route = "/CursoProfesor/Grupos/List/" + $('select[name="sltCurso"]').val() + "/" + plan + "/" + sede + "/" + $('select[name="sltBloque"]').val() + "/" + getCookie("PeriodoHorario");
+        $.getJSON(route, function (data) {
+            var items = "";
+            $.each(data, function (i, grupo) {
+                items += "<option value='" + grupo.Value + "'>" + grupo.Text + "</option>";
+            });
+
+            $("#sltGrupo").prop("disabled", false);
+            $("#sltGrupo").html(items);
+            $("#sltGrupo").prepend("<option value='' selected='selected'>-- Seleccionar Grupo --</option>");
+
+        });
+    });
+
+    $("#sltGrupo").change(function () {
+        if ($('#sltGrupo option:selected').text() != getCookie("Grupo")) {
+            setCookie("Grupo", $('#sltGrupo option:selected').text())
+            borrarTabla();
+            Cargar();
+        }
+    });
+
+    $("#LunesID").change(function () {
+        var isChecked = document.getElementById("LunesID").checked;
+        if (isChecked == true) {
+            AgregarCursos(0);
+        }
+        else {
+            document.getElementById("ComboHoraInicioLunes").selectedIndex = 0;
+            document.getElementById("ComboHoraFinLunes").selectedIndex = 0;
+            EliminarCurso(0);
+        }
+    });
+
+    $("#MartesID").change(function () {
+        var isChecked = document.getElementById("MartesID").checked;
+        if (isChecked == true) {
+            AgregarCursos(1);
+        }
+        else {
+            document.getElementById("ComboHoraInicioMartes").selectedIndex = 0;
+            document.getElementById("ComboHoraFinMartes").selectedIndex = 0;
+            EliminarCurso(1);
+        }
+    });
+
+    $("#MiercolesID").change(function () {
+        var isChecked = document.getElementById("MiercolesID").checked;
+        if (isChecked == true) {
+            AgregarCursos(2);
+        }
+        else {
+            document.getElementById("ComboHoraInicioMiercoles").selectedIndex = 0;
+            document.getElementById("ComboHoraFinMiercoles").selectedIndex = 0;
+            EliminarCurso(2);
+        }
+    });
+
+    $("#JuevesID").change(function () {
+        var isChecked = document.getElementById("JuevesID").checked;
+        if (isChecked == true) {
+            AgregarCursos(3);
+        }
+        else {
+            document.getElementById("ComboHoraInicioJueves").selectedIndex = 0;
+            document.getElementById("ComboHoraFinJueves").selectedIndex = 0;
+            EliminarCurso(3);
+        }
+    });
+
+    $("#ViernesID").change(function () {
+        var isChecked = document.getElementById("ViernesID").checked;
+        if (isChecked == true) {
+            AgregarCursos(4);
+        }
+        else {
+            document.getElementById("ComboHoraInicioViernes").selectedIndex = 0;
+            document.getElementById("ComboHoraFinViernes").selectedIndex = 0;
+            EliminarCurso(4);
+        }
+    });
+
+    $("#SabadoID").change(function () {
+        var isChecked = document.getElementById("SabadoID").checked;
+        if (isChecked == true) {
+            AgregarCursos(5);
+        }
+        else {
+            document.getElementById("ComboHoraInicioSabado").selectedIndex = 0;
+            document.getElementById("ComboHoraFinSabado").selectedIndex = 0;
+            EliminarCurso(5);
+        }
+    });
+
+    $("#DomingoID").change(function () {
+        var isChecked = document.getElementById("DomingoID").checked;
+        if (isChecked == true) {
+            AgregarCursos(6);
+        }
+        else {
+            document.getElementById("ComboHoraInicioDomingo").selectedIndex = 0;
+            document.getElementById("ComboHoraFinDomingo").selectedIndex = 0;
+            EliminarCurso(6);
+        }
+    });
+
 });
 
 function Load() {
@@ -165,39 +245,9 @@ function AgregarCursos(pDia) {
         alert("ERROR: Seleccione una aula");
         return;
     }
-    //Valido que no existan choques para la hora seleccionada
-    /*while (i < Fin) {
-
-        var IdCelda = Dia + " " + i;
-        if (i < 100) { IdCelda = Dia + " 0" + i; } //repara el string en caso de que la hora fuera 010 ya que el parse la deja como 10
-        if (i == 0) { IdCelda = Dia + " 000"; }    //repara el string en caso de que la hora fuera 000 ya que el parse la deja como 0
-
-        var celda = document.getElementById(IdCelda);
-        if (celda.style.backgroundColor != "") {
-            alert("ERROR: Existe un choque de horario,\n No se puede agregar el curso");
-            return;
-        }
-
-        i += 10;
-        if (i % 100 == 60) { i += 40; }
-    }*/
-    //var route = "/ExisteHorario/" + Dia + "/" + Inicio + "/" + Fin + "/" + Aula + "/" + Grupo + "/" + getCookie("PeriodoHorario");
+    
     var choque = 0;
-    /*$.ajax({
-        url: route,
-        datatype: 'json',
-        async: false,
-        success: function (data) {
-            if (data == 1) {
-                alert("Ya existe un curso a esa hora y aula");
-                choque = 1;
-                return;
-            }
-        }
-
-    });*/
-
-
+    
 
     for (k = 1; k <= getCookie("i") ; k++) {
         var Detalles = getCookie("Cookie" + k);
@@ -279,120 +329,7 @@ function AgregarCursos(pDia) {
     }
 }
 
-/* ESTA FUNCION AGREGA TODOS LOS CURSOS QUE ESTAN CHECKED EN EL HORARIO 
-function AgregarCurso() {
-    for (contador = 0; contador < 7; contador++) //Busca si hay check en los dias y agrega el horario
-    {
-        var IdDiaSeleccionado = "";
-        var IdHoraInicioSeleccionada = "";
-        var IdHoraFinSeleccionada = "";
-        var Dia = "";
-        switch (contador) {
-            case 0: Dia = "Lunes"; IdDiaSeleccionado = "LunesID"; IdHoraInicioSeleccionada = "ComboHoraInicioLunes"; IdHoraFinSeleccionada = "ComboHoraFinLunes"; break;
-            case 1: Dia = "Martes"; IdDiaSeleccionado = "MartesID"; IdHoraInicioSeleccionada = "ComboHoraInicioMartes"; IdHoraFinSeleccionada = "ComboHoraFinMartes"; break;
-            case 2: Dia = "Miercoles"; IdDiaSeleccionado = "MiercolesID"; IdHoraInicioSeleccionada = "ComboHoraInicioMiercoles"; IdHoraFinSeleccionada = "ComboHoraFinMiercoles"; break;
-            case 3: Dia = "Jueves"; IdDiaSeleccionado = "JuevesID"; IdHoraInicioSeleccionada = "ComboHoraInicioJueves"; IdHoraFinSeleccionada = "ComboHoraFinJueves"; break;
-            case 4: Dia = "Viernes"; IdDiaSeleccionado = "ViernesID"; IdHoraInicioSeleccionada = "ComboHoraInicioViernes"; IdHoraFinSeleccionada = "ComboHoraFinViernes"; break;
-            case 5: Dia = "Sabado"; IdDiaSeleccionado = "SabadoID"; IdHoraInicioSeleccionada = "ComboHoraInicioSabado"; IdHoraFinSeleccionada = "ComboHoraFinSabado"; break;
-            case 6: Dia = "Domingo"; IdDiaSeleccionado = "DomingoID"; IdHoraInicioSeleccionada = "ComboHoraInicioDomingo"; IdHoraFinSeleccionada = "ComboHoraFinDomingo"; break;
-            default: break;
-        }
 
-        var isCheck = document.getElementById(IdDiaSeleccionado).checked;
-
-        if (isCheck == true) {
-            try {
-                
-                var table = document.getElementById("Resultado");
-                var Curso = document.getElementById("sltCurso").options[document.getElementById("sltCurso").selectedIndex].text;
-                var Bloque = document.getElementById("sltBloque").options[document.getElementById("sltBloque").selectedIndex].value;
-                var Grupo = document.getElementById("sltGrupo").options[document.getElementById("sltGrupo").selectedIndex].value;
-                var GrupoText = document.getElementById("sltGrupo").options[document.getElementById("sltGrupo").selectedIndex].text;
-                var Aula = document.getElementById("sltAula").options[document.getElementById("sltAula").selectedIndex].text;
-                var HoraInicioTemp = document.getElementById(IdHoraInicioSeleccionada).options[document.getElementById(IdHoraInicioSeleccionada).selectedIndex].value;
-                var HoraFinTemp = document.getElementById(IdHoraFinSeleccionada).options[document.getElementById(IdHoraFinSeleccionada).selectedIndex].value;
-                var separador = ":";
-                var HoraInicio = HoraInicioTemp.replace(separador,'');
-                var HoraFin = HoraFinTemp.replace(separador, '');
-                var Inicio = parseInt(HoraInicio)
-                var Fin = parseInt(HoraFin)
-                var i = Inicio
-            }
-            catch (err) {
-                alert("ERROR: Debe seleccionar el grupo de un curso en una aula");
-                return;
-            }
-            if (Inicio == Fin) {
-                alert("ERROR: La hora de inicio y fin son iguales");
-                return;
-            }
-            if (Inicio > Fin) {
-                alert("ERROR: La hora de inicio es posterior a la de fin");
-                return;
-            }
-            if (Grupo == "") {
-                alert("ERROR: Seleccione un grupo");
-                return;
-            }
-            else if (Aula == "-- Seleccionar Aula --") {
-                alert("ERROR: Seleccione una aula");
-                return;
-            }
-            
-            var choque = 0;
-            
-            for (k = 1; k <= getCookie("i") ; k++) {
-                var Detalles = getCookie("Cookie" + k);
-                var Partes = Detalles.split("|");
-                if (Partes[0] != "d") {
-                    if ((Partes[1] == Dia && ((Partes[2] <= Inicio && Partes[3] >= Inicio) || (Partes[2] <= Fin && Partes[3] >= Fin)
-                        || (Partes[2] <= Inicio && Partes[3] >= Fin) || (Partes[2] >= Inicio && Partes[3] <= Fin)))) {
-                        alert("ERROR: Ya hay un curso impartido en ese horario o esa aula");
-                        choque = 1;
-                    }
-                }
-
-            }
-            if (choque == 0) {
-                i = Inicio;
-                var CantCeldas = 0;
-                var items = "";
-                while (i < Fin) {
-
-                    var IdCelda = Dia + " " + i;
-                    if (i < 100) { IdCelda = Dia + " 0" + i; } //repara el string en caso de que la hora fuera 0010 ya que el parse la deja como 10
-                    if (i == 0) { IdCelda = Dia + " 000"; }
-                    var celda = document.getElementById(IdCelda);
-                    if (i == Inicio) {
-                        var primera = document.getElementById(IdCelda);
-                    }
-                    else if (celda != null) {
-                        items += celda.innerHTML;
-                        celda.parentNode.removeChild(celda);
-                    }
-                    i += 10;
-                    if (i % 100 == 60) { i += 40; }//cuando se llega al minuto 60 se le suman 40 al numero para que pase por ejemplo de 1060 a 1100
-                    CantCeldas++;
-                }
-                primera.innerHTML += items + "<p id=" + Dia + ">" + Curso + "<br>" + Aula + "</p>";
-                primera.style.backgroundColor = "#51ff00";
-                primera.rowSpan = CantCeldas;
-
-                //Actualizo el contador
-                var cookie = getCookie("i");//i es el nombre de la cookie, es un contador de cursos pero en toda la sesion no local
-                var cantidad = 0;
-                if (cookie != "" && cookie != null && !isNaN(cookie)) {
-                    cantidad = parseInt(cookie);
-                }
-                cantidad++;
-                setCookie("i", cantidad.toString(), 1);
-                setCookie("Cookie" + cantidad.toString(), Curso + "|" + Dia + "|" + HoraInicio + "|" + HoraFin + "|" + Bloque + "|" + Grupo + "|" + Aula, 1);
-            }
-        }
-    }
-
-}
-*/
 function EliminarCurso(pDia) {
 
     var IdDiaSeleccionado = "";
@@ -611,3 +548,118 @@ function Dias(k) {
     }
 
 }
+
+/* ESTA FUNCION AGREGA TODOS LOS CURSOS QUE ESTAN CHECKED EN EL HORARIO 
+function AgregarCurso() {
+    for (contador = 0; contador < 7; contador++) //Busca si hay check en los dias y agrega el horario
+    {
+        var IdDiaSeleccionado = "";
+        var IdHoraInicioSeleccionada = "";
+        var IdHoraFinSeleccionada = "";
+        var Dia = "";
+        switch (contador) {
+            case 0: Dia = "Lunes"; IdDiaSeleccionado = "LunesID"; IdHoraInicioSeleccionada = "ComboHoraInicioLunes"; IdHoraFinSeleccionada = "ComboHoraFinLunes"; break;
+            case 1: Dia = "Martes"; IdDiaSeleccionado = "MartesID"; IdHoraInicioSeleccionada = "ComboHoraInicioMartes"; IdHoraFinSeleccionada = "ComboHoraFinMartes"; break;
+            case 2: Dia = "Miercoles"; IdDiaSeleccionado = "MiercolesID"; IdHoraInicioSeleccionada = "ComboHoraInicioMiercoles"; IdHoraFinSeleccionada = "ComboHoraFinMiercoles"; break;
+            case 3: Dia = "Jueves"; IdDiaSeleccionado = "JuevesID"; IdHoraInicioSeleccionada = "ComboHoraInicioJueves"; IdHoraFinSeleccionada = "ComboHoraFinJueves"; break;
+            case 4: Dia = "Viernes"; IdDiaSeleccionado = "ViernesID"; IdHoraInicioSeleccionada = "ComboHoraInicioViernes"; IdHoraFinSeleccionada = "ComboHoraFinViernes"; break;
+            case 5: Dia = "Sabado"; IdDiaSeleccionado = "SabadoID"; IdHoraInicioSeleccionada = "ComboHoraInicioSabado"; IdHoraFinSeleccionada = "ComboHoraFinSabado"; break;
+            case 6: Dia = "Domingo"; IdDiaSeleccionado = "DomingoID"; IdHoraInicioSeleccionada = "ComboHoraInicioDomingo"; IdHoraFinSeleccionada = "ComboHoraFinDomingo"; break;
+            default: break;
+        }
+
+        var isCheck = document.getElementById(IdDiaSeleccionado).checked;
+
+        if (isCheck == true) {
+            try {
+                
+                var table = document.getElementById("Resultado");
+                var Curso = document.getElementById("sltCurso").options[document.getElementById("sltCurso").selectedIndex].text;
+                var Bloque = document.getElementById("sltBloque").options[document.getElementById("sltBloque").selectedIndex].value;
+                var Grupo = document.getElementById("sltGrupo").options[document.getElementById("sltGrupo").selectedIndex].value;
+                var GrupoText = document.getElementById("sltGrupo").options[document.getElementById("sltGrupo").selectedIndex].text;
+                var Aula = document.getElementById("sltAula").options[document.getElementById("sltAula").selectedIndex].text;
+                var HoraInicioTemp = document.getElementById(IdHoraInicioSeleccionada).options[document.getElementById(IdHoraInicioSeleccionada).selectedIndex].value;
+                var HoraFinTemp = document.getElementById(IdHoraFinSeleccionada).options[document.getElementById(IdHoraFinSeleccionada).selectedIndex].value;
+                var separador = ":";
+                var HoraInicio = HoraInicioTemp.replace(separador,'');
+                var HoraFin = HoraFinTemp.replace(separador, '');
+                var Inicio = parseInt(HoraInicio)
+                var Fin = parseInt(HoraFin)
+                var i = Inicio
+            }
+            catch (err) {
+                alert("ERROR: Debe seleccionar el grupo de un curso en una aula");
+                return;
+            }
+            if (Inicio == Fin) {
+                alert("ERROR: La hora de inicio y fin son iguales");
+                return;
+            }
+            if (Inicio > Fin) {
+                alert("ERROR: La hora de inicio es posterior a la de fin");
+                return;
+            }
+            if (Grupo == "") {
+                alert("ERROR: Seleccione un grupo");
+                return;
+            }
+            else if (Aula == "-- Seleccionar Aula --") {
+                alert("ERROR: Seleccione una aula");
+                return;
+            }
+            
+            var choque = 0;
+            
+            for (k = 1; k <= getCookie("i") ; k++) {
+                var Detalles = getCookie("Cookie" + k);
+                var Partes = Detalles.split("|");
+                if (Partes[0] != "d") {
+                    if ((Partes[1] == Dia && ((Partes[2] <= Inicio && Partes[3] >= Inicio) || (Partes[2] <= Fin && Partes[3] >= Fin)
+                        || (Partes[2] <= Inicio && Partes[3] >= Fin) || (Partes[2] >= Inicio && Partes[3] <= Fin)))) {
+                        alert("ERROR: Ya hay un curso impartido en ese horario o esa aula");
+                        choque = 1;
+                    }
+                }
+
+            }
+            if (choque == 0) {
+                i = Inicio;
+                var CantCeldas = 0;
+                var items = "";
+                while (i < Fin) {
+
+                    var IdCelda = Dia + " " + i;
+                    if (i < 100) { IdCelda = Dia + " 0" + i; } //repara el string en caso de que la hora fuera 0010 ya que el parse la deja como 10
+                    if (i == 0) { IdCelda = Dia + " 000"; }
+                    var celda = document.getElementById(IdCelda);
+                    if (i == Inicio) {
+                        var primera = document.getElementById(IdCelda);
+                    }
+                    else if (celda != null) {
+                        items += celda.innerHTML;
+                        celda.parentNode.removeChild(celda);
+                    }
+                    i += 10;
+                    if (i % 100 == 60) { i += 40; }//cuando se llega al minuto 60 se le suman 40 al numero para que pase por ejemplo de 1060 a 1100
+                    CantCeldas++;
+                }
+                primera.innerHTML += items + "<p id=" + Dia + ">" + Curso + "<br>" + Aula + "</p>";
+                primera.style.backgroundColor = "#51ff00";
+                primera.rowSpan = CantCeldas;
+
+                //Actualizo el contador
+                var cookie = getCookie("i");//i es el nombre de la cookie, es un contador de cursos pero en toda la sesion no local
+                var cantidad = 0;
+                if (cookie != "" && cookie != null && !isNaN(cookie)) {
+                    cantidad = parseInt(cookie);
+                }
+                cantidad++;
+                setCookie("i", cantidad.toString(), 1);
+                setCookie("Cookie" + cantidad.toString(), Curso + "|" + Dia + "|" + HoraInicio + "|" + HoraFin + "|" + Bloque + "|" + Grupo + "|" + Aula, 1);
+            }
+        }
+    }
+
+}
+*/

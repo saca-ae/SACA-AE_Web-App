@@ -5,10 +5,11 @@
     Layout = "~/Views/Shared/Privado.cshtml";
 }
 
-<div class="row">
-    <h2>Plazas</h2>
-    <hr />
-    <div class="span12">
+
+<h1 class="page-header">
+    Plazas
+</h1>
+   
         @if (TempData.ContainsKey("Message"))
         {
             <p class="text-success">@TempData["Message"].ToString()</p>
@@ -17,11 +18,7 @@
             <a href="@Url.Action("Crear", "Plazas")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Plaza</a>
 
          </p>
-    </div>
-</div>
-
-<div class="row">
-    <div class="span12">
+  
         <table id="myTable" class="table table-hover">
             <thead>
             <tr>
@@ -71,9 +68,7 @@
             }
         </tbody> 
         </table>
-    </div>
 
-</div>
 
     @section Scripts {
     <script type="text/javascript">
