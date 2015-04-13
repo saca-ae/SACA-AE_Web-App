@@ -41,6 +41,42 @@
                })
                 @Html.ValidationMessageFor(model => model.Link)
             </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Tel1)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Tel1, new
+                       {
+                           @class = "form-control",
+                       })
+                @Html.ValidationMessageFor(model => model.Tel1)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Tel2)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Tel2, new
+                       {
+                           @class = "form-control",
+                       })
+                @Html.ValidationMessageFor(model => model.Tel2)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Correo)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.Correo, new
+                       {
+                           @class = "form-control",
+                       })
+                @Html.ValidationMessageFor(model => model.Correo)
+            </div>
+
+
+
             <br />
             <p>
                 <input type="submit" value="Guardar" class="btn" />

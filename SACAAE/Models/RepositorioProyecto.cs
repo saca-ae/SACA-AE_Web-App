@@ -42,6 +42,21 @@ namespace SACAAE.Models
                    select proyecto;
         }
 
+
+        /// <summary>
+        /// Se obtiene la lista de proyectos usando LINQ
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<Proyecto> ObtenerProfesorProyectos(int profeId)
+        {
+            return from proyecto in entidades.Proyectos
+                   orderby proyecto.Nombre
+                   join l in entidades.ProyectosXProfesors on proyecto.ID equals l.Proyecto
+                   where proyecto.Estado == 1 && l.Profesor == profeId
+                   select proyecto;
+        }
+
+
         /// <summary>
         /// Se obtiene un proyecto de acuerdo a un Id.
         /// </summary>

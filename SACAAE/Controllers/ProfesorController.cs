@@ -33,7 +33,7 @@ namespace SACAAE.Controllers
         [HttpPost]
         public ActionResult Crear(Profesore nuevoProfesor)
         {
-            repositorio.CrearProfesor(nuevoProfesor.Nombre, nuevoProfesor.Link, 1);
+            repositorio.CrearProfesor(nuevoProfesor.Nombre, nuevoProfesor.Link,nuevoProfesor.Tel1,nuevoProfesor.Tel2,nuevoProfesor.Correo, 1);
             TempData[TempDataMessageKey] = "Profesor agregado correctamente.";
             return RedirectToAction("Index");
 

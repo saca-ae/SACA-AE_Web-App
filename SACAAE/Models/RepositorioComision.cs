@@ -27,6 +27,15 @@ namespace SACAAE.Models
             entidades = new SACAAEEntities();
         }
 
+        public IQueryable<Comisione> ObtenerProfesorComisiones(int profeId)
+        {
+            return from comision in entidades.Comisiones
+                   orderby comision.Nombre
+                   join l in entidades.ComisionesXProfesors on comision.ID equals l.Comision
+                   where comision.Estado == 1 && l.Profesor == profeId
+                   select comision;
+        }
+
         public IQueryable<ComisionesXProfesor> ObtenerComisionesXProfesor(int comision)
         {
             return from ComisionesXProfesor in entidades.ComisionesXProfesors

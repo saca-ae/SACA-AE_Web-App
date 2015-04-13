@@ -52,7 +52,7 @@ namespace SACAAE.Models
             entidades.Profesores.Add(profesor);
         }
 
-        public void CrearProfesor(String nombre, String link, int estado)
+        public void CrearProfesor(String nombre, String link,string tel1,string tel2,string correo, int estado)
         {
             if (string.IsNullOrEmpty(nombre.Trim()))
                 throw new ArgumentException("El nombre del profesor no es válido. Por favor, inténtelo de nuevo");
@@ -65,7 +65,10 @@ namespace SACAAE.Models
                 Nombre = nombre,
                 //Plaza = plaza,
                 Link = link,
-                Estado = estado
+                Estado = estado,
+                Correo = correo,
+                Tel1 = tel1,
+                Tel2 = tel2
             
             };
 
@@ -116,6 +119,10 @@ namespace SACAAE.Models
                 entidades.Entry(temp).Property(p => p.Nombre).CurrentValue = profesor.Nombre;
                 //entidades.Entry(temp).Property(p => p.Plaza).CurrentValue = profesor.Plaza;
                 entidades.Entry(temp).Property(p => p.Link).CurrentValue = profesor.Link;
+
+                entidades.Entry(temp).Property(p => p.Correo).CurrentValue = profesor.Correo;
+                entidades.Entry(temp).Property(p => p.Tel1).CurrentValue = profesor.Tel1;
+                entidades.Entry(temp).Property(p => p.Tel2).CurrentValue = profesor.Tel2;
             }
 
             Save();
