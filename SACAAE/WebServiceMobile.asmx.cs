@@ -19,24 +19,24 @@ namespace SACAAE
     {
         SACAAEEntities entidades = new SACAAEEntities();
         [WebMethod]
-        public string HelloWorld()
+        public AlertaComisionProfesor HelloWorld()
         {
-            return "Hola a todos";
+            return new AlertaComisionProfesor { COMISION = "RASTA" };
         }
 
         [WebMethod]
-        public string Login(String pMail)
+        public Pass Login(String pMail)
         {
             if ((from s in entidades.Profesores
                  where s.Correo == pMail
 
                  select s.ID).Count() == 1)
             {
-                return "1";
+                return new Pass { Password = "1"};
             }
             else
             {
-                return "0";
+                return new Pass { Password = "0" };
             }
         }
 
@@ -120,5 +120,9 @@ namespace SACAAE
                             Grupoo = g.Numero,Periodoo = g.Periodo1.Nombre, Aulaa = w.Aula,Cursoo = p.Curso.Nombre,Codigo = p.Curso.Codigo};
             return serializer.Serialize(cursos);
         }
+    }
+     public class Pass
+    {
+        public String Password { get; set; }
     }
 }
