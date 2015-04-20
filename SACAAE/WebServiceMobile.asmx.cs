@@ -131,8 +131,8 @@ namespace SACAAE
                     Aula = actual.Aulaa,
                     Codigo = actual.Codigo,
                     Curso = actual.Cursoo,
-                    Inicio = String.Format("{0:MM/dd/yyyy}", actual.Inicio.Value),
-                    Fin = String.Format("{0:MM/dd/yyyy}", actual.Fin.Value),
+                    Inicio = actual.Inicio.Value.ToString(),
+                    Fin =  actual.Fin.Value.ToString(),
                     Entidad = actual.Entidad
                 });
             }
