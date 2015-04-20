@@ -42,7 +42,7 @@ namespace SACAAE
 
         // carga estimada, horas asignadas al proyecto, "" a comision
         [WebMethod]
-        public string GetProyectos(String pMail)
+        public List<AlertaProyectoProfesor> GetProyectos(String pMail)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<AlertaProyectoProfesor> resultado = new List<AlertaProyectoProfesor>();
@@ -69,12 +69,12 @@ namespace SACAAE
                 });
             }
 
-            return serializer.Serialize(resultado);
+            return resultado;
         }
     
 
         [WebMethod]
-        public string GetComisiones(String pMail)
+        public List<AlertaComisionProfesor> GetComisiones(String pMail)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
             List<AlertaComisionProfesor> resultado = new List<AlertaComisionProfesor>();
@@ -100,7 +100,7 @@ namespace SACAAE
                 });
             }
 
-            return serializer.Serialize(resultado);
+            return resultado;
         }
 
         [WebMethod]
