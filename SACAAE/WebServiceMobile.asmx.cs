@@ -104,10 +104,10 @@ namespace SACAAE
         }
 
         [WebMethod]
-        public string GetCursos(String pMail)
+        public List<CursoWS> GetCursos(String pMail)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
-            
+            List<CursoWS> resultado = new List<CursoWS>();
             var cursos = from s in entidades.ProfesoresXCursoes
                             join c in entidades.Profesores on s.Profesor equals c.ID
                             join w in entidades.Detalle_Grupo on s.Profesor equals w.Profesor
@@ -116,11 +116,45 @@ namespace SACAAE
                             join p in entidades.BloqueXPlanXCursoes on g.ID equals p.CursoID
                             where c.Correo == pMail
 
-                            select new { Profesor = c.Nombre,  Entidad = p.BloqueAcademicoXPlanDeEstudio.PlanesDeEstudio.TipoEntidad.Nombre, Inicio = d.Hora_Inicio,Fin = d.Hora_Fin, Day = d.Dia1,
+                            select new {ID= g.ID, Profesor = c.Nombre,  Entidad = p.BloqueAcademicoXPlanDeEstudio.PlanesDeEstudio.TipoEntidad.Nombre, Inicio = d.Hora_Inicio,Fin = d.Hora_Fin, Day = d.Dia1,
                             Grupoo = g.Numero,Periodoo = g.Periodo1.Nombre, Aulaa = w.Aula,Cursoo = p.Curso.Nombre,Codigo = p.Curso.Codigo};
-            return serializer.Serialize(cursos);
+
+
+            foreach (var actual in cursos)
+            {
+                resultado.Add(new CursoWS
+                {
+                    Id = actual.ID+"",
+                    Profesor = actual.Profesor,
+                    Grupo = actual.Grupoo+"",
+                    Periodo = actual.Periodoo,
+                    Aula = actual.Aulaa,
+                    Codigo = actual.Codigo,
+                    Curso = actual.Cursoo,
+                    Inicio = String.Format("{0:MM/dd/yyyy}", actual.Inicio.Value),
+                    Fin = String.Format("{0:MM/dd/yyyy}", actual.Fin.Value),
+                    Entidad = actual.Entidad
+                });
+            }
+
+            return resultado;
         }
     }
+
+    public class CursoWS
+    {
+        public String Id { get; set; }
+        public string Profesor { get; set; }
+        public String Entidad { get; set; }
+        public String Inicio { get; set; }
+        public String Fin { get; set; }
+        public String Grupo { get; set; }
+        public String Periodo { get; set; }
+        public String Aula { get; set; }
+        public String Curso { get; set; }
+        public String Codigo { get; set; }
+    }
+
      public class Pass
     {
         public String Password { get; set; }
