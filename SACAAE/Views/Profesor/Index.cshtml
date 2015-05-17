@@ -27,10 +27,20 @@
                         @Html.DisplayNameFor(model => model.Nombre)
                     </th>
                     <th class="text-center">
-                        Plaza
+                       <!--Plaza--> 
+                        Horas TEC
                     </th>
                     <th class="text-center">
-                        Horas Asignadas
+                       <!-- Horas Asignadas-->
+                        Horas FUNDATEC
+                    </th>
+                    <th class="text-center">
+                        <!--Plaza-->
+                        Horas REC
+                    </th>
+                    <th class="text-center">
+                        <!--Plaza-->
+                        Total
                     </th>
                     <th class="text-center">Asignar a</th>
                     <th class="text-center">Acciones</th>
@@ -44,19 +54,25 @@
                             @Html.DisplayFor(modelItem => item.Nombre)
                         </td>
                         <td class="text-center">
+                            <!--
                             @for (int i = 0; i < item.PlazaXProfesors.Count(); i++)
-                        {
-                        @Html.DisplayFor(modelItem => item.PlazaXProfesors.ElementAt(i).Plaza1.Codigo_Plaza)
-                        <br />
-                        }
+                            {
+                            @Html.DisplayFor(modelItem => item.PlazaXProfesors.ElementAt(i).Plaza1.Codigo_Plaza)
+                            <br />
+                            }
+                                -->
                         </td>
                         <td class="text-center">
+                            <!--
                             @for (int i = 0; i < item.PlazaXProfesors.Count(); i++)
                         {
                         @Html.DisplayFor(modelItem => item.PlazaXProfesors.ElementAt(i).Horas_Asignadas)
                         <br />
                         }
+                          -->
                         </td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
                         <td class="text-center">
                             @Html.ActionLink("Comisión", "Asignar", "ComisionProfesor") |
                             @Html.ActionLink("Proyecto", "Asignar", "ProfesoresProyectos") |
