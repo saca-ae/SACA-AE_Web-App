@@ -144,7 +144,7 @@ namespace SACAAE.Models
                 int Grupo = Int32.Parse(Partes[5]);
                 int IdHorario = Cursos.IdHorarioCurso(Grupo);
                 if(IdHorario!=0){
-                Horario.EliminarDias(IdHorario);
+                    Horario.EliminarDias(IdHorario);
                 }
 
             }

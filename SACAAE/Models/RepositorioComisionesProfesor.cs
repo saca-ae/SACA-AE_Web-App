@@ -13,7 +13,7 @@ namespace SACAAE.Models
             entidades = new SACAAEEntities();
         }
 
-        public bool CrearComisionProfesor(String profesor, String comision, String dia, int horainicio, int horafin, int IDPeriodo)
+        public bool CrearComisionProfesor(String profesor, String comision, String dia, String horainicio, String horafin, int IDPeriodo)
         {
             var retorno = false;
 
@@ -44,8 +44,8 @@ namespace SACAAE.Models
                         {
                             Dia1 = dia,
                             Horario = IDHorario,
-                            Hora_Inicio = horainicio,
-                            Hora_Fin = horafin,
+                            Hora_Inicio = Int16.Parse(horainicio),
+                            Hora_Fin = Int16.Parse(horafin),
 
                         };
 
@@ -63,8 +63,8 @@ namespace SACAAE.Models
                         {
                             Dia1 = dia,
                             Horario = IDHorario,
-                            Hora_Inicio = horainicio,
-                            Hora_Fin = horafin,
+                            Hora_Inicio = Int16.Parse(horainicio),
+                            Hora_Fin = Int16.Parse(horafin),
 
                         };
 
