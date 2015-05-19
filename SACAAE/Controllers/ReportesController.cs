@@ -140,6 +140,10 @@ namespace SACAAE.Models
                             string HoraInicio = (Dia.Hora_Inicio / 100).ToString() + ":" + (Dia.Hora_Inicio % 100).ToString();
                             string HoraFin = (Dia.Hora_Fin / 100).ToString() + ":" + (Dia.Hora_Fin % 100).ToString();
                             double CargaC = (double)(Dia.Hora_Fin - Dia.Hora_Inicio) / 100;
+                            if (Dia.Hora_Inicio <= 1200 && Dia.Hora_Fin >= 1300)
+                            {
+                                CargaC = CargaC - 1;
+                            }
                             /*sw.WriteLine("Proyecto;N/A;" +
                                         Proyecto.Nombre + ";" +
                                         Profe.Profesore.Nombre + ";" +
@@ -197,7 +201,10 @@ namespace SACAAE.Models
                             string HoraInicio = (Dia.Hora_Inicio / 100).ToString() + ":" + (Dia.Hora_Inicio % 100).ToString();
                             string HoraFin = (Dia.Hora_Fin / 100).ToString() + ":" + (Dia.Hora_Fin % 100).ToString();
                             double CargaC=(double)(Dia.Hora_Fin-Dia.Hora_Inicio)/100;
-
+                            if (Dia.Hora_Inicio <= 1200 && Dia.Hora_Fin >= 1300)
+                            {
+                                CargaC = CargaC - 1;
+                            }
                             /*sw.WriteLine("Comision;N/A;" +
                                         Comision.Nombre + ";" +
                                         Profe.Profesore.Nombre + ";" +
