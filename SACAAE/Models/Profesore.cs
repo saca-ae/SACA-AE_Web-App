@@ -29,6 +29,7 @@ namespace SACAAE.Models
         public string Tel1 { get; set; }
         public string Tel2 { get; set; }
         public string Correo { get; set; }
+        public string Contrasenia { get; set; }
     
         public virtual ICollection<ComisionesXProfesor> ComisionesXProfesors { get; set; }
         public virtual Estado Estado1 { get; set; }

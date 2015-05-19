@@ -274,7 +274,7 @@ namespace SACAAE.Models
                     Codigo = actual.Codigo,
                     Curso = actual.Cursoo,
                     Inicio = actual.Inicio.Value.ToString(),
-                    Fin = String.Format("{0:MM/dd/yyyy}", actual.Fin.Value),
+                    Fin = actual.Fin.Value.ToString(),
                     Entidad = actual.Entidad
                 });
             }

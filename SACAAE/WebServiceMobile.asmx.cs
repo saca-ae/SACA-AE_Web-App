@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Services;
 using System.Web.Services;
 
 namespace SACAAE
@@ -19,12 +20,14 @@ namespace SACAAE
     {
         SACAAEEntities entidades = new SACAAEEntities();
         [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
         public AlertaComisionProfesor HelloWorld()
         {
             return new AlertaComisionProfesor { COMISION = "RASTA" };
         }
 
         [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
         public Pass Login(String pMail)
         {
             if ((from s in entidades.Profesores
@@ -40,8 +43,27 @@ namespace SACAAE
             }
         }
 
+        [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
+        public Pass LoginContra(String pMail,string pContrasenia)
+        {
+            if ((from s in entidades.Profesores
+                 where s.Correo == pMail && s.Contrasenia == pContrasenia
+
+                 select s.ID).Count() == 1)
+            {
+                return new Pass { Password = "1" };
+            }
+            else
+            {
+                return new Pass { Password = "0" };
+            }
+        }
+
+
         // carga estimada, horas asignadas al proyecto, "" a comision
         [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
         public List<AlertaProyectoProfesor> GetProyectos(String pMail)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -74,6 +96,7 @@ namespace SACAAE
     
 
         [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
         public List<AlertaComisionProfesor> GetComisiones(String pMail)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -104,6 +127,7 @@ namespace SACAAE
         }
 
         [WebMethod]
+        [ScriptMethod(UseHttpGet = true)]
         public List<CursoWS> GetCursos(String pMail)
         {
             var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
@@ -132,7 +156,7 @@ namespace SACAAE
                     Codigo = actual.Codigo,
                     Curso = actual.Cursoo,
                     Inicio = actual.Inicio.Value.ToString(),
-                    Fin = String.Format("{0:MM/dd/yyyy}", actual.Fin.Value),
+                    Fin =  actual.Fin.Value.ToString(),
                     Entidad = actual.Entidad
                 });
             }
