@@ -90,10 +90,10 @@ namespace SACAAE.Models
         }
 
         /// <summary>
-        /// Obtiene la lista de comisiones a las que está asociado un profesor.
+        /// Obtiene la lista de proyectos a los que está asociado un profesor.
         /// </summary>
         /// <param name="idProfesor">El id del profesor.</param>
-        /// <returns>La lista de comisiones a las que está asociado el profesor.</returns>
+        /// <returns>La lista de proyectos a los que está asociado el profesor.</returns>
         internal IQueryable ObtenerProyectosXProfesor(int idProfesor)
         {
             return from profesores in entidades.Profesores

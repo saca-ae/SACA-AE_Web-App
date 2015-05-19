@@ -429,6 +429,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Scripts\GuardarDias.js" />
+    <Content Include="ServiceMobile.svc" />
     <Content Include="WebServiceMobile.asmx" />
     <EntityDeploy Include="Models\SACAAEDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

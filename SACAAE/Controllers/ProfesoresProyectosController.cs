@@ -26,6 +26,43 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Asignar()
         {
+
+
+            /*EN CASO DE UTILIZAR HORARIO TEC
+            
+            List<String> HorasInicio = new List<String>();
+            List<String> HorasFin = new List<String>();
+            
+            for (int i = 7; i < 22; i++)
+            {
+                if (i < 13)
+                    HorasInicio.Add(i.ToString() + ":30");
+                else
+                    HorasInicio.Add(i.ToString() + ":00");
+            }
+            ViewBag.HorasInicio = HorasInicio;
+
+            List<String> HorasFin = new List<String>();
+            for (int i = 8; i < 22; i++)
+            {
+                if (i < 13)
+                    HorasFin.Add(i.ToString() + ":20");
+                else
+                    HorasFin.Add(i.ToString() + ":50");
+            }
+            ViewBag.HorasFin = HorasFin;
+            */
+
+            List<String> HorasInicio = new List<String>();
+            List<String> HorasFin = new List<String>();
+            for (int i = 7; i < 23; i++)
+            {
+                HorasInicio.Add(i.ToString() + ":00");
+                HorasFin.Add(i.ToString() + ":00");
+            }
+            ViewBag.HorasInicio = HorasInicio;
+            ViewBag.HorasFin = HorasFin;
+
             ViewBag.profesores = repoProfesores.ObtenerTodosProfesores();
             ViewBag.proyectos = repoProyectos.ObtenerTodosProyectos(); 
             return View(); 
@@ -33,20 +70,47 @@ namespace SACAAE.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Asignar(String sltProfesor, String sltProyecto, String dia, String HoraInicio, String HoraFin)
+        public ActionResult Asignar(String sltProfesor, String sltProyecto)
         {
 
-            String Periodo = Request.Cookies["Periodo"].Value;
-            int IdPeriodo = repoPeriodos.IdPeriodo(Periodo); 
-
-            var creado = repoProfesProyectos.CrearProyectoProfesor(sltProfesor, sltProyecto, dia, HoraInicio, HoraFin, IdPeriodo);
-            if (creado)
+            int Cantidad;
+            try
             {
-                TempData[TempDataMessageKey] = "Profesor asignado correctamente.";
+                Cantidad = Convert.ToInt32(Request.Cookies["Cantidad"].Value);
+                Cantidad++;
             }
-            else
+            catch (Exception e)
             {
-                TempData[TempDataMessageKey] = "Ocurrió un error al asignar el profesor.";
+                Cantidad = 0;
+            }
+
+            String Periodo = Request.Cookies["Periodo"].Value;
+            int IdPeriodo = repoPeriodos.IdPeriodo(Periodo);
+
+            for (int i = 1; i < Cantidad; i++)
+            {
+                String Detalles = Request.Cookies["DiaSeleccionadoCookie" + i].Value;//Obtiene los datos de la cookie
+                string[] Partes = Detalles.Split('|');
+
+                String Dia = Partes[0];
+                String HoraInicio = Partes[1];
+                String HoraFin = Partes[2];
+
+                if (Dia != "d")
+                {
+                    var creado = repoProfesProyectos.CrearProyectoProfesor(sltProfesor, sltProyecto, Dia, HoraInicio, HoraFin, IdPeriodo);
+                    
+                    if (creado)
+                    {
+                        TempData[TempDataMessageKey] = "Profesor asignado correctamente.";
+                    }
+                    else
+                    {
+                        TempData[TempDataMessageKey] = "Ocurrió un error al asignar el profesor.";
+                    }
+                }
+
+                
             }
             return RedirectToAction("Asignar"); 
         }

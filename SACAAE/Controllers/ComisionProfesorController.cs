@@ -27,6 +27,17 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Asignar()
         {
+
+            List<String> HorasInicio = new List<String>();
+            List<String> HorasFin = new List<String>();
+            for (int i = 7; i < 23; i++)
+            {
+                HorasInicio.Add(i.ToString() + ":00");
+                HorasFin.Add(i.ToString() + ":00");
+            }
+            ViewBag.HorasInicio = HorasInicio;
+            ViewBag.HorasFin = HorasFin;
+
             ViewBag.entidad = "TEC";
             if (Request.UrlReferrer != null)
             {
@@ -58,21 +69,44 @@ namespace SACAAE.Controllers
 
         [Authorize]
         [HttpPost]
-        public ActionResult Asignar(String profesor, String comision, String dia, int HoraInicio, int HoraFin)
+        public ActionResult Asignar(String profesor, String comision)
         {
+            int Cantidad;
+            try
+            {
+                Cantidad = Convert.ToInt32(Request.Cookies["Cantidad"].Value);
+                Cantidad++;
+            }
+            catch (Exception e)
+            {
+                Cantidad = 0;
+            }
 
             String Periodo = Request.Cookies["Periodo"].Value;
-            int IdPeriodo = repoPeriodos.IdPeriodo(Periodo); 
+            int IdPeriodo = repoPeriodos.IdPeriodo(Periodo);
 
+            for (int i = 1; i < Cantidad; i++)
+            {
+                String Detalles = Request.Cookies["DiaSeleccionadoCookie" + i].Value;//Obtiene los datos de la cookie
+                string[] Partes = Detalles.Split('|');
 
-            var creado = repositoriocomisionesprofesor.CrearComisionProfesor(profesor, comision, dia, HoraInicio, HoraFin, IdPeriodo);
-            if (creado)
-            {
-                TempData[TempDataMessageKey] = "Profesor asignado correctamente.";
-            }
-            else
-            {
-                TempData[TempDataMessageKey] = "Ocurrió un error al asignar el profesor.";
+                String Dia = Partes[0];
+                String HoraInicio = Partes[1];
+                String HoraFin = Partes[2];
+                
+
+                if (Dia != "d")
+                {
+                    var creado = repositoriocomisionesprofesor.CrearComisionProfesor(profesor, comision, Dia, HoraInicio, HoraFin, IdPeriodo);
+                    if (creado)
+                    {
+                        TempData[TempDataMessageKey] = "Profesor asignado correctamente.";
+                    }
+                    else
+                    {
+                        TempData[TempDataMessageKey] = "Ocurrió un error al asignar el profesor.";
+                    }
+                }
             }
             return RedirectToAction("Asignar");
         }
