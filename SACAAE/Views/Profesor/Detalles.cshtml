@@ -59,12 +59,12 @@
 
     
 
-    <h2>Proyectos Asociados</h2>
+    <h2>Proyectos Asociados</h2>   
 </div>
 
 <div class="row">
     <div class="span12">
-        <table class="table  table-hover">
+        <table class="table  table-hover" id="tb_proyectos">
             <tr>
                 <th>
                     Nombre
@@ -94,11 +94,8 @@
 
                     <td>
 
-                        <a href="@Url.Action("Detalles", new { id = item.ID })"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a> &nbsp
-
-                        <a href="@Url.Action("Editar", new { id = item.ID })"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> &nbsp
-
-                        <a href="@Url.Action("Eliminar", new { id = item.ID })"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        @Html.ActionLink("Editar", "Editar", "Proyecto", new { id = item.ID }, null)
+                        @Html.ActionLink("Eliminar", "Eliminar", "Proyecto", new { id = item.ID }, null)
 
                     </td>
                 </tr>
@@ -140,9 +137,8 @@
                         @item.Fin.ToString("dd/MM/yyyy")
                     </td>
                     <td class="text-center">
-                        <a href="@Url.Action("Detalles", new { id = item.ID })"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-                        <a href="@Url.Action("Editar", new { id = item.ID })"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
-                        <a href="@Url.Action("Eliminar", new { id = item.ID })"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        @Html.ActionLink("Editar", "Editar", "Comision", new { id = item.ID }, null)
+                        @Html.ActionLink("Eliminar", "Eliminar", "Comision", new { id = item.ID }, null)
                     </td>
                 </tr>
             }
@@ -150,3 +146,65 @@
         </table>
     </div>
 </div>
+
+
+
+<h2>Cursos Asociadas</h2>
+<div class="row">
+    <div class="span12">
+        <table class="table  table-hover">
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Inicio
+                </th>
+                <th >
+                    Fin
+                </th>
+                <th>
+                    Periodo
+                </th>
+                <th>
+                   Grupo
+                </th>
+                <th>
+                    Entidad
+                </th>
+
+                <th class="text-center">Acciones</th>
+            </tr>
+
+            @foreach (var item in new SACAAE.Models.RepositorioCursos().GetCursosDetalle(Int32.Parse(Url.RequestContext.RouteData.Values["id"].ToString())))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Curso)
+                    </td>
+                    <td >
+                        @item.Inicio.ToString()
+                    </td>
+                    <td >
+                        @item.Fin.ToString()
+                    </td>
+                    <td>
+                        @item.Periodo
+                    </td>
+                    <td>
+                        @item.Grupo
+                    </td>
+                    <td>
+                        @item.Entidad
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Editar", "ModificarCurso", "Courses", new { id = item.Id }, null)
+                        @Html.ActionLink("Eliminar", "ModificarCurso", "Courses", new { id = item.Id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

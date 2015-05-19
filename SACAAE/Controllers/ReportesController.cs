@@ -37,7 +37,8 @@ namespace SACAAE.Models
         {
             var fi = new FileInfo("myfile.txt");
             byte[] bytes;
-            Dictionary<String, int> profesores = new Dictionary<string, int>();
+            Dictionary<String, int> profesores_carga_tec = new Dictionary<string, int>();
+            Dictionary<String, int> profesores_carga_fundatec = new Dictionary<string, int>();
             List<Profesor> todo_profesores = new List<Profesor>();
             try
             {
@@ -48,9 +49,10 @@ namespace SACAAE.Models
             using (Stream fs = new MemoryStream())
             {
                 StreamWriter sw = new StreamWriter(fs,Encoding.UTF8);
-                sw.WriteLine("Tipo;Grupo;Nombre;Profesor;Dia;Hora Inicio;Hora Fin;Cupo;Plan de Estudio;Modalidad;Sede; Horas Teoricas; Horas Practicas; Externo;Carga Estimada;Entidad");
+                sw.WriteLine("Tipo;Grupo;Nombre;Profesor;Dia;Hora Inicio;Hora Fin;Sede;Aula;Cupo;Plan de Estudio;Modalidad; Horas Teoricas; Horas Practicas; Externo;Carga Estimada;Entidad");
                 String Periodo = Request.Cookies["Periodo"].Value;
                 int IdPeriodo = repoPeriodos.IdPeriodo(Periodo);
+                String entidad_temp;
                 IQueryable<Grupo> Grupos = repoGrupos.ObtenerTodosGrupos(IdPeriodo);
                 foreach (Grupo item in Grupos)
                 {
@@ -89,7 +91,7 @@ namespace SACAAE.Models
                                         item.BloqueXPlanXCurso.Curso.Externo.ToString() + ";" +
                                         Carga
                                          );*/
-
+                                entidad_temp = item.BloqueXPlanXCurso.BloqueAcademicoXPlanDeEstudio.PlanesDeEstudio.TipoEntidad.Nombre;
                                 todo_profesores.Add(new Profesor
                                 {
                                     
@@ -108,17 +110,39 @@ namespace SACAAE.Models
                                  HoraPractica = item.BloqueXPlanXCurso.Curso.HorasPracticas+"",
                                  Externo = item.BloqueXPlanXCurso.Curso.Externo.ToString(),
                                  CargaEstimada = Carga + "",
-                                 Entidad = item.BloqueXPlanXCurso.BloqueAcademicoXPlanDeEstudio.PlanesDeEstudio.TipoEntidad.Nombre
+                                 Aula = Detalle.Aula,
+                                 Entidad = entidad_temp
                                 });
-
-                            if (profesores.ContainsKey(Detalle.ProfesoresXCurso.Profesore.Nombre))
-                            {
-                                profesores[Detalle.ProfesoresXCurso.Profesore.Nombre] += Carga;
-                            }
-                            else
-                            {
-                                profesores.Add(Detalle.ProfesoresXCurso.Profesore.Nombre, Carga);
-                            }
+                                // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
+                                if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
+                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico"))
+                                    if (entidad_temp.Equals("TEC-REC"))
+                                    {
+                                        // Se omite este, dado que son horas voluntarias
+                                    }
+                                    else
+                                    {
+                                        if (profesores_carga_tec.ContainsKey(Detalle.ProfesoresXCurso.Profesore.Nombre))
+                                        {
+                                            profesores_carga_tec[Detalle.ProfesoresXCurso.Profesore.Nombre] += Carga;
+                                        }
+                                        else
+                                        {
+                                            profesores_carga_tec.Add(Detalle.ProfesoresXCurso.Profesore.Nombre, Carga);
+                                        }
+                                    }
+                                    
+                                else
+                                {
+                                    if (profesores_carga_fundatec.ContainsKey(Detalle.ProfesoresXCurso.Profesore.Nombre))
+                                    {
+                                        profesores_carga_fundatec[Detalle.ProfesoresXCurso.Profesore.Nombre] += Carga;
+                                    }
+                                    else
+                                    {
+                                        profesores_carga_fundatec.Add(Detalle.ProfesoresXCurso.Profesore.Nombre, Carga);
+                                    }
+                                }
                         }
 
                     }
@@ -152,7 +176,7 @@ namespace SACAAE.Models
                                         HoraFin + ";N/A;N/A;N/A;N/A;N/A;N/A;N/A;" +
                                         Math.Ceiling(CargaC)
                                         );*/
-
+                            entidad_temp = Profe.Proyecto1.TipoEntidad.Nombre;
                             todo_profesores.Add(new Profesor
                             {
                                 Tipo = "Carga Investigación Extensión",
@@ -170,17 +194,40 @@ namespace SACAAE.Models
                                 HoraPractica = "N/A",
                                 Externo = "N/A",
                                 CargaEstimada = CargaC + "",
-                                Entidad = Profe.Proyecto1.TipoEntidad.Nombre
+                                Aula = "N/A",
+                                Entidad = entidad_temp
                             });
 
 
-                            if (profesores.ContainsKey(Profe.Profesore.Nombre))
-                            {
-                                profesores[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
-                            }
+                            // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
+                            if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
+                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico"))
+                                if (entidad_temp.Equals("TEC-REC"))
+                                {
+                                    // Se omite este, dado que son horas voluntarias
+                                }
+                                else
+                                {
+                                    if (profesores_carga_tec.ContainsKey(Profe.Profesore.Nombre))
+                                    {
+                                        profesores_carga_tec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                    }
+                                    else
+                                    {
+                                        profesores_carga_tec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                    }
+                                }
+
                             else
                             {
-                                profesores.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                if (profesores_carga_fundatec.ContainsKey(Profe.Profesore.Nombre))
+                                {
+                                    profesores_carga_fundatec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                }
+                                else
+                                {
+                                    profesores_carga_fundatec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                }
                             }
                         }
                     }
@@ -213,6 +260,7 @@ namespace SACAAE.Models
                                         HoraFin + ";N/A;N/A;N/A;N/A;N/A;N/A;N/A;" +
                                         Math.Ceiling(CargaC)
                                         );*/
+                            entidad_temp = Comision.TipoEntidad.Nombre;
                             todo_profesores.Add(new Profesor
                             {
                                 Tipo = "Carga Académico Administrativo",
@@ -230,16 +278,39 @@ namespace SACAAE.Models
                                 HoraPractica = "N/A",
                                 Externo = "N/A",
                                 CargaEstimada = CargaC + "",
-                                Entidad = Comision.TipoEntidad.Nombre
+                                Aula = "N/A",
+                                Entidad = entidad_temp
                             });
 
-                            if (profesores.ContainsKey(Profe.Profesore.Nombre))
-                            {
-                                profesores[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
-                            }
+                            // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
+                            if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
+                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico"))
+                                if (entidad_temp.Equals("TEC-REC"))
+                                {
+                                    // Se omite este, dado que son horas voluntarias
+                                }
+                                else
+                                {
+                                    if (profesores_carga_tec.ContainsKey(Profe.Profesore.Nombre))
+                                    {
+                                        profesores_carga_tec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                    }
+                                    else
+                                    {
+                                        profesores_carga_tec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                    }
+                                }
+
                             else
                             {
-                                profesores.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                if (profesores_carga_fundatec.ContainsKey(Profe.Profesore.Nombre))
+                                {
+                                    profesores_carga_fundatec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                }
+                                else
+                                {
+                                    profesores_carga_fundatec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                }
                             }
                         }
                     }
@@ -265,15 +336,55 @@ namespace SACAAE.Models
                     }
                     else
                     {
-                        sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores[profe_actual]);
-                        sw.WriteLine("");
-                        sw.WriteLine("");
+                        if (profesores_carga_tec.ContainsKey(profe_actual)&& profesores_carga_fundatec.ContainsKey(profe_actual))
+                        { 
+                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;"  + profesores_carga_fundatec[profe_actual]);
+                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + (profesores_carga_tec[profe_actual] + profesores_carga_fundatec[profe_actual]));
+                        
+                        }
+                        else if (!profesores_carga_tec.ContainsKey(profe_actual) && profesores_carga_fundatec.ContainsKey(profe_actual))
+                        {
+                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" +"0");
+                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_fundatec[profe_actual]);
+                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;"  + profesores_carga_fundatec[profe_actual]);
+                        
+                        }
+                        else if (profesores_carga_tec.ContainsKey(profe_actual) && !profesores_carga_fundatec.ContainsKey(profe_actual))
+                        {
+                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;" + 0);
+                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                        
+                        }
+                        
 
                         profe_actual = profe.Profesor_Nombre;
                         sw.WriteLine(profe.toStr());
                     }
                 }
-                sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores[profe_actual]);
+                // el ciclo se termina con el ultimo profe, por eso hay q hacer un llamado al final
+                if (profesores_carga_tec.ContainsKey(profe_actual) && profesores_carga_fundatec.ContainsKey(profe_actual))
+                {
+                    sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                    sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_fundatec[profe_actual]);
+                    sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + (profesores_carga_tec[profe_actual] + profesores_carga_fundatec[profe_actual]));
+
+                }
+                else if (!profesores_carga_tec.ContainsKey(profe_actual) && profesores_carga_fundatec.ContainsKey(profe_actual))
+                {
+                    sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" + "0");
+                    sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_fundatec[profe_actual]);
+                    sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_fundatec[profe_actual]);
+
+                }
+                else if (profesores_carga_tec.ContainsKey(profe_actual) && !profesores_carga_fundatec.ContainsKey(profe_actual))
+                {
+                    sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                    sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;" + 0);
+                    sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+
+                }
 
 
                 /*
@@ -389,12 +500,14 @@ namespace SACAAE.Models
         public String HoraPractica { get; set; }
         public String Externo { get; set; }
         public String CargaEstimada { get; set; }
+        public String Aula { get; set; }
         public String Entidad { get; set; }
         
         public String toStr()
         {
-            return Tipo + ";" + Grupo + ";" + Nombre + ";" + Profesor_Nombre + ";" + Dia + ";" + HoraInicio + ";" + HoraFin + ";" + Cupo + ";" + PlanEstudio + ";" + Modalidad + ";" + Sede + ";" + HoraTeoricas + ";" +
+            return Tipo + ";" + Grupo + ";" + Nombre + ";" + Profesor_Nombre + ";" + Dia + ";" + HoraInicio + ";" + HoraFin +";"+ Sede + ";" + Aula + ";" + Cupo + ";" + PlanEstudio + ";" + Modalidad + ";" + HoraTeoricas + ";" +
                 HoraPractica+";"+Externo+";"+CargaEstimada+";"+Entidad+";";
         }
     }
 }
+                //sw.WriteLine("Tipo;Grupo;Nombre;Profesor;Dia;Hora Inicio;Hora Fin;Sede;Aula;Cupo;Plan de Estudio;Modalidad; Horas Teoricas; Horas Practicas; Externo;Carga Estimada;Entidad");

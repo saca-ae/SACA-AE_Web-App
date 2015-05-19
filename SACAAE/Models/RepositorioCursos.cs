@@ -233,6 +233,55 @@ namespace SACAAE.Models
                 return;
         }
 
+
+        public List<CursoWS> GetCursosDetalle(int id)
+        {
+            var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+            List<CursoWS> resultado = new List<CursoWS>();
+            var cursos = from s in entidades.ProfesoresXCursoes
+                         join c in entidades.Profesores on s.Profesor equals c.ID
+                         join w in entidades.Detalle_Grupo on s.Profesor equals w.Profesor
+                         join g in entidades.Grupoes on w.Grupo equals g.ID
+                         join d in entidades.Dias on w.Horario equals d.Horario
+                         join p in entidades.BloqueXPlanXCursoes on g.ID equals p.CursoID
+                         where c.ID == id
+
+                         select new
+                         {
+                             ID = w.Id,
+                             Profesor = c.Nombre,
+                             Entidad = p.BloqueAcademicoXPlanDeEstudio.PlanesDeEstudio.TipoEntidad.Nombre,
+                             Inicio = d.Hora_Inicio,
+                             Fin = d.Hora_Fin,
+                             Day = d.Dia1,
+                             Grupoo = g.Numero,
+                             Periodoo = g.Periodo1.Nombre,
+                             Aulaa = w.Aula,
+                             Cursoo = p.Curso.Nombre,
+                             Codigo = p.Curso.Codigo
+                         };
+
+
+            foreach (var actual in cursos)
+            {
+                resultado.Add(new CursoWS
+                {
+                    Id = actual.ID + "",
+                    Profesor = actual.Profesor,
+                    Grupo = actual.Grupoo + "",
+                    Periodo = actual.Periodoo,
+                    Aula = actual.Aulaa,
+                    Codigo = actual.Codigo,
+                    Curso = actual.Cursoo,
+                    Inicio = actual.Inicio.Value.ToString(),
+                    Fin = actual.Fin.Value.ToString(),
+                    Entidad = actual.Entidad
+                });
+            }
+
+            return resultado;
+        }
+
         private void Save()
         {
             entidades.SaveChanges(); 

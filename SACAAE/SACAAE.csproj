@@ -246,6 +246,7 @@
     <Compile Include="Models\Curso.cs">
       <DependentUpon>SACAAEDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CursoWS.cs" />
     <Compile Include="Models\Detalle_Grupo.cs">
       <DependentUpon>SACAAEDataModel.tt</DependentUpon>
     </Compile>
@@ -344,9 +345,6 @@
       <DependentUpon>SACAAEDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceMobile.svc.cs">
-      <DependentUpon>ServiceMobile.svc</DependentUpon>
-    </Compile>
     <Compile Include="WebServiceMobile.asmx.cs">
       <DependentUpon>WebServiceMobile.asmx</DependentUpon>
       <SubType>Component</SubType>
