@@ -214,6 +214,7 @@
     <Compile Include="Controllers\ProfesoresProyectosController.cs" />
     <Compile Include="Controllers\ProyectoController.cs" />
     <Compile Include="Controllers\ReportesController.cs" />
+    <Compile Include="Controllers\SedesController.cs" />
     <Compile Include="Controllers\SeleccionarController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -593,6 +594,11 @@
     <Content Include="Views\AlertaProyectoProfesor\Index.cshtml" />
     <Content Include="Views\AlertaComisionProfesor\Index.cshtml" />
     <Content Include="Views\Aula\HorarioAula.cshtml" />
+    <Content Include="Views\Sedes\Create.cshtml" />
+    <Content Include="Views\Sedes\Delete.cshtml" />
+    <Content Include="Views\Sedes\Details.cshtml" />
+    <Content Include="Views\Sedes\Edit.cshtml" />
+    <Content Include="Views\Sedes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
