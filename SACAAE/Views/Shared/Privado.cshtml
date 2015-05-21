@@ -12,8 +12,11 @@
         }
     </style>
     @Scripts.Render("~/bundles/modernizr")
+    @section Scripts {
+        <script src="@Url.Content("~/Scripts/entidades.js")"></script>
+    }
 </head>
-<body>
+<body onload="Load('TEC')">
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -28,7 +31,7 @@
                 </button>
                 <div class="navbar-brand">@Html.ActionLink("SACAAE", "Index", "Home")</div>
             </div>
-            
+
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li class="dropdown">
@@ -90,32 +93,34 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> <b class="caret"></b></a>
                     <ul class="dropdown-menu alert-dropdown">
-                        @if (SACAAE.Models.AlertaProyectoProfesor.getProyectosAtrasados(100).Count > 0) {
+                        @if (SACAAE.Models.AlertaProyectoProfesor.getProyectosAtrasados(100).Count > 0)
+                        {
                             <li>
                                 <a href="@Url.Action("Index", "AlertaProyectoProfesor", new  { Dias = "100" })"><span class="label label-danger">@SACAAE.Models.AlertaProyectoProfesor.getProyectosAtrasados(100).Count+ Proyectos Vencidos/O vencer</span></a>
-                        </li>
+                            </li>
                         }
-                        else {
+                        else
+                        {
                             <li>
                                 <a href="@Url.Action("Index", "AlertaProyectoProfesor", new  { Dias = "100" })">Alert Name <span class="label label-success">No hay proyectos vencidos</span></a>
-                        </li>
+                            </li>
                         }
 
                         <li class="divider"></li>
-                                                @if (SACAAE.Models.AlertaComisionProfesor.getComisionesAtrasados(100).Count > 0)
-                                                {
-                                                    <li>
-                                                        <a href="@Url.Action("Index", "AlertaComisionProfesor", new  { Dias = "100" })"><span class="label label-danger">@SACAAE.Models.AlertaComisionProfesor.getComisionesAtrasados(100).Count+ Comisiones Vencidas/O vencer</span></a>
-                                                    </li>
-                                                }
-                                                else
-                                                {
-                                                    <li>
-                                                        <a href="@Url.Action("Index", "AlertaComisionProfesor", new  { Dias = "100" })">Alert Name <span class="label label-success">No hay comisiones vencidas</span></a>
-                                                    </li>
-                                                }
-                        
-                        
+                        @if (SACAAE.Models.AlertaComisionProfesor.getComisionesAtrasados(100).Count > 0)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "AlertaComisionProfesor", new  { Dias = "100" })"><span class="label label-danger">@SACAAE.Models.AlertaComisionProfesor.getComisionesAtrasados(100).Count+ Comisiones Vencidas/O vencer</span></a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "AlertaComisionProfesor", new  { Dias = "100" })">Alert Name <span class="label label-success">No hay comisiones vencidas</span></a>
+                            </li>
+                        }
+
+
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -133,7 +138,7 @@
                         <li class="divider"></li>
                         <li>
                             <a href="@Url.Action("Logoff", "Account")"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Log Out</a>
-                            
+
                         </li>
                     </ul>
                 </li>
@@ -213,54 +218,23 @@
                                 <a href="@Url.Action("Index", "Sedes")">Sedes</a>
                             </li>
                         </ul>
-                    </li>          
+                    </li>
                 </ul>
             </div>
 
         </nav>
 
         <div id="page-wrapper">
-            <!--
-            <div class="btn-group pull-right" role="group" data-toggle="button" aria-pressed="false">
-                <button type="button" class="btn btn-default">TEC</button>
-                <button type="button" class="btn btn-default">TAE</button>
-                <button type="button" class="btn btn-default">MAE</button>
-                <button type="button" class="btn btn-default">DDE</button>
-                <button type="button" class="btn btn-default">FUNDATEC</button>
-                <button type="button" class="btn btn-default">Actualización</button>
-            </div>
-               
-            <div class="btn-group pull-right" data-toggle="buttons">
-                <label class="btn btn-default active">
-                    <input type="radio" name="options" id="option1" autocomplete="off" checked> TEC
-                </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="options" id="option2" autocomplete="off"> TAE
-                </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="options" id="option3" autocomplete="off"> MAE
-                </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="options" id="option4" autocomplete="off"> DDE
-                </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="options" id="option5" autocomplete="off"> FUNDATEC
-                </label>
-                <label class="btn btn-default">
-                    <input type="radio" name="options" id="option6" autocomplete="off"> Actualización
-                </label>
-            </div>
-            -->
-            
+
             <ul class="nav nav-pills pull-right">
-                <li class="active"><a data-toggle="pill" href="#">TEC</a></li>
-                <li><a data-toggle="pill" href="#">CIE</a></li>
-                <li><a data-toggle="pill" href="#">TAE</a></li>
-                <li><a data-toggle="pill" href="#">MAE</a></li>
-                <li><a data-toggle="pill" href="#">DDE</a></li>
-                <li><a data-toggle="pill" href="#">Emprendedores</a></li>
-                <li><a data-toggle="pill" href="#">Actualización Cartago</a></li>
-                <li><a data-toggle="pill" href="#">Actualización San Carlos</a></li>
+                <li class="active"><a data-toggle="pill" href="#" onclick="return setEntidad('TEC');">TEC</a></li>
+                <li><a data-toggle="pill" href="#" onclick="return setEntidad('CIE')">CIE</a></li>
+                <li><a data-toggle="pill" href="#" onclick="return setEntidad('TAE')">TAE</a></li>
+                <li><a data-toggle="pill" href="#" onclick="return setEntidad('MAE')">MAE</a></li>
+                <li><a data-toggle="pill" href="#" onclick="return setEntidad('DDE')">DDE</a></li>
+                <li><a data-toggle="pill" href="#" onclick="return setEntidad('Emprendedores')">Emprendedores</a></li>
+                <li><a data-toggle="pill" href="#" onclick="return setEntidad('Actualizacion_Cartago')">Actualización Cartago</a></li>
+                <li><a data-toggle="pill" href="#" onclick="return setEntidad('Actualizacion_San_Carlos')">Actualización San Carlos</a></li>
             </ul>
 
 
@@ -269,25 +243,25 @@
             </div>
 
             <!--
-         <div id="footer">
-             <div class="container">
-                 <p class="text-muted">Escuela de Administraci&oacute;n de Empresas - 2014.</p>
+             <div id="footer">
+                 <div class="container">
+                     <p class="text-muted">Escuela de Administraci&oacute;n de Empresas - 2014.</p>
+                 </div>
              </div>
-         </div>
 
-        -->
+            -->
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
 
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
-        
 
-        <!-- Bootstrap core JavaScript
-        ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
 </body>
+
 </html>

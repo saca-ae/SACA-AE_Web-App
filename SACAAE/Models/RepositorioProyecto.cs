@@ -42,6 +42,14 @@ namespace SACAAE.Models
                    select proyecto;
         }
 
+        public IQueryable<Proyecto> ObtenerProyectoXEntidad(string entidad)
+        {
+             return from proyecto in entidades.Proyectos
+                   orderby proyecto.Nombre
+                   where proyecto.Estado == 1 && proyecto.TipoEntidad.Nombre == entidad
+                   select proyecto;
+        }
+
 
         /// <summary>
         /// Se obtiene la lista de proyectos usando LINQ

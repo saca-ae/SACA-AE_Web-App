@@ -32,7 +32,9 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var model = repoCursos.ObtenerCursos();
+            //var model = repoCursos.ObtenerCursos();
+            String entidad = Request.Cookies["Entidad"].Value;
+            var model = repoCursos.ObtenerCursosXEntidad(entidad);
             return View(model);
 
         }

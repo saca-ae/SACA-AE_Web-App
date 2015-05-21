@@ -38,7 +38,7 @@ namespace SACAAE.Controllers
             ViewBag.HorasInicio = HorasInicio;
             ViewBag.HorasFin = HorasFin;
 
-            ViewBag.entidad = "FUNDATEC";
+           
             if (Request.UrlReferrer != null)
             {
                 ViewBag.returnUrl = Request.UrlReferrer.ToString();

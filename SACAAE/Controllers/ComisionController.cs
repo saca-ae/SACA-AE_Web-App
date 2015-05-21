@@ -1,6 +1,7 @@
 ﻿using SACAAE.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +18,9 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var model = repositorio.ObtenerTodasComisiones();
+           // var model = repositorio.ObtenerTodasComisiones();
+            String entidad = Request.Cookies["Entidad"].Value;
+            var model = repositorio.ObtenerComisionesXEntidad(entidad);
             return View(model);
         }
 

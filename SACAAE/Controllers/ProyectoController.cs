@@ -17,7 +17,9 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var model = repositorio.ObtenerTodosProyectos();
+            //var model = repositorio.ObtenerTodosProyectos();
+            String entidad = Request.Cookies["Entidad"].Value;
+            var model = repositorio.ObtenerProyectoXEntidad(entidad);
             return View(model);
         }
 
