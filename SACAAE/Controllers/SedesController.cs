@@ -72,20 +72,13 @@ namespace SACAAE.Controllers
             return View(sede);
            
         }
-        /**
+        
         // GET: Sedes/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Sede sede = db.Sedes.Find(id);
-            if (sede == null)
-            {
-                return HttpNotFound();
-            }
-            return View(sede);
+            var model = repositorio.ObtenerSede(id);
+            ViewBag.Sede = model;
+            return View(model);
         }
     
         // POST: Sedes/Edit/5
@@ -97,13 +90,13 @@ namespace SACAAE.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(sede).State = EntityState.Modified;
-                db.SaveChanges();
+                repositorio.Actualizar(sede);
+                TempData[TempDataMessageKey] = "Sede editada correctamente.";
                 return RedirectToAction("Index");
             }
             return View(sede);
         }
-        */
+       
         // GET: Sedes/Delete/5
         [Authorize]
         public ActionResult Delete(int id)

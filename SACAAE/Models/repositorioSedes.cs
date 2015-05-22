@@ -8,6 +8,8 @@ namespace SACAAE.Models
     public class repositorioSedes
     {
 
+        private const string MuchoSede = "Sede ya existe";
+
         private SACAAEEntities entidades;
         public repositorioSedes()
         {
@@ -41,6 +43,9 @@ namespace SACAAE.Models
 
         public void crearSede(Sede sede) 
         {
+            if (ExisteSede(sede))
+                throw new ArgumentException(MuchoSede);
+
             entidades.Sedes.Add(sede);
             entidades.SaveChanges();
         }
@@ -61,6 +66,29 @@ namespace SACAAE.Models
         public void borrarSede(String nombre) {
 
             borrarSede(ObtenerSede(nombre));
+        }
+
+        public bool ExisteSede(Sede sede)
+        {
+            if (sede == null)
+                return false;
+            return (entidades.Sedes.SingleOrDefault(s => s.ID == sede.ID ||
+                s.ID == sede.ID) != null);
+        }
+
+        public void Actualizar(Sede sede)
+        {
+            if (!ExisteSede(sede))
+                crearSede(sede);
+
+            var temp = entidades.Sedes.Find(sede.ID);
+
+            if (temp != null)
+            {
+                entidades.Entry(temp).Property(s => s.Nombre).CurrentValue = sede.Nombre;
+            }
+
+            entidades.SaveChanges(); 
         }
     
     }
