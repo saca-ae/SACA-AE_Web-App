@@ -49,10 +49,12 @@
 
     $("#LunesID").change(function () {
         var isChecked = document.getElementById("LunesID").checked;
+        document.getElementById("LunesID").disabled = true;
         if (isChecked == true) {
             AgregarCursos(0);
         }
         else {
+            document.getElementById("LunesID").disabled = false;
             document.getElementById("ComboHoraInicioLunes").selectedIndex = 0;
             document.getElementById("ComboHoraFinLunes").selectedIndex = 0;
             EliminarCurso(0);
@@ -61,10 +63,12 @@
 
     $("#MartesID").change(function () {
         var isChecked = document.getElementById("MartesID").checked;
+        document.getElementById("MartesID").disabled = true;
         if (isChecked == true) {
             AgregarCursos(1);
         }
         else {
+            document.getElementById("MartesID").disabled = false;
             document.getElementById("ComboHoraInicioMartes").selectedIndex = 0;
             document.getElementById("ComboHoraFinMartes").selectedIndex = 0;
             EliminarCurso(1);
@@ -73,10 +77,12 @@
 
     $("#MiercolesID").change(function () {
         var isChecked = document.getElementById("MiercolesID").checked;
+        document.getElementById("MiercolesID").disabled = true;
         if (isChecked == true) {
             AgregarCursos(2);
         }
         else {
+            document.getElementById("MiercolesID").disabled = false;
             document.getElementById("ComboHoraInicioMiercoles").selectedIndex = 0;
             document.getElementById("ComboHoraFinMiercoles").selectedIndex = 0;
             EliminarCurso(2);
@@ -85,10 +91,12 @@
 
     $("#JuevesID").change(function () {
         var isChecked = document.getElementById("JuevesID").checked;
+        document.getElementById("JuevesID").disabled = true;
         if (isChecked == true) {
             AgregarCursos(3);
         }
         else {
+            document.getElementById("JuevesID").disabled = false;
             document.getElementById("ComboHoraInicioJueves").selectedIndex = 0;
             document.getElementById("ComboHoraFinJueves").selectedIndex = 0;
             EliminarCurso(3);
@@ -97,10 +105,12 @@
 
     $("#ViernesID").change(function () {
         var isChecked = document.getElementById("ViernesID").checked;
+        document.getElementById("ViernesID").disabled = true;
         if (isChecked == true) {
             AgregarCursos(4);
         }
         else {
+            document.getElementById("ViernesID").disabled = false;
             document.getElementById("ComboHoraInicioViernes").selectedIndex = 0;
             document.getElementById("ComboHoraFinViernes").selectedIndex = 0;
             EliminarCurso(4);
@@ -109,10 +119,12 @@
 
     $("#SabadoID").change(function () {
         var isChecked = document.getElementById("SabadoID").checked;
+        document.getElementById("SabadoID").disabled = true;
         if (isChecked == true) {
             AgregarCursos(5);
         }
         else {
+            document.getElementById("SabadoID").disabled = false;
             document.getElementById("ComboHoraInicioSabado").selectedIndex = 0;
             document.getElementById("ComboHoraFinSabado").selectedIndex = 0;
             EliminarCurso(5);
@@ -121,10 +133,12 @@
 
     $("#DomingoID").change(function () {
         var isChecked = document.getElementById("DomingoID").checked;
+        document.getElementById("DomingoID").disabled = true;
         if (isChecked == true) {
             AgregarCursos(6);
         }
         else {
+            document.getElementById("DomingoID").disabled = false;
             document.getElementById("ComboHoraInicioDomingo").selectedIndex = 0;
             document.getElementById("ComboHoraFinDomingo").selectedIndex = 0;
             EliminarCurso(6);
@@ -227,27 +241,47 @@ function AgregarCursos(pDia) {
     }
     catch (err) {
         alert("ERROR: Debe seleccionar el grupo de un curso en una aula");
+        document.getElementById(IdDiaSeleccionado).checked = false;
+        document.getElementById(IdDiaSeleccionado).disabled = false;
+        document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
+        document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
         return;
     }
     if (Inicio == Fin) {
         alert("ERROR: La hora de inicio y fin son iguales");
+        document.getElementById(IdDiaSeleccionado).checked = false;
+        document.getElementById(IdDiaSeleccionado).disabled = false;
+        document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
+        document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
         return;
     }
     if (Inicio > Fin) {
         alert("ERROR: La hora de inicio es posterior a la de fin");
+        document.getElementById(IdDiaSeleccionado).checked = false;
+        document.getElementById(IdDiaSeleccionado).disabled = false;
+        document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
+        document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
         return;
     }
     if (Grupo == "") {
         alert("ERROR: Seleccione un grupo");
+        document.getElementById(IdDiaSeleccionado).checked = false;
+        document.getElementById(IdDiaSeleccionado).disabled = false;
+        document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
+        document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
         return;
     }
     else if (Aula == "-- Seleccionar Aula --") {
         alert("ERROR: Seleccione una aula");
+        document.getElementById(IdDiaSeleccionado).checked = false;
+        document.getElementById(IdDiaSeleccionado).disabled = false;
+        document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
+        document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
         return;
     }
-    
+
     var choque = 0;
-    
+
 
     for (k = 1; k <= getCookie("i") ; k++) {
         var Detalles = getCookie("Cookie" + k);
@@ -257,6 +291,7 @@ function AgregarCursos(pDia) {
             || (Partes[2] <= Inicio && Partes[3] >= Fin) || (Partes[2] >= Inicio && Partes[3] <= Fin)))) {
                 alert("ERROR: Ya hay un curso impartido en el horario seleccionado.");
                 document.getElementById(IdDiaSeleccionado).checked = false;
+                document.getElementById(IdDiaSeleccionado).disabled = false;
                 document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
                 document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
                 choque = 1;
@@ -285,6 +320,7 @@ function AgregarCursos(pDia) {
                     hayChoque = 1;
                     alert("ERROR: Ya hay un curso impartido en el aula y horario seleccionados: " + vCurso);
                     document.getElementById(IdDiaSeleccionado).checked = false;
+                    document.getElementById(IdDiaSeleccionado).disabled = false;
                     document.getElementById(IdHoraInicioSeleccionada).selectedIndex = 0;
                     document.getElementById(IdHoraFinSeleccionada).selectedIndex = 0;
                     return false;
@@ -324,9 +360,12 @@ function AgregarCursos(pDia) {
                 cantidad++;
                 setCookie("i", cantidad.toString(), 1);
                 setCookie("Cookie" + cantidad.toString(), Curso + "|" + Dia + "|" + HoraInicio + "|" + HoraFin + "|" + Bloque + "|" + Grupo + "|" + Aula, 1);
+                document.getElementById(IdDiaSeleccionado).disabled = false;
             }
         });
     }
+    
+    
 }
 
 

@@ -431,6 +431,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\GuardarDias.js" />
+    <Content Include="Scripts\horario.js" />
     <Content Include="ServiceMobile.svc" />
     <Content Include="WebServiceMobile.asmx" />
     <EntityDeploy Include="Models\SACAAEDataModel.edmx">
@@ -458,7 +459,6 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\horarioAula.js" />
-    <Content Include="Scripts\horarios.js" />
     <Content Include="Scripts\CursoProfesor.js" />
     <Content Include="Scripts\eliminarAjax.js" />
     <Content Include="Scripts\entidades.js" />
