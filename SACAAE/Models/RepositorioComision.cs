@@ -51,12 +51,25 @@ namespace SACAAE.Models
                    select comision;
         }
 
-        public IQueryable<Comisione> ObtenerComisionesXEntidad(string entidad)
+        public IQueryable<Comisione> ObtenerComisionesXEntidad(int entidad)
         {
-            return from comision in entidades.Comisiones
-                   orderby comision.Nombre
-                   where comision.Estado == 1 && comision.TipoEntidad.Nombre == entidad
-                   select comision;
+            if (entidad == 1)
+            {
+                return from comision in entidades.Comisiones
+                       orderby comision.Nombre
+                       where comision.Estado == 1 && comision.TipoEntidad.Id == 1 || //TEC
+                       comision.TipoEntidad.Id == 2 || comision.TipoEntidad.Id == 3 || //TEC-VIC TEC-REC
+                       comision.TipoEntidad.Id == 4 || comision.TipoEntidad.Id == 10 //TEC-MIXTO TEC-Académico
+                       select comision;
+            }
+            else {
+                return from comision in entidades.Comisiones
+                       orderby comision.Nombre
+                       where comision.Estado == 1 && comision.TipoEntidad.Id == entidad
+                       select comision;
+            
+            }
+
         }
 
         public Comisione ObtenerComision(int id)
@@ -76,7 +89,7 @@ namespace SACAAE.Models
             entidades.Comisiones.Add(comision);
         }
 
-        public void CrearComision(String nombre, DateTime inicio, DateTime fin)
+        public void CrearComision(String nombre, DateTime inicio, DateTime fin, int entidadID)
         {
             if (string.IsNullOrEmpty(nombre.Trim()))
                 throw new ArgumentException("El nombre de la comisión no es válida. Por favor, inténtelo de nuevo");
@@ -86,6 +99,7 @@ namespace SACAAE.Models
                 Nombre = nombre,
                 Inicio = inicio,
                 Fin = fin,
+                FK_TipoEntidad = entidadID,
                 Estado = 1
             };
 

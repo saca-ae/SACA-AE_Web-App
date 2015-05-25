@@ -19,8 +19,47 @@ namespace SACAAE.Controllers
         {
             //var model = repositorio.ObtenerTodosProyectos();
             String entidad = Request.Cookies["Entidad"].Value;
-            var model = repositorio.ObtenerProyectoXEntidad(entidad);
-            return View(model);
+
+            if (entidad.Equals("TEC"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(1);
+                return View(model);
+            }
+            else if (entidad.Equals("CIE"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(7);
+                return View(model);
+            }
+            else if (entidad.Equals("TAE"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(5);
+                return View(model);
+            }
+            else if (entidad.Equals("MAE"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(6);
+                return View(model);
+            }
+            else if (entidad.Equals("DDE"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(11);
+                return View(model);
+            }
+            else if (entidad.Equals("Emprendedores"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(12);
+                return View(model);
+            }
+            else if (entidad.Equals("Actualizacion_Cartago"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(9);
+                return View(model);
+            }
+            else
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(8); //Actualización San Carlos
+                return View(model);
+            }
         }
 
         [Authorize]
@@ -34,7 +73,19 @@ namespace SACAAE.Controllers
         [HttpPost]
         public ActionResult Crear(Proyecto nuevoProyecto)
         {
-            repositorio.CrearProyecto(nuevoProyecto.Nombre, nuevoProyecto.Inicio, nuevoProyecto.Fin, nuevoProyecto.Link);
+            String entidad = Request.Cookies["Entidad"].Value;
+            int entidadID;
+
+            if (entidad.Equals("TEC")){ entidadID = 1; }
+            else if (entidad.Equals("CIE")){ entidadID = 7;}
+            else if (entidad.Equals("TAE")){ entidadID = 5;}
+            else if (entidad.Equals("MAE")){ entidadID = 6;}
+            else if (entidad.Equals("DDE")){ entidadID = 11;}
+            else if (entidad.Equals("Emprendedores")){  entidadID = 12; }
+            else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
+            else { entidadID = 8; }
+
+            repositorio.CrearProyecto(nuevoProyecto.Nombre, nuevoProyecto.Inicio, nuevoProyecto.Fin, nuevoProyecto.Link, entidadID);
             TempData[TempDataMessageKey] = "Proyecto creado correctamente.";
             return RedirectToAction("Index");
             

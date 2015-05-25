@@ -36,8 +36,53 @@ namespace SACAAE.Controllers
         {
             ViewBag.Modalidades = repoModalidades.ObtenerTodosModalidades();
             ViewBag.Sedes = repoSedes.ObtenerTodosSedes();
-            var model = repoPlanes.ObtenerTodosPlanesDeEstudio();
-            return View(model);
+            //var model = repoPlanes.ObtenerTodosPlanesDeEstudio();
+           // return View(model);
+
+            String entidad = Request.Cookies["Entidad"].Value;
+
+            if (entidad.Equals("TEC"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(1);
+                return View(model);
+            }
+            else if (entidad.Equals("CIE"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(7);
+                return View(model);
+            }
+            else if (entidad.Equals("TAE"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(5);
+                return View(model);
+            }
+            else if (entidad.Equals("MAE"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(6);
+                return View(model);
+            }
+            else if (entidad.Equals("DDE"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(11);
+                return View(model);
+            }
+            else if (entidad.Equals("Emprendedores"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(12);
+                return View(model);
+            }
+            else if (entidad.Equals("Actualizacion_Cartago"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(9);
+                return View(model);
+            }
+            else
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(8); //Actualización San Carlos
+                return View(model);
+            }
+            
+            
         }
 
         [Authorize]

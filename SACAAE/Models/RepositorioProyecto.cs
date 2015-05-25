@@ -42,12 +42,23 @@ namespace SACAAE.Models
                    select proyecto;
         }
 
-        public IQueryable<Proyecto> ObtenerProyectoXEntidad(string entidad)
+        public IQueryable<Proyecto> ObtenerProyectoXEntidad(int entidad)
         {
-             return from proyecto in entidades.Proyectos
-                   orderby proyecto.Nombre
-                   where proyecto.Estado == 1 && proyecto.TipoEntidad.Nombre == entidad
-                   select proyecto;
+            if (entidad == 1) { 
+                 return from proyecto in entidades.Proyectos
+                       orderby proyecto.Nombre
+                       where proyecto.Estado == 1 && proyecto.TipoEntidad.Id == 1 || //TEC
+                       proyecto.TipoEntidad.Id == 2 || proyecto.TipoEntidad.Id == 3 || //TEC-VIC TEC-REC
+                       proyecto.TipoEntidad.Id == 4 || proyecto.TipoEntidad.Id == 10 //TEC-MIXTO TEC Acádemico
+                       select proyecto;
+            }
+            else
+            {
+                return from proyecto in entidades.Proyectos
+                       orderby proyecto.Nombre
+                       where proyecto.Estado == 1 && proyecto.TipoEntidad.Id == entidad
+                       select proyecto;
+            }
         }
 
 
@@ -102,7 +113,7 @@ namespace SACAAE.Models
             entidades.Proyectos.Add(proyecto);
         }
 
-        public void CrearProyecto(string nombre, DateTime? fechaInicio, DateTime? fechaFin, String link)
+        public void CrearProyecto(string nombre, DateTime? fechaInicio, DateTime? fechaFin, String link, int entidadID)
         {
             if (string.IsNullOrEmpty(nombre.Trim()))
                 throw new ArgumentException("El nombre del proyecto no es válido. Por favor, intente de nuevo.");
@@ -112,6 +123,7 @@ namespace SACAAE.Models
                 Nombre = nombre,
                 Inicio = fechaInicio,
                 Fin = fechaFin,
+                FK_TipoEntidad = entidadID,
                 Link = link,
                 Estado = 1
             };

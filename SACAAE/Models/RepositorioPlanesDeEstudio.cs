@@ -16,6 +16,27 @@ namespace SACAAE.Models
                    select PlanesDeEstudio;
         }
 
+        public IQueryable<PlanesDeEstudio> ObtenerPlanesDeEstudioXEntidad(int entidadID)
+        {
+            if (entidadID == 1)
+            {
+                return from plan in entidades.PlanesDeEstudios
+                       orderby plan.Nombre
+                       where  plan.TipoEntidad.Id == 1 || //TEC
+                       plan.TipoEntidad.Id == 2 || plan.TipoEntidad.Id == 3 || //TEC-VIC TEC-REC
+                       plan.TipoEntidad.Id == 4 || plan.TipoEntidad.Id == 10 //TEC-MIXTO TEC-Académico
+                       select plan;
+            }
+            else
+            {
+                return from plan in entidades.PlanesDeEstudios
+                       orderby plan.Nombre
+                       where plan.TipoEntidad.Id == entidadID
+                       select plan;
+
+            }
+        }
+
         public PlanesDeEstudio ObtenerUnPlanDeEstudio(int plan)
         {
             return (from PlanesDeEstudio in entidades.PlanesDeEstudios
@@ -131,6 +152,8 @@ namespace SACAAE.Models
                 return -1;
             }
         }
+
+
 
 
     }
