@@ -33,9 +33,49 @@ namespace SACAAE.Controllers
         public ActionResult Index()
         {
             //var model = repoCursos.ObtenerCursos();
+
             String entidad = Request.Cookies["Entidad"].Value;
-            var model = repoCursos.ObtenerCursosXEntidad(entidad);
-            return View(model);
+
+            if (entidad.Equals("TEC"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(1);
+                return View(model);
+            }
+            else if (entidad.Equals("CIE"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(7);
+                return View(model);
+            }
+            else if (entidad.Equals("TAE"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(5);
+                return View(model);
+            }
+            else if (entidad.Equals("MAE"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(6);
+                return View(model);
+            }
+            else if (entidad.Equals("DDE"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(11);
+                return View(model);
+            }
+            else if (entidad.Equals("Emprendedores"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(12);
+                return View(model);
+            }
+            else if (entidad.Equals("Actualizacion_Cartago"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(9);
+                return View(model);
+            }
+            else
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(8); //Actualización San Carlos
+                return View(model);
+            }
 
         }
 

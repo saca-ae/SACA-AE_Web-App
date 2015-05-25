@@ -24,8 +24,49 @@ namespace SACAAE.Controllers
         public ActionResult Index()
         {
             ViewBag.Sedes = vRepoSedes.ObtenerTodosSedes();
-            var model = vRepoAulas.ListarAulas();
-            return View(model);
+           // var model = vRepoAulas.ListarAulas();
+            String entidad = Request.Cookies["Entidad"].Value;
+
+            if (entidad.Equals("TEC"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(1);
+                return View(model);
+            }
+            else if (entidad.Equals("CIE"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(7);
+                return View(model);
+            }
+            else if (entidad.Equals("TAE"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(5);
+                return View(model);
+            }
+            else if (entidad.Equals("MAE"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(6);
+                return View(model);
+            }
+            else if (entidad.Equals("DDE"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(11);
+                return View(model);
+            }
+            else if (entidad.Equals("Emprendedores"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(12);
+                return View(model);
+            }
+            else if (entidad.Equals("Actualizacion_Cartago"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(9);
+                return View(model);
+            }
+            else
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(8); //Actualización San Carlos
+                return View(model);
+            }
         } 
 
         [Authorize]

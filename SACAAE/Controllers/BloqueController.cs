@@ -18,8 +18,49 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var model = vRepoBloqueAcademico.ListarBloquesAcademicos();
-            return View(model);
+           // var model = vRepoBloqueAcademico.ListarBloquesAcademicos();
+            String entidad = Request.Cookies["Entidad"].Value;
+
+            if (entidad.Equals("TEC"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(1);
+                return View(model);
+            }
+            else if (entidad.Equals("CIE"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(7);
+                return View(model);
+            }
+            else if (entidad.Equals("TAE"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(5);
+                return View(model);
+            }
+            else if (entidad.Equals("MAE"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(6);
+                return View(model);
+            }
+            else if (entidad.Equals("DDE"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(11);
+                return View(model);
+            }
+            else if (entidad.Equals("Emprendedores"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(12);
+                return View(model);
+            }
+            else if (entidad.Equals("Actualizacion_Cartago"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(9);
+                return View(model);
+            }
+            else
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(8); //Actualización San Carlos
+                return View(model);
+            }
         }
 
         [Authorize]

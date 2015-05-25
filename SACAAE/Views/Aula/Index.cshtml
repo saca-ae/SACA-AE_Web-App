@@ -38,9 +38,9 @@
 }
 
 
-    <h1 class="page-header">
-        Aulas
-    </h1>
+    <h2 class="page-header">
+        Aulas por sede
+    </h2>
    
         @if (TempData.ContainsKey("MessageError"))
         {
@@ -80,3 +80,47 @@
 <br />
 
         <table id="datosAula" class="table table-hover"></table>
+
+<h2 class="page-header">
+    Aulas por entidad
+</h2>
+<table class="table  table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Espacio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Activa)
+            </th>
+            <th>
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Espacio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Activa)
+                </td>
+                <td>
+                    <a href="@Url.Action("ModificarAula", new { id = item.ID })" >Editar </a> |
+                    <a href="@Url.Action("EliminarAula", new { id = item.ID })" >Eliminar </a> |
+                    <a href="@Url.Action("HorarioAula", new { id = item.ID })" >Ver Horario </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

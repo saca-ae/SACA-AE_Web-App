@@ -157,6 +157,18 @@ namespace SACAAE.Controllers
         [HttpPost]
         public ActionResult CrearPlan(PlanesDeEstudio plan,int Modalidades,List<int> Sedes)
         {
+            String entidad = Request.Cookies["Entidad"].Value;
+            int entidadID;
+
+            if (entidad.Equals("TEC")) { entidadID = 1; }
+            else if (entidad.Equals("CIE")) { entidadID = 7; }
+            else if (entidad.Equals("TAE")) { entidadID = 5; }
+            else if (entidad.Equals("MAE")) { entidadID = 6; }
+            else if (entidad.Equals("DDE")) { entidadID = 11; }
+            else if (entidad.Equals("Emprendedores")) { entidadID = 12; }
+            else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
+            else { entidadID = 8; }
+
             if (plan.Nombre == null)
             {
                 TempData[TempDataMessageKey] = "Ingrese un Nombre";
@@ -173,6 +185,7 @@ namespace SACAAE.Controllers
                 return RedirectToAction("CrearPlan");   
             }
             plan.Modalidad = Modalidades;
+            plan.FK_TipoEntidad = entidadID;
             repoPlanes.agregarPlan(plan);
             int idplan = repoPlanes.IdPlanDeEstudioPorIdModalidad(plan.Nombre, Modalidades);
             PlanesDeEstudioXSede planXSede = new PlanesDeEstudioXSede();

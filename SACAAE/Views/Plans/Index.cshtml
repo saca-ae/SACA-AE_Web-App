@@ -35,7 +35,7 @@
 
 }
   
-<h1 class="page-header">Planes de Estudio</h1>
+<h2 class="page-header">Planes de estudio por sede</h2>
         @if (TempData.ContainsKey("MessageError"))
         {
             <p class="text-danger">@TempData["MessageError"].ToString()</p>
@@ -105,4 +105,41 @@
     </div>
 
     <table id="datosPlan" class="table table-hover"></table>
+                
 }
+
+<h2 class="page-header">
+    Planes de estudio por entidad
+</h2>
+<table class="table  table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    <a href="@Url.Action("BloqueXPlan", new { id = item.ID })" title="Ver Bloques">Ver Bloques</a>
+                    
+                </td>
+                <td>
+                    
+                    <a href="@Url.Action("EliminarPlan", new { id = item.ID })" title="Eliminar">Eliminar</a> 
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

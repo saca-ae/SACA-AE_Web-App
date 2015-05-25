@@ -21,6 +21,27 @@ namespace SACAAE.Models
                    select Aulas;
         }
 
+        public IQueryable<Aula> ListarAulasXEntidad(int entidadID)
+        {
+            if (entidadID == 1) {
+                return from aula in entidades.Aulas
+                       join Sedes in entidades.Sedes on aula.SedeID equals Sedes.ID
+                       join PlanXSede in entidades.PlanesDeEstudioXSedes on Sedes.ID equals PlanXSede.Sede
+                       join PlanDeEstudio in entidades.PlanesDeEstudios on PlanXSede.PlanDeEstudio equals PlanDeEstudio.ID
+                       where PlanDeEstudio.TipoEntidad.Id == 1 || PlanDeEstudio.TipoEntidad.Id == 2 ||
+                       PlanDeEstudio.TipoEntidad.Id == 3 || PlanDeEstudio.TipoEntidad.Id == 4 || PlanDeEstudio.TipoEntidad.Id == 10
+                       select aula;
+            }
+            else {
+                return from aula in entidades.Aulas
+                       join Sedes in entidades.Sedes on aula.SedeID equals Sedes.ID
+                       join PlanXSede in entidades.PlanesDeEstudioXSedes on Sedes.ID equals PlanXSede.Sede
+                       join PlanDeEstudio in entidades.PlanesDeEstudios on PlanXSede.PlanDeEstudio equals PlanDeEstudio.ID
+                       where PlanDeEstudio.TipoEntidad.Id == entidadID
+                       select aula;
+            }
+        }
+
 
         public IQueryable ListarAulasXSede(int pSedeID)
         {
