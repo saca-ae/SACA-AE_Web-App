@@ -52,7 +52,7 @@ namespace SACAAE.Models
                 sw.WriteLine("Tipo;Grupo;Nombre;Profesor;Dia;Hora Inicio;Hora Fin;Sede;Aula;Cupo;Plan de Estudio;Modalidad; Horas Teoricas; Horas Practicas; Externo;Carga Estimada;Entidad");
                 String Periodo = Request.Cookies["Periodo"].Value;
                 int IdPeriodo = repoPeriodos.IdPeriodo(Periodo);
-                String entidad_temp;
+                String entidad_temp = "";
                 IQueryable<Grupo> Grupos = repoGrupos.ObtenerTodosGrupos(IdPeriodo);
                 foreach (Grupo item in Grupos)
                 {
@@ -338,23 +338,23 @@ namespace SACAAE.Models
                     {
                         if (profesores_carga_tec.ContainsKey(profe_actual)&& profesores_carga_fundatec.ContainsKey(profe_actual))
                         { 
-                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
-                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;"  + profesores_carga_fundatec[profe_actual]);
-                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + (profesores_carga_tec[profe_actual] + profesores_carga_fundatec[profe_actual]));
+                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;;"  + profesores_carga_fundatec[profe_actual]);
+                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;;" + (profesores_carga_tec[profe_actual] + profesores_carga_fundatec[profe_actual]));
                         
                         }
                         else if (!profesores_carga_tec.ContainsKey(profe_actual) && profesores_carga_fundatec.ContainsKey(profe_actual))
                         {
-                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" +"0");
-                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_fundatec[profe_actual]);
-                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;"  + profesores_carga_fundatec[profe_actual]);
+                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;;" +"0");
+                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;;" + profesores_carga_fundatec[profe_actual]);
+                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;;"  + profesores_carga_fundatec[profe_actual]);
                         
                         }
                         else if (profesores_carga_tec.ContainsKey(profe_actual) && !profesores_carga_fundatec.ContainsKey(profe_actual))
                         {
-                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
-                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;" + 0);
-                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                            sw.WriteLine("SUBTOTAL CARGA TEC;;;" + profe_actual + ";;;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
+                            sw.WriteLine("SUBTOTAL CARGA FUNDATEC;;;" + profe_actual + ";;;;;;;;;;;;" + 0);
+                            sw.WriteLine("TOTAL CARGA;;;" + profe_actual + ";;;;;;;;;;;;" + profesores_carga_tec[profe_actual]);
                         
                         }
                         
