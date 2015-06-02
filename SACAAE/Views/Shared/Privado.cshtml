@@ -185,13 +185,13 @@
                         <a href="javascript:;" data-toggle="collapse" data-target="#demo">Mantenimientos <b class="caret"></b></a>
                         <ul id="demo" class="collapse">
                             <li>
-                                <a href="@Url.Action("Index", "Courses")">Cursos</a>
+                                <a href="@Url.Action("Index", "Plans")">Planes de Estudio</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index", "Bloque")">Bloques Académicos</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index", "Plans")">Planes de Estudio</a>
+                                <a href="@Url.Action("Index", "Courses")">Cursos</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index", "OfertaAcademica")">Oferta Académica</a>
@@ -203,13 +203,13 @@
                                 <a href="@Url.Action("Index", "Horarios")">Horarios</a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index", "Profesor")">Profesores</a>
-                            </li>
-                            <li>
                                 <a href="@Url.Action("Index", "Proyecto")">Proyectos</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index", "Comision")">Comisiones</a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index", "Profesor")">Profesores</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Index", "Plazas")">Plazas</a>
@@ -227,12 +227,15 @@
         <div id="page-wrapper">
 
             <ul class="nav nav-pills pull-right">
-                <li id="TEC"><a data-toggle="pill" href="#" onclick="return setEntidad('TEC');">TEC</a></li>
-                <li id="CIE"><a data-toggle="pill" href="#" onclick="return setEntidad('CIE')">CIE</a></li>
+                <li id="TEC"><a data-toggle="pill" href="#" onclick="return setEntidad('TEC')">TEC</a></li>
+                <li id="CIADEG "><a data-toggle="pill" href="#" onclick="return setEntidad('CIADEG')">CIADEG</a></li>
                 <li id="TAE"><a data-toggle="pill" href="#" onclick="return setEntidad('TAE')">TAE</a></li>
                 <li id="MAE"><a data-toggle="pill" href="#" onclick="return setEntidad('MAE')">MAE</a></li>
+                <li id="MDE"><a data-toggle="pill" href="#" onclick="return setEntidad('MDE')">MDE</a></li>
+                <li id="MGP"><a data-toggle="pill" href="#" onclick="return setEntidad('MGP')">MGP</a></li>
                 <li id="DDE"><a data-toggle="pill" href="#" onclick="return setEntidad('DDE')">DDE</a></li>
                 <li id="Emprendedores"><a data-toggle="pill" href="#" onclick="return setEntidad('Emprendedores')">Emprendedores</a></li>
+                <li id="CIE"><a data-toggle="pill" href="#" onclick="return setEntidad('CIE')">CIE</a></li>
                 <li id="Actualizacion_Cartago"><a data-toggle="pill" href="#" onclick="return setEntidad('Actualizacion_Cartago')">Actualización Cartago</a></li>
                 <li id="Actualizacion_San_Carlos"><a data-toggle="pill" href="#" onclick="return setEntidad('Actualizacion_San_Carlos')">Actualización San Carlos</a></li>
             </ul>

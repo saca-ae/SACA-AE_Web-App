@@ -100,6 +100,17 @@ namespace SACAAE.Models
                    select curso;
         }
 
+        public IQueryable<Curso> ObtenerCursosXEntidad(int planDeEstudio, int bloque, int entidadID)
+        {
+            return from curso in entidades.Cursos
+                   join BloqueXPlanXCursos in entidades.BloqueXPlanXCursoes on curso.ID equals BloqueXPlanXCursos.CursoID
+                   join BloquesXPlan in entidades.BloqueAcademicoXPlanDeEstudios on BloqueXPlanXCursos.BloqueXPlanID equals BloquesXPlan.ID
+                   join PlanDeEstudio in entidades.PlanesDeEstudios on BloquesXPlan.PlanID equals PlanDeEstudio.ID
+                   where BloquesXPlan.PlanID == planDeEstudio && BloquesXPlan.BloqueID == bloque && PlanDeEstudio.TipoEntidad.Id == entidadID
+                   orderby curso.Nombre
+                   select curso;
+        }
+
         public IQueryable<Detalle_Grupo> ObtenerDetalleCursos()
         {
             return from Detalle_Curso in entidades.Detalle_Grupo

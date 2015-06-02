@@ -63,8 +63,20 @@ namespace SACAAE.Controllers
             ViewBag.HorasInicio = HorasInicio;
             ViewBag.HorasFin = HorasFin;
 
+            String entidad = Request.Cookies["Entidad"].Value;
+            int entidadID;
+
+            if (entidad.Equals("TEC")) { entidadID = 1; }
+            else if (entidad.Equals("CIE")) { entidadID = 7; }
+            else if (entidad.Equals("TAE")) { entidadID = 5; }
+            else if (entidad.Equals("MAE")) { entidadID = 6; }
+            else if (entidad.Equals("DDE")) { entidadID = 11; }
+            else if (entidad.Equals("Emprendedores")) { entidadID = 12; }
+            else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
+            else { entidadID = 8; }
+
             ViewBag.profesores = repoProfesores.ObtenerTodosProfesores();
-            ViewBag.proyectos = repoProyectos.ObtenerTodosProyectos(); 
+            ViewBag.proyectos = repoProyectos.ObtenerProyectoXEntidad(entidadID); 
             return View(); 
         }
 

@@ -34,8 +34,47 @@
     </script>
 
 }
+
+<h2 class="page-header">
+    Planes de Estudio
+</h2>
+<p>
+    <a href="@Url.Action("CrearPlan", "Plans")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Plan de Estudio</a>
+</p>
+<table class="table  table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    <a href="@Url.Action("BloqueXPlan", new { id = item.ID })" title="Ver Bloques">Ver Bloques</a>
+
+                </td>
+                <td>
+
+                    <a href="@Url.Action("EliminarPlan", new { id = item.ID })" title="Eliminar">Eliminar</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
   
-<h2 class="page-header">Planes de estudio por sede</h2>
+<h3 class="page-header" data-toggle="collapse" data-target="#planesXSede">Planes de estudio por sede</h3>
         @if (TempData.ContainsKey("MessageError"))
         {
             <p class="text-danger">@TempData["MessageError"].ToString()</p>
@@ -46,12 +85,10 @@
         }
             @using (Html.BeginForm())
 {
-     <div class="row-fluid">
+     <div id="planesXSede" class="row-fluid collapse">
     <div class="col-lg-5">
         <div class="span12">
-        <p>
-            <a href="@Url.Action("CrearPlan", "Plans")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Plan de Estudio</a>
-        </p>
+
          <label>
                     Sede
                 </label>
@@ -105,41 +142,7 @@
     </div>
 
     <table id="datosPlan" class="table table-hover"></table>
-                
+
 }
 
-<h2 class="page-header">
-    Planes de estudio por entidad
-</h2>
-<table class="table  table-hover">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    <a href="@Url.Action("BloqueXPlan", new { id = item.ID })" title="Ver Bloques">Ver Bloques</a>
-                    
-                </td>
-                <td>
-                    
-                    <a href="@Url.Action("EliminarPlan", new { id = item.ID })" title="Eliminar">Eliminar</a> 
-                </td>
 
-            </tr>
-        }
-    </tbody>
-</table>

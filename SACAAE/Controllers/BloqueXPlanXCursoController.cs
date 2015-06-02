@@ -59,9 +59,46 @@ namespace SACAAE.Controllers
             return RedirectToAction("CrearBloqueXPlanXCurso", new { plan = PlanID });
         }
 
-        public ActionResult ObtenerCursos(int plan, int bloque)
+        public ActionResult ObtenerCursos(int plan, int bloque)  //Por entidad
         {
-            IQueryable vListaCursos = vRepoCursos.ObtenerCursos(plan,bloque);
+            String entidad = Request.Cookies["Entidad"].Value;
+            int entidadID = 0;
+
+            if (entidad.Equals("TEC"))
+            {
+                entidadID = 1;
+                
+            }
+            else if (entidad.Equals("CIE"))
+            {
+                entidadID = 7;
+            }
+            else if (entidad.Equals("TAE"))
+            {
+                entidadID = 5;
+            }
+            else if (entidad.Equals("MAE"))
+            {
+                entidadID = 6;
+            }
+            else if (entidad.Equals("DDE"))
+            {
+                entidadID = 11;
+            }
+            else if (entidad.Equals("Emprendedores"))
+            {
+                entidadID = 12;
+            }
+            else if (entidad.Equals("Actualizacion_Cartago"))
+            {
+                entidadID = 9;
+            }
+            else
+            {
+                entidadID = 8;
+            }
+
+            IQueryable vListaCursos = vRepoCursos.ObtenerCursosXEntidad(plan,bloque,entidadID);
             if (HttpContext.Request.IsAjaxRequest())
             {
                 return Json(new SelectList(

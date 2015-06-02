@@ -70,9 +70,9 @@
             </div>
             <div class="editor-field" style="display:inline">
                 <select id="sltComision" name="comision" class="form-control">
-                    @if (ViewBag.ComisionesXEntidad != null)
+                    @if (ViewBag.Comisiones != null)
                     {
-                        foreach (var item in ViewBag.ComisionesXEntidad)
+                        foreach (var item in ViewBag.Comisiones)
                         {         
                             <option>@item.Nombre</option>
                         } 

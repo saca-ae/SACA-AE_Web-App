@@ -37,53 +37,14 @@
     <script type="text/javascript" src="../Scripts/jquery.tablesorter.js"></script>
 }
 
-
-    <h2 class="page-header">
-        Aulas por sede
-    </h2>
-   
-        @if (TempData.ContainsKey("MessageError"))
-        {
-            <p class="text-danger">@TempData["MessageError"].ToString()</p>
-        }
-        @if (TempData.ContainsKey("MessageSuccess"))
-        {
-            <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
-        }
-        <p>
-
-            <a href="@Url.Action("CrearAula", "Aula")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Aula</a>
-
-        </p>
-
-    <div class="col-lg-5">
-    <div class="span12">
-        <label>Sede</label>
-        <br />
-        <select id="selectSede" name="selectSede" class="form-control">
-            @if (ViewBag.Sedes != null)
-                        {
-                            <option value=" " selected="selected">-- Seleccionar Sede --</option>
-                            foreach (var item in ViewBag.Sedes)
-                            {         
-                            <option value="@item.ID">@item.Nombre</option>
-                            }
-                        }
-                        else
-                        {
-                            <option selected="selected">No hay sedes</option>
-                        }
-        </select>
-        <br />
-    </div>
-</div>
-<br />
-
-        <table id="datosAula" class="table table-hover"></table>
-
 <h2 class="page-header">
-    Aulas por entidad
+    Aulas
 </h2>
+<p>
+
+    <a href="@Url.Action("CrearAula", "Aula")"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Agregar Aula</a>
+
+</p>
 <table class="table  table-hover">
     <thead>
         <tr>
@@ -115,12 +76,52 @@
                     @Html.DisplayFor(modelItem => item.Activa)
                 </td>
                 <td>
-                    <a href="@Url.Action("ModificarAula", new { id = item.ID })" >Editar </a> |
-                    <a href="@Url.Action("EliminarAula", new { id = item.ID })" >Eliminar </a> |
-                    <a href="@Url.Action("HorarioAula", new { id = item.ID })" >Ver Horario </a>
+                    <a href="@Url.Action("ModificarAula", new { id = item.ID })">Editar </a> |
+                    <a href="@Url.Action("EliminarAula", new { id = item.ID })">Eliminar </a> |
+                    <a href="@Url.Action("HorarioAula", new { id = item.ID })">Ver Horario </a>
                 </td>
 
             </tr>
         }
     </tbody>
 </table>
+
+    <h2 class="page-header">
+        Aulas por sede
+    </h2>
+   
+        @if (TempData.ContainsKey("MessageError"))
+        {
+            <p class="text-danger">@TempData["MessageError"].ToString()</p>
+        }
+        @if (TempData.ContainsKey("MessageSuccess"))
+        {
+            <p class="text-success">@TempData["MessageSuccess"].ToString()</p>
+        }
+
+
+    <div class="col-lg-5">
+    <div class="span12">
+        <label>Sede</label>
+        <br />
+        <select id="selectSede" name="selectSede" class="form-control">
+            @if (ViewBag.Sedes != null)
+                        {
+                            <option value=" " selected="selected">-- Seleccionar Sede --</option>
+                            foreach (var item in ViewBag.Sedes)
+                            {         
+                            <option value="@item.ID">@item.Nombre</option>
+                            }
+                        }
+                        else
+                        {
+                            <option selected="selected">No hay sedes</option>
+                        }
+        </select>
+        <br />
+    </div>
+</div>
+<br />
+
+        <table id="datosAula" class="table table-hover"></table>
+
