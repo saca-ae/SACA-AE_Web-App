@@ -13,7 +13,7 @@ namespace SACAAE.Models
             entidades = new SACAAEEntities();
         }
 
-        public bool CrearComisionProfesor(String profesor, String comision, String dia, String horainicio, String horafin, int IDPeriodo)
+        public bool CrearComisionProfesor(string profesor, string comision, string dia, string horainicio, string horafin, int IDPeriodo)
         {
             var retorno = false;
 
@@ -26,13 +26,13 @@ namespace SACAAE.Models
                     RepositorioProfesor repositorioProfesor = new RepositorioProfesor();
                     RepositorioComision repositorioComision = new RepositorioComision();
 
-                    var IDProfesor = repositorioProfesor.ObtenerProfesor(profesor);
-                    var IDComision = repositorioComision.ObtenerComision(comision);                 
+                    var IDProfesor = repositorioProfesor.ObtenerProfesor(Int16.Parse(profesor));
+                    var IDComision = repositorioComision.ObtenerComision(Int16.Parse(comision));                 
 
                     ComisionesXProfesor comisionProfesor = new ComisionesXProfesor()
                     {
-                        Comision = IDComision.ID,
-                        Profesor = IDProfesor.ID,
+                        Comision = Int16.Parse(IDComision.ID.ToString()),
+                        Profesor = Int16.Parse(IDProfesor.ID.ToString()),
                         Periodo = IDPeriodo
                     };
 

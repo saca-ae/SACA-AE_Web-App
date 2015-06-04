@@ -58,7 +58,7 @@ namespace SACAAE.Models
                 {
                     var IDHorario = repoHorario.CrearHorario();
                     proyectosProfesor.Horario = IDHorario;
-                    Dia lala = new Dia(); 
+
                     
                     Dia nuevoDia = new Dia()
                     {

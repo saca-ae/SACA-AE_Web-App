@@ -18,43 +18,51 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Index()
         {
-           // var model = repositorio.ObtenerTodasComisiones();
+            // var model = repositorio.ObtenerTodasComisiones();
             String entidad = Request.Cookies["Entidad"].Value;
 
-            if (entidad.Equals("TEC")) {
+            if (entidad.Equals("TEC"))
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(1);
                 return View(model);
             }
-            else if (entidad.Equals("CIE")) {
+            else if (entidad.Equals("CIE"))
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(7);
                 return View(model);
             }
-            else if (entidad.Equals("TAE")) {
+            else if (entidad.Equals("TAE"))
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(5);
                 return View(model);
             }
-            else if (entidad.Equals("MAE")) {
+            else if (entidad.Equals("MAE"))
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(6);
                 return View(model);
             }
-            else if (entidad.Equals("DDE")) {
+            else if (entidad.Equals("DDE"))
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(11);
                 return View(model);
             }
-            else if (entidad.Equals("Emprendedores")) {
+            else if (entidad.Equals("Emprendedores"))
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(12);
                 return View(model);
             }
-            else if (entidad.Equals("Actualizacion_Cartago")) {
+            else if (entidad.Equals("Actualizacion_Cartago"))
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(9);
                 return View(model);
             }
-            else { 
+            else
+            {
                 var model = repositorio.ObtenerComisionesXEntidad(8); //Actualización San Carlos
                 return View(model);
             }
-            
-            
+
+
         }
 
         [Authorize]
@@ -71,12 +79,12 @@ namespace SACAAE.Controllers
             String entidad = Request.Cookies["Entidad"].Value;
             int entidadID;
 
-            if (entidad.Equals("TEC")){ entidadID = 1; }
-            else if (entidad.Equals("CIE")){ entidadID = 7;}
-            else if (entidad.Equals("TAE")){ entidadID = 5;}
-            else if (entidad.Equals("MAE")){ entidadID = 6;}
-            else if (entidad.Equals("DDE")){ entidadID = 11;}
-            else if (entidad.Equals("Emprendedores")){  entidadID = 12; }
+            if (entidad.Equals("TEC")) { entidadID = 1; }
+            else if (entidad.Equals("CIE")) { entidadID = 7; }
+            else if (entidad.Equals("TAE")) { entidadID = 5; }
+            else if (entidad.Equals("MAE")) { entidadID = 6; }
+            else if (entidad.Equals("DDE")) { entidadID = 11; }
+            else if (entidad.Equals("Emprendedores")) { entidadID = 12; }
             else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
             else { entidadID = 8; }
 

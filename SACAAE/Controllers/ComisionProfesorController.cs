@@ -38,7 +38,7 @@ namespace SACAAE.Controllers
             ViewBag.HorasInicio = HorasInicio;
             ViewBag.HorasFin = HorasFin;
 
-           
+
             if (Request.UrlReferrer != null)
             {
                 ViewBag.returnUrl = Request.UrlReferrer.ToString();
@@ -50,12 +50,26 @@ namespace SACAAE.Controllers
             List<Profesore> ListaProfesores = repositorioProfesor.ObtenerTodosProfesores().ToList<Profesore>();
             List<Comisione> ListaComisiones = repositorioComision.ObtenerTodasComisiones().ToList<Comisione>();
 
-           
+            String entidad = Request.Cookies["Entidad"].Value;
+            int entidadID;
+
+            if (entidad.Equals("TEC")) { entidadID = 1; }
+            else if (entidad.Equals("CIE")) { entidadID = 7; }
+            else if (entidad.Equals("TAE")) { entidadID = 5; }
+            else if (entidad.Equals("MAE")) { entidadID = 6; }
+            else if (entidad.Equals("DDE")) { entidadID = 11; }
+            else if (entidad.Equals("Emprendedores")) { entidadID = 12; }
+            else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
+            else { entidadID = 8; }
+
+            ViewBag.profesores = repositorioProfesor.ObtenerTodosProfesores();
+            ViewBag.comisiones = repositorioComision.ObtenerComisionesXEntidad(entidadID);
+
 
             if (ListaProfesores.Count > 0)
-                ViewBag.Profesores = ListaProfesores;
+                ViewBag.profesores = ListaProfesores;
             else
-                ViewBag.Profesores = null;
+                ViewBag.profesores = null;
 
             return View();
         }
@@ -86,7 +100,7 @@ namespace SACAAE.Controllers
                 String Dia = Partes[0];
                 String HoraInicio = Partes[1];
                 String HoraFin = Partes[2];
-                
+
 
                 if (Dia != "d")
                 {
@@ -123,7 +137,7 @@ namespace SACAAE.Controllers
                 ViewBag.Profesores = ListaProfesores;
             else
                 ViewBag.Profesores = null;
-            
+
             return View();
         }
 
@@ -131,7 +145,7 @@ namespace SACAAE.Controllers
         {
             IQueryable listaComisiones = repositoriocomisionesprofesor.ObtenerComisionesXProfesor(idProfesor);
             if (HttpContext.Request.IsAjaxRequest())
-            {                
+            {
                 var json = JsonConvert.SerializeObject(listaComisiones);
 
                 return Content(json);

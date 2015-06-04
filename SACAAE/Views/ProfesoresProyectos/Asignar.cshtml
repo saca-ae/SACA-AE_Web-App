@@ -21,6 +21,7 @@
 
 </Style>
 
+
 @section Scripts {
     <script src="@Url.Content("~/Scripts/GuardarDias.js")"></script>
 }
@@ -45,9 +46,32 @@
             </div>
             <div class="editor-field">
                 <select id="sltProfesor" name="sltProfesor" class="form-control">
-                    @foreach (var item in ViewBag.profesores)
+                    
+                    @if (Url.RequestContext.RouteData.Values["id"].ToString()=="0")
+                      {
+                        foreach (var item in ViewBag.profesores)
+                        {
+                            <option value="@item.ID">@item.Nombre</option>
+                        }
+                      }
+                      else
+                      {
+                        foreach (var item in ViewBag.profesores)
+                        {
+                            if (Url.RequestContext.RouteData.Values["id"].ToString()==item.ID.ToString())
+                            {    
+                                <option value="@item.ID">@item.Nombre</option>
+                                break;
+                            }
+                            
+                        } 
+                      }
+                    
+
+                    @if (ViewBag.profesores == null)
                     {
-                        <option value="@item.ID">@item.Nombre</option>
+                    
+                        @Html.ActionLink("Crear Profesor", "Crear", "Profesor")
                     }
                 </select>
             </div>
@@ -57,11 +81,12 @@
             </div>
             <div class="editor-field">
                 <select id="sltProyecto" name="sltProyecto" class="form-control">
-                                        @foreach (var item in ViewBag.proyectos)
+
+                    @foreach (var item in ViewBag.proyectos)
                     {
                         <option value="@item.ID">@item.Nombre</option>
                     }
-
+                      
                 </select>
             </div>
             <br />
@@ -91,8 +116,8 @@
 
             <div class="alineacion-div">
             <div> <input type="checkbox" id="LunesID" name="LunesOption" value="Lunes"> Lunes<br> </div>
-            <div> @Html.DropDownList("ComboHoraInicioLunes", new SelectList(ViewBag.HorasInicio),new {@id="ComboHoraInicioLunes"}) </div>
-            <div> @Html.DropDownList("ComboHoraFinLunes", new SelectList(ViewBag.HorasFin),new {@id="ComboHoraFinLunes"}) </div>
+            <div> @Html.DropDownList("ComboHoraInicioLunes", new SelectList(ViewBag.HorasInicio), new { @id = "ComboHoraInicioLunes" }) </div>
+            <div> @Html.DropDownList("ComboHoraFinLunes", new SelectList(ViewBag.HorasFin), new { @id = "ComboHoraFinLunes" }) </div>
             </div>
 
             <div class="editor-field">
@@ -100,8 +125,8 @@
             
             <div class="alineacion-div">
             <div> <input type="checkbox" id="MartesID" name="MartesOption" value="Martes"> Martes<br> </div>
-            <div> @Html.DropDownList("ComboHoraInicioMartes", new SelectList(ViewBag.HorasInicio),new {@id="ComboHoraInicioMartes"}) </div>
-            <div> @Html.DropDownList("ComboHoraFinMartes", new SelectList(ViewBag.HorasFin),new {@id="ComboHoraFinMartes"}) </div>
+            <div> @Html.DropDownList("ComboHoraInicioMartes", new SelectList(ViewBag.HorasInicio), new { @id = "ComboHoraInicioMartes" }) </div>
+            <div> @Html.DropDownList("ComboHoraFinMartes", new SelectList(ViewBag.HorasFin), new { @id = "ComboHoraFinMartes" }) </div>
             </div> 
 
             <div class="editor-field">
@@ -109,8 +134,8 @@
             
             <div class="alineacion-div">
             <div> <input type="checkbox" id="MiercolesID" name="MiercolesOption" value="Miercoles"> Miércoles<br> </div>
-            <div> @Html.DropDownList("ComboHoraInicioMiercoles", new SelectList(ViewBag.HorasInicio),new {@id="ComboHoraInicioMiercoles"}) </div>
-            <div> @Html.DropDownList("ComboHoraFinMiercoles", new SelectList(ViewBag.HorasFin),new {@id="ComboHoraFinMiercoles"}) </div>
+            <div> @Html.DropDownList("ComboHoraInicioMiercoles", new SelectList(ViewBag.HorasInicio), new { @id = "ComboHoraInicioMiercoles" }) </div>
+            <div> @Html.DropDownList("ComboHoraFinMiercoles", new SelectList(ViewBag.HorasFin), new { @id = "ComboHoraFinMiercoles" }) </div>
             </div> 
 
             <div class="editor-field">
@@ -118,8 +143,8 @@
             
             <div class="alineacion-div">
             <div> <input type="checkbox" id="JuevesID" name="JuevesOption" value="Jueves"> Jueves<br> </div>
-            <div> @Html.DropDownList("ComboHoraInicioJueves", new SelectList(ViewBag.HorasInicio),new {@id="ComboHoraInicioJueves"}) </div>
-            <div> @Html.DropDownList("ComboHoraFinJueves", new SelectList(ViewBag.HorasFin),new {@id="ComboHoraFinJueves"}) </div>
+            <div> @Html.DropDownList("ComboHoraInicioJueves", new SelectList(ViewBag.HorasInicio), new { @id = "ComboHoraInicioJueves" }) </div>
+            <div> @Html.DropDownList("ComboHoraFinJueves", new SelectList(ViewBag.HorasFin), new { @id = "ComboHoraFinJueves" }) </div>
             </div> 
 
             <div class="editor-field">
@@ -127,8 +152,8 @@
             
             <div class="alineacion-div">
             <div> <input type="checkbox" id="ViernesID" name="ViernesOption" value="Viernes"> Viernes<br> </div>
-            <div> @Html.DropDownList("ComboHoraInicioViernes", new SelectList(ViewBag.HorasInicio),new {@id="ComboHoraInicioViernes"}) </div>
-            <div> @Html.DropDownList("ComboHoraFinViernes", new SelectList(ViewBag.HorasFin),new {@id="ComboHoraFinViernes"}) </div>
+            <div> @Html.DropDownList("ComboHoraInicioViernes", new SelectList(ViewBag.HorasInicio), new { @id = "ComboHoraInicioViernes" }) </div>
+            <div> @Html.DropDownList("ComboHoraFinViernes", new SelectList(ViewBag.HorasFin), new { @id = "ComboHoraFinViernes" }) </div>
             </div> 
 
             <div class="editor-field">
@@ -136,8 +161,8 @@
             
             <div class="alineacion-div">
             <div> <input type="checkbox" id="SabadoID" name="SabadoOption" value="Sabado"> Sábado<br> </div>
-            <div> @Html.DropDownList("ComboHoraInicioSabado", new SelectList(ViewBag.HorasInicio),new {@id="ComboHoraInicioSabado"}) </div>
-            <div> @Html.DropDownList("ComboHoraFinSabado", new SelectList(ViewBag.HorasFin),new {@id="ComboHoraFinSabado"}) </div>
+            <div> @Html.DropDownList("ComboHoraInicioSabado", new SelectList(ViewBag.HorasInicio), new { @id = "ComboHoraInicioSabado" }) </div>
+            <div> @Html.DropDownList("ComboHoraFinSabado", new SelectList(ViewBag.HorasFin), new { @id = "ComboHoraFinSabado" }) </div>
             </div> 
             <br />
             <br />

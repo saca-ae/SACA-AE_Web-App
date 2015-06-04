@@ -12,7 +12,7 @@ namespace SACAAE.Controllers
     public class ProfesoresProyectosController : Controller
     {
 
-        private  RepositorioProyecto repoProyectos = new RepositorioProyecto();
+        private RepositorioProyecto repoProyectos = new RepositorioProyecto();
         private RepositorioProfesor repoProfesores = new RepositorioProfesor();
         RepositorioProfesorProyecto repoProfesProyectos = new RepositorioProfesorProyecto();
         private RepositorioPeriodos repoPeriodos = new RepositorioPeriodos();
@@ -76,8 +76,8 @@ namespace SACAAE.Controllers
             else { entidadID = 8; }
 
             ViewBag.profesores = repoProfesores.ObtenerTodosProfesores();
-            ViewBag.proyectos = repoProyectos.ObtenerProyectoXEntidad(entidadID); 
-            return View(); 
+            ViewBag.proyectos = repoProyectos.ObtenerProyectoXEntidad(entidadID);
+            return View();
         }
 
         [Authorize]
@@ -111,7 +111,7 @@ namespace SACAAE.Controllers
                 if (Dia != "d")
                 {
                     var creado = repoProfesProyectos.CrearProyectoProfesor(sltProfesor, sltProyecto, Dia, HoraInicio, HoraFin, IdPeriodo);
-                    
+
                     if (creado)
                     {
                         TempData[TempDataMessageKey] = "Profesor asignado correctamente.";
@@ -122,9 +122,9 @@ namespace SACAAE.Controllers
                     }
                 }
 
-                
+
             }
-            return RedirectToAction("Asignar"); 
+            return RedirectToAction("Asignar");
         }
 
         [Authorize]
@@ -182,5 +182,5 @@ namespace SACAAE.Controllers
 
             return RedirectToAction("Revocar");
         }
-	}
+    }
 }
