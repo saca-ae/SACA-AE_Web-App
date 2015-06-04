@@ -41,17 +41,25 @@
                 </div>
                 <div class="editor-field">
                     <select id="sltProfesor" name="sltProfesor" class="form-control">
-                        @if (ViewBag.Profesores != null)
+                        @if (Url.RequestContext.RouteData.Values["id"].ToString()=="0")
                         {
-                            foreach (var item in ViewBag.Profesores)
-                            {         
+                        foreach (var item in ViewBag.Profesores)
+                        {
                             <option value="@item.ID">@item.Nombre</option>
-                            }
                         }
-                        else
+                      }
+                      else
+                      {
+                          foreach (var item in ViewBag.Profesores)
                         {
-                            <option selected="selected">No hay profesores</option>
-                        }
+                            if (Url.RequestContext.RouteData.Values["id"].ToString()==item.ID.ToString())
+                            {    
+                                <option value="@item.ID">@item.Nombre</option>
+                                break;
+                            }
+                        } 
+                      }
+                        
 
                     </select>
                     @if (ViewBag.Profesores == null)
