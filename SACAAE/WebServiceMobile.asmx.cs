@@ -45,7 +45,7 @@ namespace SACAAE
 
         [WebMethod]
         [ScriptMethod(UseHttpGet = true)]
-        public Pass LoginContra(String pMail,string pContrasenia)
+        public Pass LoginContra(String pMail,String pContrasenia)
         {
             if ((from s in entidades.Profesores
                  where s.Correo == pMail && s.Contrasenia == pContrasenia

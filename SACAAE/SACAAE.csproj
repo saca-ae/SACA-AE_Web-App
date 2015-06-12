@@ -433,7 +433,6 @@
     <Content Include="Scripts\GuardarDias.js" />
     <Content Include="Scripts\horario.js" />
     <Content Include="Scripts\horarios.js" />
-    <Content Include="ServiceMobile.svc" />
     <Content Include="WebServiceMobile.asmx" />
     <EntityDeploy Include="Models\SACAAEDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

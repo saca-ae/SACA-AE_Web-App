@@ -115,7 +115,7 @@ namespace SACAAE.Models
                                 });
                                 // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
                                 if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
-                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico"))
+                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
                                     if (entidad_temp.Equals("TEC-REC"))
                                     {
                                         // Se omite este, dado que son horas voluntarias
@@ -201,7 +201,7 @@ namespace SACAAE.Models
 
                             // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
                             if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
-                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico"))
+                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
                                 if (entidad_temp.Equals("TEC-REC"))
                                 {
                                     // Se omite este, dado que son horas voluntarias
@@ -284,7 +284,7 @@ namespace SACAAE.Models
 
                             // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
                             if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
-                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico"))
+                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
                                 if (entidad_temp.Equals("TEC-REC"))
                                 {
                                     // Se omite este, dado que son horas voluntarias
