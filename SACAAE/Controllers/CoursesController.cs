@@ -32,7 +32,6 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            //var model = repoCursos.ObtenerCursos();
 
             String entidad = Request.Cookies["Entidad"].Value;
 
@@ -69,6 +68,21 @@ namespace SACAAE.Controllers
             else if (entidad.Equals("Actualizacion_Cartago"))
             {
                 var model = repoCursos.ObtenerCursosXEntidad(9);
+                return View(model);
+            }
+            else if (entidad.Equals("CIADEG"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(13);
+                return View(model);
+            }
+            else if (entidad.Equals("MDE"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(14);
+                return View(model);
+            }
+            else if (entidad.Equals("MGE"))
+            {
+                var model = repoCursos.ObtenerCursosXEntidad(15);
                 return View(model);
             }
             else

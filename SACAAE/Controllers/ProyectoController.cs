@@ -55,6 +55,21 @@ namespace SACAAE.Controllers
                 var model = repositorio.ObtenerProyectoXEntidad(9);
                 return View(model);
             }
+            else if (entidad.Equals("CIADEG"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(13);
+                return View(model);
+            }
+            else if (entidad.Equals("MDE"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(14);
+                return View(model);
+            }
+            else if (entidad.Equals("MGE"))
+            {
+                var model = repositorio.ObtenerProyectoXEntidad(15);
+                return View(model);
+            }
             else
             {
                 var model = repositorio.ObtenerProyectoXEntidad(8); //Actualización San Carlos
@@ -82,7 +97,9 @@ namespace SACAAE.Controllers
             else if (entidad.Equals("MAE")){ entidadID = 6;}
             else if (entidad.Equals("DDE")){ entidadID = 11;}
             else if (entidad.Equals("Emprendedores")){  entidadID = 12; }
-            else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
+            else if (entidad.Equals("CIADEG")) { entidadID = 13; }
+            else if (entidad.Equals("MDE")) { entidadID = 14; }
+            else if (entidad.Equals("MGE")) { entidadID = 15; }
             else { entidadID = 8; }
 
             repositorio.CrearProyecto(nuevoProyecto.Nombre, nuevoProyecto.Inicio, nuevoProyecto.Fin, nuevoProyecto.Link, entidadID);

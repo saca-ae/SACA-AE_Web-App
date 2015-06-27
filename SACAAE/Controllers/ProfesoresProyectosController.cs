@@ -73,6 +73,9 @@ namespace SACAAE.Controllers
             else if (entidad.Equals("DDE")) { entidadID = 11; }
             else if (entidad.Equals("Emprendedores")) { entidadID = 12; }
             else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
+            else if (entidad.Equals("CIADEG")) { entidadID = 13; }
+            else if (entidad.Equals("MDE")) { entidadID = 14; }
+            else if (entidad.Equals("MGE")) { entidadID = 15; }
             else { entidadID = 8; }
 
             ViewBag.profesores = repoProfesores.ObtenerTodosProfesores();

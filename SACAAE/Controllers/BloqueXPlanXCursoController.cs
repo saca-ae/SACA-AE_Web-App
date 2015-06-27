@@ -93,6 +93,18 @@ namespace SACAAE.Controllers
             {
                 entidadID = 9;
             }
+            else if (entidad.Equals("CIADEG"))
+            {
+                entidadID = 13;
+            }
+            else if (entidad.Equals("MDE"))
+            {
+                entidadID = 14;
+            }
+            else if (entidad.Equals("MGP"))
+            {
+                entidadID = 15;
+            }
             else
             {
                 entidadID = 8;

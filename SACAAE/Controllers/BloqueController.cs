@@ -56,6 +56,21 @@ namespace SACAAE.Controllers
                 var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(9);
                 return View(model);
             }
+            else if (entidad.Equals("CIADEG"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(13);
+                return View(model);
+            }
+            else if (entidad.Equals("MDE"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(14);
+                return View(model);
+            }
+            else if (entidad.Equals("MGP"))
+            {
+                var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(15);
+                return View(model);
+            }
             else
             {
                 var model = vRepoBloqueAcademico.ListarBloquesAcademicosXEntidad(8); //Actualización San Carlos

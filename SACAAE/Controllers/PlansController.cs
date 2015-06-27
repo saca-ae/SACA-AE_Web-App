@@ -76,6 +76,21 @@ namespace SACAAE.Controllers
                 var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(9);
                 return View(model);
             }
+            else if (entidad.Equals("CIADEG"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(13);
+                return View(model);
+            }
+            else if (entidad.Equals("MDE"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(14);
+                return View(model);
+            }
+            else if (entidad.Equals("MGE"))
+            {
+                var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(15);
+                return View(model);
+            }
             else
             {
                 var model = repoPlanes.ObtenerPlanesDeEstudioXEntidad(8); //Actualización San Carlos

@@ -24,7 +24,6 @@ namespace SACAAE.Controllers
         public ActionResult Index()
         {
             ViewBag.Sedes = vRepoSedes.ObtenerTodosSedes();
-           // var model = vRepoAulas.ListarAulas();
             String entidad = Request.Cookies["Entidad"].Value;
 
             if (entidad.Equals("TEC"))
@@ -60,6 +59,21 @@ namespace SACAAE.Controllers
             else if (entidad.Equals("Actualizacion_Cartago"))
             {
                 var model = vRepoAulas.ListarAulasXEntidad(9);
+                return View(model);
+            }
+            else if (entidad.Equals("CIADEG"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(13);
+                return View(model);
+            }
+            else if (entidad.Equals("MDE"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(14);
+                return View(model);
+            }
+            else if (entidad.Equals("MGP"))
+            {
+                var model = vRepoAulas.ListarAulasXEntidad(15);
                 return View(model);
             }
             else

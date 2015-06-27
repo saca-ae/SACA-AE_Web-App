@@ -18,7 +18,6 @@ namespace SACAAE.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            // var model = repositorio.ObtenerTodasComisiones();
             String entidad = Request.Cookies["Entidad"].Value;
 
             if (entidad.Equals("TEC"))
@@ -56,6 +55,21 @@ namespace SACAAE.Controllers
                 var model = repositorio.ObtenerComisionesXEntidad(9);
                 return View(model);
             }
+            else if (entidad.Equals("CIADEG"))
+            {
+                var model = repositorio.ObtenerComisionesXEntidad(13);
+                return View(model);
+            }
+            else if (entidad.Equals("MDE"))
+            {
+                var model = repositorio.ObtenerComisionesXEntidad(14);
+                return View(model);
+            }
+            else if (entidad.Equals("MGP"))
+            {
+                var model = repositorio.ObtenerComisionesXEntidad(9);
+                return View(model);
+            }
             else
             {
                 var model = repositorio.ObtenerComisionesXEntidad(8); //Actualización San Carlos
@@ -86,6 +100,9 @@ namespace SACAAE.Controllers
             else if (entidad.Equals("DDE")) { entidadID = 11; }
             else if (entidad.Equals("Emprendedores")) { entidadID = 12; }
             else if (entidad.Equals("Actualizacion_Cartago")) { entidadID = 9; }
+            else if (entidad.Equals("CIADEG")) { entidadID = 13; }
+            else if (entidad.Equals("MDE")) { entidadID = 14; }
+            else if (entidad.Equals("MGE")) { entidadID = 15; }
             else { entidadID = 8; }
 
 
