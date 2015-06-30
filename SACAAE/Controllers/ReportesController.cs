@@ -39,6 +39,7 @@ namespace SACAAE.Models
             byte[] bytes;
             Dictionary<String, int> profesores_carga_tec = new Dictionary<string, int>();
             Dictionary<String, int> profesores_carga_fundatec = new Dictionary<string, int>();
+            Dictionary<String, List<String>> profesores_cursos_asociados = new Dictionary<String, List<String>>();
             List<Profesor> todo_profesores = new List<Profesor>();
             try
             {
@@ -113,34 +114,84 @@ namespace SACAAE.Models
                                  Aula = Detalle.Aula,
                                  Entidad = entidad_temp
                                 });
+                                List<String> entidadesXProfesor;
                                 // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
                                 if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
                                 entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
+                                {
                                     if (entidad_temp.Equals("TEC-REC"))
                                     {
                                         // Se omite este, dado que son horas voluntarias
                                     }
                                     else
                                     {
+                                        
                                         if (profesores_carga_tec.ContainsKey(Detalle.ProfesoresXCurso.Profesore.Nombre))
                                         {
-                                            profesores_carga_tec[Detalle.ProfesoresXCurso.Profesore.Nombre] += Carga;
+                                            entidadesXProfesor = profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre];
+                                            if(entidadesXProfesor.Contains(CursoInfo.Nombre))
+                                            {
+                                                // quiere decir que el curso ya esta contabilizado, entonces se omite
+                                            }
+                                            else{
+                                                entidadesXProfesor.Add(CursoInfo.Nombre);
+                                                profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre] = entidadesXProfesor;
+                                                profesores_carga_tec[Detalle.ProfesoresXCurso.Profesore.Nombre] += Carga;
+                                            }
+                                            
                                         }
                                         else
                                         {
+                                            
                                             profesores_carga_tec.Add(Detalle.ProfesoresXCurso.Profesore.Nombre, Carga);
+                                            // se pregunta si el curso, comision o proyecto ha sido contabilizado
+                                            if (profesores_cursos_asociados.ContainsKey(Detalle.ProfesoresXCurso.Profesore.Nombre))
+                                            {
+                                                entidadesXProfesor = profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre];
+                                                entidadesXProfesor.Add(CursoInfo.Nombre);
+
+
+                                                profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre] = entidadesXProfesor;
+                                            }
+                                            else
+                                            {
+                                                profesores_cursos_asociados.Add(Detalle.ProfesoresXCurso.Profesore.Nombre, new List<String>() { CursoInfo.Nombre });
+                                            }
                                         }
                                     }
-                                    
+                                }
                                 else
                                 {
                                     if (profesores_carga_fundatec.ContainsKey(Detalle.ProfesoresXCurso.Profesore.Nombre))
                                     {
-                                        profesores_carga_fundatec[Detalle.ProfesoresXCurso.Profesore.Nombre] += Carga;
+                                        entidadesXProfesor = profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre];
+                                        if (entidadesXProfesor.Contains(CursoInfo.Nombre))
+                                        {
+                                            // quiere decir que el curso ya esta contabilizado, entonces se omite
+                                        }
+                                        else
+                                        {
+                                            entidadesXProfesor.Add(CursoInfo.Nombre);
+                                            profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre] = entidadesXProfesor;
+                                            profesores_carga_fundatec[Detalle.ProfesoresXCurso.Profesore.Nombre] += Carga;
+                                        }
                                     }
                                     else
                                     {
                                         profesores_carga_fundatec.Add(Detalle.ProfesoresXCurso.Profesore.Nombre, Carga);
+                                        // se pregunta si el curso, comision o proyecto ha sido contabilizado
+                                        if (profesores_cursos_asociados.ContainsKey(Detalle.ProfesoresXCurso.Profesore.Nombre))
+                                        {
+                                            entidadesXProfesor = profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre];
+                                            entidadesXProfesor.Add(CursoInfo.Nombre);
+
+
+                                            profesores_cursos_asociados[Detalle.ProfesoresXCurso.Profesore.Nombre] = entidadesXProfesor;
+                                        }
+                                        else
+                                        {
+                                            profesores_cursos_asociados.Add(Detalle.ProfesoresXCurso.Profesore.Nombre, new List<String>() { CursoInfo.Nombre });
+                                        }
                                     }
                                 }
                         }
@@ -199,34 +250,86 @@ namespace SACAAE.Models
                             });
 
 
+                            List<String> entidadesXProfesor;
                             // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
                             if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
-                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
+                            entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
+                            {
                                 if (entidad_temp.Equals("TEC-REC"))
                                 {
                                     // Se omite este, dado que son horas voluntarias
                                 }
                                 else
                                 {
+
                                     if (profesores_carga_tec.ContainsKey(Profe.Profesore.Nombre))
                                     {
-                                        profesores_carga_tec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                        entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                        if (entidadesXProfesor.Contains(Proyecto.Nombre))
+                                        {
+                                            // quiere decir que el curso ya esta contabilizado, entonces se omite
+                                        }
+                                        else
+                                        {
+                                            entidadesXProfesor.Add(Proyecto.Nombre);
+                                            profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                            profesores_carga_tec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                        }
+
                                     }
                                     else
                                     {
+
                                         profesores_carga_tec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                        // se pregunta si el curso, comision o proyecto ha sido contabilizado
+                                        if (profesores_cursos_asociados.ContainsKey(Profe.Profesore.Nombre))
+                                        {
+                                            entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                            entidadesXProfesor.Add(Proyecto.Nombre);
+
+
+                                            profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                        }
+                                        else
+                                        {
+                                            profesores_cursos_asociados.Add(Profe.Profesore.Nombre, new List<String>() { Proyecto.Nombre });
+                                        }
                                     }
                                 }
-
+                            }
                             else
                             {
                                 if (profesores_carga_fundatec.ContainsKey(Profe.Profesore.Nombre))
                                 {
-                                    profesores_carga_fundatec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                    entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                    if (entidadesXProfesor.Contains(Proyecto.Nombre))
+                                    {
+                                        // quiere decir que el curso ya esta contabilizado, entonces se omite
+                                    }
+                                    else
+                                    {
+                                        entidadesXProfesor.Add(Proyecto.Nombre);
+                                        profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                        profesores_carga_fundatec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                    }
                                 }
                                 else
                                 {
                                     profesores_carga_fundatec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+
+                                    // se pregunta si el curso, comision o proyecto ha sido contabilizado
+                                    if (profesores_cursos_asociados.ContainsKey(Profe.Profesore.Nombre))
+                                    {
+                                        entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                        entidadesXProfesor.Add(Proyecto.Nombre);
+
+
+                                        profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                    }
+                                    else{
+                                        profesores_cursos_asociados.Add(Profe.Profesore.Nombre, new List<String>() { Proyecto.Nombre });
+                                    }
+                                    
                                 }
                             }
                         }
@@ -282,34 +385,84 @@ namespace SACAAE.Models
                                 Entidad = entidad_temp
                             });
 
+                            List<String> entidadesXProfesor;
                             // ES UNA ENTIDAD TEC, POR LO QUE VA EN OTRO TOTAL
                             if (entidad_temp.Equals("TEC") || entidad_temp.Equals("TEC-VIC") || entidad_temp.Equals("TEC-REC") ||
-                                entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
+                            entidad_temp.Equals("TEC-MIXTO") || entidad_temp.Equals("TEC-Académico") || entidad_temp.Equals("CIADEG "))
+                            {
                                 if (entidad_temp.Equals("TEC-REC"))
                                 {
                                     // Se omite este, dado que son horas voluntarias
                                 }
                                 else
                                 {
+
                                     if (profesores_carga_tec.ContainsKey(Profe.Profesore.Nombre))
                                     {
-                                        profesores_carga_tec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                        entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                        if (entidadesXProfesor.Contains(Comision.Nombre))
+                                        {
+                                            // quiere decir que el curso ya esta contabilizado, entonces se omite
+                                        }
+                                        else
+                                        {
+                                            entidadesXProfesor.Add(Comision.Nombre);
+                                            profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                            profesores_carga_tec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                        }
+
                                     }
                                     else
                                     {
+
                                         profesores_carga_tec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                        if (profesores_cursos_asociados.ContainsKey(Profe.Profesore.Nombre))
+                                        {
+                                            entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                            entidadesXProfesor.Add(Comision.Nombre);
+
+
+                                            profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                        }
+                                        else
+                                        {
+                                            profesores_cursos_asociados.Add(Profe.Profesore.Nombre, new List<String>() { Comision.Nombre });
+                                        }
                                     }
                                 }
-
+                            }
                             else
                             {
                                 if (profesores_carga_fundatec.ContainsKey(Profe.Profesore.Nombre))
                                 {
-                                    profesores_carga_fundatec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                    entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                    if (entidadesXProfesor.Contains(Comision.Nombre))
+                                    {
+                                        // quiere decir que el curso ya esta contabilizado, entonces se omite
+                                    }
+                                    else
+                                    {
+                                        entidadesXProfesor.Add(Comision.Nombre);
+                                        profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                        profesores_carga_fundatec[Profe.Profesore.Nombre] += Convert.ToInt32(CargaC);
+                                    }
                                 }
                                 else
                                 {
                                     profesores_carga_fundatec.Add(Profe.Profesore.Nombre, Convert.ToInt32(CargaC));
+                                    // se pregunta si el curso, comision o proyecto ha sido contabilizado
+                                    if (profesores_cursos_asociados.ContainsKey(Profe.Profesore.Nombre))
+                                    {
+                                        entidadesXProfesor = profesores_cursos_asociados[Profe.Profesore.Nombre];
+                                        entidadesXProfesor.Add(Comision.Nombre);
+
+
+                                        profesores_cursos_asociados[Profe.Profesore.Nombre] = entidadesXProfesor;
+                                    }
+                                    else
+                                    {
+                                        profesores_cursos_asociados.Add(Profe.Profesore.Nombre, new List<String>() { Comision.Nombre });
+                                    }
                                 }
                             }
                         }

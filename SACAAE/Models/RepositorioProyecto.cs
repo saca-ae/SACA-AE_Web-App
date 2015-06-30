@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using System.Diagnostics;
 
 namespace SACAAE.Models
 {
@@ -125,7 +126,8 @@ namespace SACAAE.Models
                 Fin = fechaFin,
                 FK_TipoEntidad = entidadID,
                 Link = link,
-                Estado = 1
+                Estado = 1,
+                
             };
 
             try
@@ -161,6 +163,7 @@ namespace SACAAE.Models
         public void Save()
         {
             entidades.SaveChanges();
+        
         }
 
         public void BorrarProyecto(Proyecto proyecto)
