@@ -156,11 +156,12 @@ function AgregarCursos(pDia) {
         alert("ERROR: No se pudo convertir el dia seleccionado");
         return;
     }
-
+    /*
     if (Inicio == Fin) {
         alert("ERROR: La hora de inicio y fin son iguales");
         return;
     }
+    */
     if (Inicio > Fin) {
         alert("ERROR: La hora de inicio es posterior a la de fin");
         return;
